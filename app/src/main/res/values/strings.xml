@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Quoridor</string>
+    <string name="hello_world">Quoridor</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_1_text">Start Game</string>
+    <string name="exit_game">Quit App</string>
+    <string name="description_game">Quoridor is super awesome. The rules should go here.</string>
+</resources>
+
