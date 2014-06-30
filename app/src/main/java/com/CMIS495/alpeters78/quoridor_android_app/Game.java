@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.CMIS495.alpeters78.quoridor_android_app.R;
+
+
+
 
 public class Game extends Activity {
 
@@ -33,4 +35,6 @@ public class Game extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:background="@drawable/Game_Board"
+        android:background="@drawable/game_board"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton"
-        android:background="@drawable/V_wall"
+        android:background="@drawable/v_wall"
         android:layout_alignTop="@+id/imageView3"
         android:layout_centerHorizontal="true" />
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton2"
-        android:background="@drawable/H_wall"
+        android:background="@drawable/h_wall"
         android:layout_alignTop="@+id/imageView2"
         android:layout_alignLeft="@+id/imageButton"
         android:layout_alignStart="@+id/imageButton" />
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView2"
-        android:background="@drawable/AI_Pawn"
+        android:background="@drawable/ai_pawn"
         android:layout_marginTop="36dp"
         android:layout_below="@+id/imageView"
         android:layout_alignLeft="@+id/imageView3"
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView3"
-        android:background="@drawable/User_Pawn"
+        android:background="@drawable/user_pawn"
         android:layout_below="@+id/imageView2"
         android:layout_alignLeft="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:text="@string/h_wall"
         android:id="@+id/textView2"
-        android:layout_above="@+id/imageView3"
+        android:layout_alignTop="@+id/imageButton2"
         android:layout_toRightOf="@+id/textView" />
 
     <TextView
