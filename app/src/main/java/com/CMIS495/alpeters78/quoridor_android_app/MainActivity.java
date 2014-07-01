@@ -1,4 +1,5 @@
 package com.CMIS495.alpeters78.quoridor_android_app;
+//TODO Change the package to com.CMSC495...
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class MyActivity extends Activity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
