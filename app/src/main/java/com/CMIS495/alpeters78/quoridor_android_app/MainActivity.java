@@ -2,12 +2,13 @@ package com.CMIS495.alpeters78.quoridor_android_app;
 //TODO Change the package to com.CMSC495...
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -25,14 +26,16 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-
+                Intent intent = new Intent(MainActivity.this, Game.class);
+                startActivity(intent);
             }
+
         });
 
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(MainActivity.this, "Button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -56,4 +59,5 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
