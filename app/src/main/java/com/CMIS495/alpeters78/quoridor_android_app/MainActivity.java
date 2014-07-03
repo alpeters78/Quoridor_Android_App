@@ -1,5 +1,5 @@
 package com.CMIS495.alpeters78.quoridor_android_app;
-//TODO Change the package to com.CMSC495...
+//TODO Change the package to com.CMSC495... - CR
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, Game.class);
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(intent);
             }
 
