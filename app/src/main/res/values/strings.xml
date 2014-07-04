@@ -11,5 +11,10 @@
     <string name="title_activity_game">Game</string>
     <string name="h_wall">Horizontal Wall - Drag and Drop to place</string>
     <string name="v_wall">Vertical Wall - Drag and Drop to place</string>
+    <string name="walls_remaining">Walls remaining:</string>
+    <string name="ai_walls">Computer:</string>
+    <string name="user_walls">You:</string>
+
+
 
 </resources>
