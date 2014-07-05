@@ -60,7 +60,7 @@
                 android:layout_height="25dp"
                 android:id="@+id/pawn31"
                 android:background="#ff606060"
-                android:clickable="true" />
+                android:clickable="true"  />
 
             <ImageView
                 android:layout_width="10dp"
