@@ -6,22 +6,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.CMIS495.alpeters78.quoridor_android_app.R;
+import com.CMSC495.alpeters78.quoridor_android_app.R;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class GameActivity extends Activity {
 
     //Instance variables
-    private Point userPosition = new Point(5, 1); //Point(int x, int y)
-    private Point oldUserPosition; //Stores the last user position for the undo move button
-    private Point aiPosition = new Point(5, 9); //TODO is this the right default spot for the AI? - CR
-    private ArrayList<Wall> wallArray = new ArrayList<Wall>(); //Stores the details of the walls on the board
-    private int numUserWallsRemaining = 10; //The user starts with 10 walls
-    private int numAIWallsRemaining = 10; //The AI starts with 10 walls
-    private ArrayList<Point> blockedPathList = new ArrayList<Point>(); //The paths that are blocked
+    public ArrayList<Wall> wallArray = new ArrayList<Wall>(); //Stores the details of the walls on the board
+    public ArrayList<Point> blockedPathList = new ArrayList<Point>(); //The paths that are blocked
+    public User user = new User();
+    public AI ai = new AI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,150 +75,9 @@ public class GameActivity extends Activity {
      */
     private boolean checkForWin()
     {
-        return false;
-    }
-
-    /*
-     * Inner class that stores a Wall Object and the
-     * information about the wall object.
-     */
-    class Wall
-    {
-        private Point position; //The center position of the wall.
-        private boolean orientation; //True is vertical, false is horizontal.
-
-        Wall(boolean anOrientation, int x, int y)
-        {
-            position = new Point(x, y);
-            orientation = anOrientation;
-        }
-
-        public Point getPosition()
-        {
-            return position;
-        }
-
-        public void setPosition(Point aWallPosition)
-        {
-            position = aWallPosition;
-        }
-
-        public boolean getOrientation()
-        {
-            return orientation;
-        }
-
-        public void setOrientation(boolean anOrientation)
-        {
-            orientation = anOrientation;
-        }
-    }
-
-    /* --------------------------- User Methods --------------------------- */
-
-    private boolean undoLastMove()
-    {
-        if(oldUserPosition == null)
-        {
-            //Last move was a wall placement
-            //TODO Remove the wall that was placed - CR
-        }
+        if(user.userPosition.y == 1 || ai.aiPosition.y == 9)
+            return true; //Either the AI or User has won.
         else
-            userPosition = oldUserPosition;
-
-        return true;
-    }
-
-    /* --------------------------- AI Methods --------------------------- */
-
-    /**
-     * Finds the position in front of the user, and places a wall to block
-     * the user's path.
-     *
-     * @return boolean
-     *              True if a wall was placed, false otherwise.
-     */
-    private boolean blockUserPathWithWall()
-    {
-        Wall wall;
-        Iterator<Wall> iterator;
-        int x;
-        int y;
-
-        if(userPosition.x == 9)
-            x = userPosition.x - 1; //Shift the position left to compensate for the end of the board.
-        else
-            x = userPosition.x;
-
-        y = userPosition.y - 1;
-
-        iterator = wallArray.iterator();
-        while(iterator.hasNext())
-        {
-            Wall tempWall = iterator.next();
-            if(tempWall.getPosition().equals(x, y))
-                return false; //The wall spot was already taken by another wall.
-
-            //TODO Check to see if the wall overlaps with another wall. - CR
-
-        }
-
-        wall = new Wall(false, x, y);
-        wallArray.add(wall);
-
-        //TODO Possibly add logic to also include adding vertical walls. - CR
-        //TODO Possibly add logic to add the wall in a different position if that spot is already taken. - CR
-
-        return true;
-    }
-
-    /**
-     * Places a Wall in a random position somewhere near the user.
-     *
-     * @return boolean
-     *              True if a wall was placed, false otherwise.
-     */
-    private boolean placeRandomWallNearUser()
-    {
-        Wall wall;
-        Iterator<Wall> iterator;
-        int x;
-        int y;
-
-        return false;
-    }
-
-    /**
-     * Places a Wall somewhere next to another wall already on the board.
-     *
-     * @return boolean
-     *              True if a wall was placed, false otherwise.
-     */
-    private boolean placeRandomWallNextToAnotherWall()
-    {
-        return false;
-    }
-
-    /**
-     * Calculates the shortest path to the other end of the board,
-     * and moves the AI's pawn to the next point on that path.
-     *
-     * @return boolean
-     *              True if the AI's pawn was moved, false otherwise.
-     */
-    private boolean makeGoodAIMove()
-    {
-        return false;
-    }
-
-    /**
-     * Pick a random spot to move the AI's pawn to.
-     *
-     * @return boolean
-     *              True if the AI's pawn was moved, false otherwise.
-     */
-    private boolean makeRandomAIMove()
-    {
-        return false;
+            return false; //No one has won, keep playing the game!
     }
 }
