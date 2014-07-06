@@ -1,9 +1,4 @@
-<<<<<<< HEAD:app/src/main/java/com/CMIS495/alpeters78/quoridor_android_app/MainActivity.java
-package com.CMIS495.alpeters78.quoridor_android_app;
-//TODO Change the package to com.CMSC495... - CR
-=======
 package com.CMSC495.alpeters78.quoridor_android_app;
->>>>>>> c8cee1a280b791e34ea45c4f6620503317e3e079:app/src/main/java/com/CMSC495/alpeters78/quoridor_android_app/MainActivity.java
 
 import android.app.Activity;
 import android.content.Intent;

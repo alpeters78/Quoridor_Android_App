@@ -27,6 +27,30 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        /* I have been playing around with changing the image when clicked. I was thinking we can
+                only allow clicks on valid moves and then turning the image off when a new square is clicked.
+                Then parsing the ImageView's name to get the point the pawn was moved to.
+
+                ImageView pawn = (ImageView) findViewById(R.id.pawn11);
+
+                pawn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //This is how to change an image onClick
+                        //ImageView imageView = (ImageView) findViewById(R.id.myimageview);
+                        //imageView.setImageResource(R.drawable.myimage);
+
+                        int position = view.getId();
+                        findViewById(position);
+                        String name = getResources().getResourceEntryName(position);
+                        String clickPosition = name.substring(name.length(), -2);
+                        int pawnPosition = Integer.parseInt(clickPosition);
+                        int x = pawnPosition / 10;
+                        int y = pawnPosition % 10;
+                        */
+
+
     }
 
 
