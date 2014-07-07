@@ -11,13 +11,13 @@ public class User
     public Point userPosition; //Point(int x, int y)
     private Point oldUserPosition; //Stores the last user position for the undo move button
     public int numUserWallsRemaining; //The user starts with 10 walls
-    private int currentResID;
+
 
     public User()
     {
         userPosition = new Point(5, 1); //Point(int x, int y)
         numUserWallsRemaining = 10; //The user starts with 10 walls
-        currentResID = R.id.pawn51;
+
     }
 
     public boolean undoLastMove()
@@ -33,11 +33,4 @@ public class User
         return true;
     }
 
-    public int getCurrentResID() {
-        return currentResID;
-    }
-
-    public void setCurrentResID(int currentResID) {
-        this.currentResID = currentResID;
-    }
 }
