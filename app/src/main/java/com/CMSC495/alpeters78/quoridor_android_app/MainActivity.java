@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.CMIS495.alpeters78.quoridor_android_app.R;
+import com.CMSC495.alpeters78.quoridor_android_app.R;
 
 
 
