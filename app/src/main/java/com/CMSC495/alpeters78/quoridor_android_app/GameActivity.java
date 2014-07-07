@@ -8,9 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.CMSC495.alpeters78.quoridor_android_app.R;
 import java.util.ArrayList;
-
 
 public class GameActivity extends Activity implements View.OnClickListener {
 
@@ -19,7 +17,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
     public ArrayList<Point> blockedPathList = new ArrayList<Point>(); //The paths that are blocked
     public User user = new User();
     public AI ai = new AI();
-
+    public int currentResID;
+    public int aiResID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +27,16 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //These will be inside the loop I'm just using it for testing
         setPawnClickListners();
         setWallClickListners();
+
+        //Initialize game board
+        //userPawn start position
+        ImageView User = (ImageView) findViewById(R.id.pawn51);
+        User.setImageResource(R.drawable.user_pawn);
+        currentResID = R.id.pawn51;
+        //Ai pawn start position
+        ImageView AI = (ImageView) findViewById(R.id.pawn59);
+        AI.setImageResource(R.drawable.ai_pawn);
+        aiResID = R.id.pawn59;
 
 
         // the loop will be set up after all the components are working properly.
@@ -548,6 +557,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             int y = pawnPosition % 10;
             */
 
+
+
         //The conditional will be added after the radio buttons are set up.
         //TODO if pawn radio button is selected
         pawnClick(view);
@@ -561,9 +572,14 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     }
 
-    public boolean isValidPawnPosition(){
-        return true; //using this for testing
+    public boolean isValidPawnPosition(int position){
 
+        //using this for testing
+        if (position != aiResID) {
+            return true; //using this for testing
+        }else{
+            return false;
+        }
         //TODO need to set up valid pawn position logic
     }
 
@@ -573,12 +589,18 @@ public class GameActivity extends Activity implements View.OnClickListener {
     }
 
     public boolean setPawnImage(int resID){
-        if (isValidPawnPosition()) {
-            //TODO set previous position to blank
+        if (isValidPawnPosition(resID)) {
+
+            //sets previous position to blank
+            ImageView oldPosition = (ImageView) findViewById(currentResID);
+            oldPosition.setImageResource(R.drawable.blank);
 
             //sets image of new position to user pawn
-            ImageView name = (ImageView) findViewById(resID);
-            name.setImageResource(R.drawable.user_pawn);
+            ImageView newPosition = (ImageView) findViewById(resID);
+            newPosition.setImageResource(R.drawable.user_pawn);
+
+            //new position is set to current
+            currentResID = resID;
             return true;
         } else {
 
