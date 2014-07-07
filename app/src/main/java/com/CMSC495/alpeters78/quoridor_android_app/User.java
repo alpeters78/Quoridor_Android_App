@@ -3,7 +3,7 @@ package com.CMSC495.alpeters78.quoridor_android_app;
 import android.graphics.Point;
 
 /**
- * Created by christian on 7/6/14.
+ * A User object holds the current User's position and the number of walls remaining.
  */
 public class User
 {
@@ -18,7 +18,7 @@ public class User
         numUserWallsRemaining = 10; //The user starts with 10 walls
     }
 
-    private boolean undoLastMove()
+    public boolean undoLastMove()
     {
         if(oldUserPosition == null)
         {
