@@ -14,7 +14,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     //Instance variables
     public ArrayList<Wall> wallArray = new ArrayList<Wall>(); //Stores the details of the walls on the board
-    public ArrayList<Point> blockedPathList = new ArrayList<Point>(); //The paths that are blocked
+    public ArrayList<Point> hBlockedPathList = new ArrayList<Point>(); //The paths that are blocked by horizontal walls
+    public ArrayList<Point> vBlockedPathList = new ArrayList<Point>(); //The paths that are blocked by horizontal walls
     public User user = new User();
     public AI ai = new AI();
     public int currentResID;
@@ -30,18 +31,18 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         //Initialize game board
         //userPawn start position
-        ImageView User = (ImageView) findViewById(R.id.pawn51);
+        ImageView User = (ImageView) findViewById(R.id.pawn59);
         User.setImageResource(R.drawable.user_pawn);
-        currentResID = R.id.pawn51;
+        currentResID = R.id.pawn59;
         //Ai pawn start position
-        ImageView AI = (ImageView) findViewById(R.id.pawn59);
+        ImageView AI = (ImageView) findViewById(R.id.pawn51);
         AI.setImageResource(R.drawable.ai_pawn);
-        aiResID = R.id.pawn59;
+        aiResID = R.id.pawn51;
 
 
         // the loop will be set up after all the components are working properly.
         //TODO start game Loop while(!win){}
-        //TODO setup radio buttons to call clickListners inside loop
+        //TODO setup radio buttons to call clickListeners inside loop
         //TODO boolean win == checkForWin(); if true break; and call popup
         //TODO AI turn
         //TODO win == checkForWin(); if true break; and call popup
@@ -572,24 +573,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     }
 
-    public boolean isValidPawnPosition(int position){
-
-        //using this for testing
-        if (position != aiResID) {
-            return true; //using this for testing
-        }else{
-            return false;
-        }
-        //TODO need to set up valid pawn position logic
-    }
-
-    public boolean isValidWallPosition(){
-        //TODO set up valid wall position logic
-        return false; //using this for testing
-    }
-
-    public boolean setPawnImage(int resID){
-        if (isValidPawnPosition(resID)) {
+    public boolean setPawnImage(int resID, Point aPossiblePawnPosition){
+        if (user.isValidPawnMove(aPossiblePawnPosition, ai.aiPosition , hBlockedPathList, vBlockedPathList)) {
 
             //sets previous position to blank
             ImageView oldPosition = (ImageView) findViewById(currentResID);
@@ -601,6 +586,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             //new position is set to current
             currentResID = resID;
+            user.setNewUserPosition(aPossiblePawnPosition);
+
             return true;
         } else {
 
@@ -608,8 +595,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public boolean setHorWallImage(int resID){
-        if (isValidWallPosition()) {
+    public boolean setHorWallImage(int resID, Point aPossibleWallPosition){
+        if (user.isValidHorizontalWallMove(aPossibleWallPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList)) {
 
             //TODO set path images and wall center to H_wall
 
@@ -620,8 +607,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public boolean setVerWallImage(int resID){
-        if (isValidWallPosition()) {
+    public boolean setVerWallImage(int resID, Point aPossibleWallPosition){
+        if (user.isValidVerticalWallMove(aPossibleWallPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList)) {
 
             //TODO set path images and wall center to H_wall
 
@@ -641,7 +628,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                 //row 1
                 case R.id.pawn11:
-                    if (setPawnImage(R.id.pawn11)) {
+                    if (setPawnImage(R.id.pawn11, new Point(1, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -650,7 +637,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn21:
-                    if (setPawnImage(R.id.pawn21)) {
+                    if (setPawnImage(R.id.pawn21, new Point(2, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -659,7 +646,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn31:
-                    if (setPawnImage(R.id.pawn31)) {
+                    if (setPawnImage(R.id.pawn31, new Point(3, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -668,7 +655,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn41:
-                    if (setPawnImage(R.id.pawn41)) {
+                    if (setPawnImage(R.id.pawn41, new Point(4, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -677,7 +664,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn51:
-                    if (setPawnImage(R.id.pawn51)) {
+                    if (setPawnImage(R.id.pawn51, new Point(5, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -686,7 +673,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn61:
-                    if (setPawnImage(R.id.pawn61)) {
+                    if (setPawnImage(R.id.pawn61, new Point(6, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -695,7 +682,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn71:
-                    if (setPawnImage(R.id.pawn71)) {
+                    if (setPawnImage(R.id.pawn71, new Point(7, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -704,7 +691,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn81:
-                    if (setPawnImage(R.id.pawn81)) {
+                    if (setPawnImage(R.id.pawn81, new Point(8, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -713,7 +700,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn91:
-                    if (setPawnImage(R.id.pawn91)) {
+                    if (setPawnImage(R.id.pawn91, new Point(9, 1))) {
                         moveMade = true;
                         break;
                     } else {
@@ -724,7 +711,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 2
                 case R.id.pawn12:
-                    if (setPawnImage(R.id.pawn12)) {
+                    if (setPawnImage(R.id.pawn12, new Point(1, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -733,7 +720,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn22:
-                    if (setPawnImage(R.id.pawn22)) {
+                    if (setPawnImage(R.id.pawn22, new Point(2, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -742,7 +729,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn32:
-                    if (setPawnImage(R.id.pawn32)) {
+                    if (setPawnImage(R.id.pawn32, new Point(3, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -751,7 +738,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn42:
-                    if (setPawnImage(R.id.pawn42)) {
+                    if (setPawnImage(R.id.pawn42, new Point(4, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -760,7 +747,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn52:
-                    if (setPawnImage(R.id.pawn52)) {
+                    if (setPawnImage(R.id.pawn52, new Point(5, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -769,7 +756,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn62:
-                    if (setPawnImage(R.id.pawn62)) {
+                    if (setPawnImage(R.id.pawn62, new Point(6, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -778,7 +765,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn72:
-                    if (setPawnImage(R.id.pawn72)) {
+                    if (setPawnImage(R.id.pawn72, new Point(7, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -787,7 +774,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn82:
-                    if (setPawnImage(R.id.pawn82)) {
+                    if (setPawnImage(R.id.pawn82, new Point(8, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -796,7 +783,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn92:
-                    if (setPawnImage(R.id.pawn92)) {
+                    if (setPawnImage(R.id.pawn92, new Point(9, 2))) {
                         moveMade = true;
                         break;
                     } else {
@@ -807,7 +794,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 3
                 case R.id.pawn13:
-                    if (setPawnImage(R.id.pawn13)) {
+                    if (setPawnImage(R.id.pawn13, new Point(1, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -816,7 +803,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn23:
-                    if (setPawnImage(R.id.pawn23)) {
+                    if (setPawnImage(R.id.pawn23, new Point(2, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -825,7 +812,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn33:
-                    if (setPawnImage(R.id.pawn33)) {
+                    if (setPawnImage(R.id.pawn33, new Point(3, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -834,7 +821,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn43:
-                    if (setPawnImage(R.id.pawn43)) {
+                    if (setPawnImage(R.id.pawn43, new Point(4, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -843,7 +830,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn53:
-                    if (setPawnImage(R.id.pawn53)) {
+                    if (setPawnImage(R.id.pawn53, new Point(5, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -852,7 +839,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn63:
-                    if (setPawnImage(R.id.pawn63)) {
+                    if (setPawnImage(R.id.pawn63, new Point(6, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -861,7 +848,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn73:
-                    if (setPawnImage(R.id.pawn73)) {
+                    if (setPawnImage(R.id.pawn73, new Point(7, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -870,7 +857,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn83:
-                    if (setPawnImage(R.id.pawn83)) {
+                    if (setPawnImage(R.id.pawn83, new Point(8, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -879,7 +866,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn93:
-                    if (setPawnImage(R.id.pawn93)) {
+                    if (setPawnImage(R.id.pawn93, new Point(9, 3))) {
                         moveMade = true;
                         break;
                     } else {
@@ -890,7 +877,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 4
                 case R.id.pawn14:
-                    if (setPawnImage(R.id.pawn14)) {
+                    if (setPawnImage(R.id.pawn14, new Point(1, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -899,7 +886,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn24:
-                    if (setPawnImage(R.id.pawn24)) {
+                    if (setPawnImage(R.id.pawn24, new Point(2, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -908,7 +895,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn34:
-                    if (setPawnImage(R.id.pawn34)) {
+                    if (setPawnImage(R.id.pawn34, new Point(3, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -917,7 +904,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn44:
-                    if (setPawnImage(R.id.pawn44)) {
+                    if (setPawnImage(R.id.pawn44, new Point(4, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -926,7 +913,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn54:
-                    if (setPawnImage(R.id.pawn54)) {
+                    if (setPawnImage(R.id.pawn54, new Point(5, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -935,7 +922,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn64:
-                    if (setPawnImage(R.id.pawn64)) {
+                    if (setPawnImage(R.id.pawn64, new Point(6, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -944,7 +931,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn74:
-                    if (setPawnImage(R.id.pawn74)) {
+                    if (setPawnImage(R.id.pawn74, new Point(7, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -953,7 +940,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn84:
-                    if (setPawnImage(R.id.pawn84)) {
+                    if (setPawnImage(R.id.pawn84, new Point(8, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -962,7 +949,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn94:
-                    if (setPawnImage(R.id.pawn94)) {
+                    if (setPawnImage(R.id.pawn94, new Point(9, 4))) {
                         moveMade = true;
                         break;
                     } else {
@@ -973,7 +960,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 5
                 case R.id.pawn15:
-                    if (setPawnImage(R.id.pawn15)) {
+                    if (setPawnImage(R.id.pawn15, new Point(1, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -982,7 +969,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn25:
-                    if (setPawnImage(R.id.pawn25)) {
+                    if (setPawnImage(R.id.pawn25, new Point(2, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -991,7 +978,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn35:
-                    if (setPawnImage(R.id.pawn35)) {
+                    if (setPawnImage(R.id.pawn35, new Point(3, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1000,7 +987,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn45:
-                    if (setPawnImage(R.id.pawn45)) {
+                    if (setPawnImage(R.id.pawn45, new Point(4, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1009,7 +996,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn55:
-                    if (setPawnImage(R.id.pawn55)) {
+                    if (setPawnImage(R.id.pawn55, new Point(5, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1018,7 +1005,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn65:
-                    if (setPawnImage(R.id.pawn65)) {
+                    if (setPawnImage(R.id.pawn65, new Point(6, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1027,7 +1014,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn75:
-                    if (setPawnImage(R.id.pawn75)) {
+                    if (setPawnImage(R.id.pawn75, new Point(7, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1036,7 +1023,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn85:
-                    if (setPawnImage(R.id.pawn85)) {
+                    if (setPawnImage(R.id.pawn85, new Point(8, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1045,7 +1032,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn95:
-                    if (setPawnImage(R.id.pawn95)) {
+                    if (setPawnImage(R.id.pawn95, new Point(9, 5))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1056,7 +1043,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 6
                 case R.id.pawn16:
-                    if (setPawnImage(R.id.pawn16)) {
+                    if (setPawnImage(R.id.pawn16, new Point(1, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1065,7 +1052,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn26:
-                    if (setPawnImage(R.id.pawn26)) {
+                    if (setPawnImage(R.id.pawn26, new Point(2, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1074,7 +1061,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn36:
-                    if (setPawnImage(R.id.pawn36)) {
+                    if (setPawnImage(R.id.pawn36, new Point(3, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1083,7 +1070,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn46:
-                    if (setPawnImage(R.id.pawn46)) {
+                    if (setPawnImage(R.id.pawn46, new Point(4, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1092,7 +1079,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn56:
-                    if (setPawnImage(R.id.pawn56)) {
+                    if (setPawnImage(R.id.pawn56, new Point(5, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1101,7 +1088,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn66:
-                    if (setPawnImage(R.id.pawn66)) {
+                    if (setPawnImage(R.id.pawn66, new Point(6, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1110,7 +1097,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn76:
-                    if (setPawnImage(R.id.pawn76)) {
+                    if (setPawnImage(R.id.pawn76, new Point(7, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1119,7 +1106,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn86:
-                    if (setPawnImage(R.id.pawn86)) {
+                    if (setPawnImage(R.id.pawn86, new Point(8, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1128,7 +1115,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn96:
-                    if (setPawnImage(R.id.pawn96)) {
+                    if (setPawnImage(R.id.pawn96, new Point(9, 6))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1139,7 +1126,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 7
                 case R.id.pawn17:
-                    if (setPawnImage(R.id.pawn17)) {
+                    if (setPawnImage(R.id.pawn17, new Point(1, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1148,7 +1135,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn27:
-                    if (setPawnImage(R.id.pawn27)) {
+                    if (setPawnImage(R.id.pawn27, new Point(2, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1157,7 +1144,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn37:
-                    if (setPawnImage(R.id.pawn37)) {
+                    if (setPawnImage(R.id.pawn37, new Point(3, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1166,7 +1153,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn47:
-                    if (setPawnImage(R.id.pawn47)) {
+                    if (setPawnImage(R.id.pawn47, new Point(4, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1175,7 +1162,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn57:
-                    if (setPawnImage(R.id.pawn57)) {
+                    if (setPawnImage(R.id.pawn57, new Point(5, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1184,7 +1171,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn67:
-                    if (setPawnImage(R.id.pawn67)) {
+                    if (setPawnImage(R.id.pawn67, new Point(6, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1193,7 +1180,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn77:
-                    if (setPawnImage(R.id.pawn77)) {
+                    if (setPawnImage(R.id.pawn77, new Point(7, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1202,7 +1189,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn87:
-                    if (setPawnImage(R.id.pawn87)) {
+                    if (setPawnImage(R.id.pawn87, new Point(8, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1211,7 +1198,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn97:
-                    if (setPawnImage(R.id.pawn97)) {
+                    if (setPawnImage(R.id.pawn97, new Point(9, 7))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1222,7 +1209,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 8
                 case R.id.pawn18:
-                    if (setPawnImage(R.id.pawn18)) {
+                    if (setPawnImage(R.id.pawn18, new Point(1, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1231,7 +1218,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn28:
-                    if (setPawnImage(R.id.pawn28)) {
+                    if (setPawnImage(R.id.pawn28, new Point(2, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1240,7 +1227,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn38:
-                    if (setPawnImage(R.id.pawn38)) {
+                    if (setPawnImage(R.id.pawn38, new Point(3, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1249,7 +1236,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn48:
-                    if (setPawnImage(R.id.pawn48)) {
+                    if (setPawnImage(R.id.pawn48, new Point(4, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1258,7 +1245,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn58:
-                    if (setPawnImage(R.id.pawn58)) {
+                    if (setPawnImage(R.id.pawn58, new Point(5, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1267,7 +1254,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn68:
-                    if (setPawnImage(R.id.pawn68)) {
+                    if (setPawnImage(R.id.pawn68, new Point(6, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1276,7 +1263,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn78:
-                    if (setPawnImage(R.id.pawn78)) {
+                    if (setPawnImage(R.id.pawn78, new Point(7, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1285,7 +1272,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn88:
-                    if (setPawnImage(R.id.pawn88)) {
+                    if (setPawnImage(R.id.pawn88, new Point(8, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1294,7 +1281,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn98:
-                    if (setPawnImage(R.id.pawn98)) {
+                    if (setPawnImage(R.id.pawn98, new Point(9, 8))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1305,7 +1292,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     //row 9
                 case R.id.pawn19:
-                    if (setPawnImage(R.id.pawn19)) {
+                    if (setPawnImage(R.id.pawn19, new Point(1, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1314,7 +1301,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn29:
-                    if (setPawnImage(R.id.pawn29)) {
+                    if (setPawnImage(R.id.pawn29, new Point(2, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1323,7 +1310,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn39:
-                    if (setPawnImage(R.id.pawn39)) {
+                    if (setPawnImage(R.id.pawn39, new Point(3, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1332,7 +1319,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn49:
-                    if (setPawnImage(R.id.pawn49)) {
+                    if (setPawnImage(R.id.pawn49, new Point(4, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1341,7 +1328,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn59:
-                    if (setPawnImage(R.id.pawn59)) {
+                    if (setPawnImage(R.id.pawn59, new Point(5, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1350,7 +1337,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn69:
-                    if (setPawnImage(R.id.pawn69)) {
+                    if (setPawnImage(R.id.pawn69, new Point(6, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1359,7 +1346,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn79:
-                    if (setPawnImage(R.id.pawn79)) {
+                    if (setPawnImage(R.id.pawn79, new Point(7, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1368,7 +1355,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn89:
-                    if (setPawnImage(R.id.pawn89)) {
+                    if (setPawnImage(R.id.pawn89, new Point(8, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1377,7 +1364,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
                 case R.id.pawn99:
-                    if (setPawnImage(R.id.pawn99)) {
+                    if (setPawnImage(R.id.pawn99, new Point(9, 9))) {
                         moveMade = true;
                         break;
                     } else {
@@ -1389,13 +1376,1080 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //}
     }
 
-    public void hWallClick(View view){
-        //TODO Set up switch
+    public void hWallClick(View view) {
+        boolean moveMade = false;
+        //while loop allows the user to keep making selections until a valid move is made.
+        // turned off for testing
+        //while(!moveMade){
+            switch (view.getId()) {
+
+                //row 1
+                case R.id.wall11:
+                    if (setHorWallImage(R.id.wall11, new Point(1, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall21:
+                    if (setHorWallImage(R.id.wall21, new Point(2, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall31:
+                    if (setHorWallImage(R.id.wall31, new Point(3, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall41:
+                    if (setHorWallImage(R.id.wall41, new Point(4, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall51:
+                    if (setHorWallImage(R.id.wall51, new Point(5, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall61:
+                    if (setHorWallImage(R.id.wall61, new Point(6, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall71:
+                    if (setHorWallImage(R.id.wall71, new Point(7, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall81:
+                    if (setHorWallImage(R.id.wall81, new Point(8, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 2
+                case R.id.wall12:
+                    if (setHorWallImage(R.id.wall12, new Point(1, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall22:
+                    if (setHorWallImage(R.id.wall22, new Point(2, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall32:
+                    if (setHorWallImage(R.id.wall32, new Point(3, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall42:
+                    if (setHorWallImage(R.id.wall42, new Point(4, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall52:
+                    if (setHorWallImage(R.id.wall52, new Point(5, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall62:
+                    if (setHorWallImage(R.id.wall62, new Point(6, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall72:
+                    if (setHorWallImage(R.id.wall72, new Point(7, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall82:
+                    if (setHorWallImage(R.id.wall82, new Point(8, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 3
+                case R.id.wall13:
+                    if (setHorWallImage(R.id.wall13, new Point(1, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall23:
+                    if (setHorWallImage(R.id.wall23, new Point(2, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall33:
+                    if (setHorWallImage(R.id.wall33, new Point(3, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall43:
+                    if (setHorWallImage(R.id.wall43, new Point(4, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall53:
+                    if (setHorWallImage(R.id.wall53, new Point(5, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall63:
+                    if (setHorWallImage(R.id.wall63, new Point(6, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall73:
+                    if (setHorWallImage(R.id.wall73, new Point(7, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall83:
+                    if (setHorWallImage(R.id.wall83, new Point(8, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 4
+                case R.id.wall14:
+                    if (setHorWallImage(R.id.wall14, new Point(1, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall24:
+                    if (setHorWallImage(R.id.wall24, new Point(2, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall34:
+                    if (setHorWallImage(R.id.wall34, new Point(3, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall44:
+                    if (setHorWallImage(R.id.wall44, new Point(4, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall54:
+                    if (setHorWallImage(R.id.wall54, new Point(5, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall64:
+                    if (setHorWallImage(R.id.wall64, new Point(6, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall74:
+                    if (setHorWallImage(R.id.wall74, new Point(7, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall84:
+                    if (setHorWallImage(R.id.wall84, new Point(8, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 5
+                case R.id.wall15:
+                    if (setHorWallImage(R.id.wall15, new Point(1, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall25:
+                    if (setHorWallImage(R.id.wall25, new Point(2, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall35:
+                    if (setHorWallImage(R.id.wall35, new Point(3, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall45:
+                    if (setHorWallImage(R.id.wall45, new Point(4, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall55:
+                    if (setHorWallImage(R.id.wall55, new Point(5, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall65:
+                    if (setHorWallImage(R.id.wall65, new Point(6, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall75:
+                    if (setHorWallImage(R.id.wall75, new Point(7, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall85:
+                    if (setHorWallImage(R.id.wall85, new Point(8, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 6
+                case R.id.wall16:
+                    if (setHorWallImage(R.id.wall16, new Point(1, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall26:
+                    if (setHorWallImage(R.id.wall26, new Point(2, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall36:
+                    if (setHorWallImage(R.id.wall36, new Point(3, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall46:
+                    if (setHorWallImage(R.id.wall46, new Point(4, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall56:
+                    if (setHorWallImage(R.id.wall56, new Point(5, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall66:
+                    if (setHorWallImage(R.id.wall66, new Point(6, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall76:
+                    if (setHorWallImage(R.id.wall76, new Point(7, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall86:
+                    if (setHorWallImage(R.id.wall86, new Point(8, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 7
+                case R.id.wall17:
+                    if (setHorWallImage(R.id.wall17, new Point(1, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall27:
+                    if (setHorWallImage(R.id.wall27, new Point(2, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall37:
+                    if (setHorWallImage(R.id.wall37, new Point(3, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall47:
+                    if (setHorWallImage(R.id.wall47, new Point(4, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall57:
+                    if (setHorWallImage(R.id.wall57, new Point(5, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall67:
+                    if (setHorWallImage(R.id.wall67, new Point(6, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall77:
+                    if (setHorWallImage(R.id.wall77, new Point(7, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall87:
+                    if (setHorWallImage(R.id.wall87, new Point(8, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 8
+                case R.id.wall18:
+                    if (setHorWallImage(R.id.wall18, new Point(1, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall28:
+                    if (setHorWallImage(R.id.wall28, new Point(2, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall38:
+                    if (setHorWallImage(R.id.wall38, new Point(3, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall48:
+                    if (setHorWallImage(R.id.wall48, new Point(4, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall58:
+                    if (setHorWallImage(R.id.wall58, new Point(5, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall68:
+                    if (setHorWallImage(R.id.wall68, new Point(6, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall78:
+                    if (setHorWallImage(R.id.wall78, new Point(7, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall88:
+                    if (setHorWallImage(R.id.wall88, new Point(8, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+            }
+        //}
     }
 
-    public void vWallClick(View view){
-        //TODO Set up switch
+    public void vWallClick(View view) {
+        boolean moveMade = false;
+        //while loop allows the user to keep making selections until a valid move is made.
+        // turned off for testing
+        //while(!moveMade){
+            switch (view.getId()) {
+
+                //row 1
+                case R.id.wall11:
+                    if (setVerWallImage(R.id.wall11, new Point(1, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall21:
+                    if (setVerWallImage(R.id.wall21, new Point(2, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall31:
+                    if (setVerWallImage(R.id.wall31, new Point(3, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall41:
+                    if (setVerWallImage(R.id.wall41, new Point(4, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall51:
+                    if (setVerWallImage(R.id.wall51, new Point(5, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall61:
+                    if (setVerWallImage(R.id.wall61, new Point(6, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall71:
+                    if (setVerWallImage(R.id.wall71, new Point(7, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall81:
+                    if (setVerWallImage(R.id.wall81, new Point(8, 1))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 2
+                case R.id.wall12:
+                    if (setVerWallImage(R.id.wall12, new Point(1, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall22:
+                    if (setVerWallImage(R.id.wall22, new Point(2, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall32:
+                    if (setVerWallImage(R.id.wall32, new Point(3, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall42:
+                    if (setVerWallImage(R.id.wall42, new Point(4, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall52:
+                    if (setVerWallImage(R.id.wall52, new Point(5, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall62:
+                    if (setVerWallImage(R.id.wall62, new Point(6, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall72:
+                    if (setVerWallImage(R.id.wall72, new Point(7, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall82:
+                    if (setVerWallImage(R.id.wall82, new Point(8, 2))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 3
+                case R.id.wall13:
+                    if (setVerWallImage(R.id.wall13, new Point(1, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall23:
+                    if (setVerWallImage(R.id.wall23, new Point(2, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall33:
+                    if (setVerWallImage(R.id.wall33, new Point(3, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall43:
+                    if (setVerWallImage(R.id.wall43, new Point(4, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall53:
+                    if (setVerWallImage(R.id.wall53, new Point(5, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall63:
+                    if (setVerWallImage(R.id.wall63, new Point(6, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall73:
+                    if (setVerWallImage(R.id.wall73, new Point(7, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall83:
+                    if (setVerWallImage(R.id.wall83, new Point(8, 3))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 4
+                case R.id.wall14:
+                    if (setVerWallImage(R.id.wall14, new Point(1, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall24:
+                    if (setVerWallImage(R.id.wall24, new Point(2, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall34:
+                    if (setVerWallImage(R.id.wall34, new Point(3, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall44:
+                    if (setVerWallImage(R.id.wall44, new Point(4, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall54:
+                    if (setVerWallImage(R.id.wall54, new Point(5, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall64:
+                    if (setVerWallImage(R.id.wall64, new Point(6, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall74:
+                    if (setVerWallImage(R.id.wall74, new Point(7, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall84:
+                    if (setVerWallImage(R.id.wall84, new Point(8, 4))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 5
+                case R.id.wall15:
+                    if (setVerWallImage(R.id.wall15, new Point(1, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall25:
+                    if (setVerWallImage(R.id.wall25, new Point(2, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall35:
+                    if (setVerWallImage(R.id.wall35, new Point(3, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall45:
+                    if (setVerWallImage(R.id.wall45, new Point(4, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall55:
+                    if (setVerWallImage(R.id.wall55, new Point(5, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall65:
+                    if (setVerWallImage(R.id.wall65, new Point(6, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall75:
+                    if (setVerWallImage(R.id.wall75, new Point(7, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall85:
+                    if (setVerWallImage(R.id.wall85, new Point(8, 5))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 6
+                case R.id.wall16:
+                    if (setVerWallImage(R.id.wall16, new Point(1, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall26:
+                    if (setVerWallImage(R.id.wall26, new Point(2, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall36:
+                    if (setVerWallImage(R.id.wall36, new Point(3, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall46:
+                    if (setVerWallImage(R.id.wall46, new Point(4, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall56:
+                    if (setVerWallImage(R.id.wall56, new Point(5, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall66:
+                    if (setVerWallImage(R.id.wall66, new Point(6, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall76:
+                    if (setVerWallImage(R.id.wall76, new Point(7, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall86:
+                    if (setVerWallImage(R.id.wall86, new Point(8, 6))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 7
+                case R.id.wall17:
+                    if (setVerWallImage(R.id.wall17, new Point(1, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall27:
+                    if (setVerWallImage(R.id.wall27, new Point(2, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall37:
+                    if (setVerWallImage(R.id.wall37, new Point(3, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall47:
+                    if (setVerWallImage(R.id.wall47, new Point(4, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall57:
+                    if (setVerWallImage(R.id.wall57, new Point(5, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall67:
+                    if (setVerWallImage(R.id.wall67, new Point(6, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall77:
+                    if (setVerWallImage(R.id.wall77, new Point(7, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall87:
+                    if (setVerWallImage(R.id.wall87, new Point(8, 7))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+
+                //row 8
+                case R.id.wall18:
+                    if (setVerWallImage(R.id.wall18, new Point(1, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall28:
+                    if (setVerWallImage(R.id.wall28, new Point(2, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall38:
+                    if (setVerWallImage(R.id.wall38, new Point(3, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall48:
+                    if (setVerWallImage(R.id.wall48, new Point(4, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall58:
+                    if (setVerWallImage(R.id.wall58, new Point(5, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall68:
+                    if (setVerWallImage(R.id.wall68, new Point(6, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall78:
+                    if (setVerWallImage(R.id.wall78, new Point(7, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+                case R.id.wall88:
+                    if (setVerWallImage(R.id.wall88, new Point(8, 8))) {
+                        moveMade = true;
+                    } else {
+                        Toast.makeText(GameActivity.this, "Invalid Wall Placement", Toast.LENGTH_SHORT).show();
+                        moveMade = false;
+                    }
+                    break;
+            }
+        //}
     }
 
 }
-

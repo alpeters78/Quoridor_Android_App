@@ -18,7 +18,7 @@ public class AI
 
     public AI()
     {
-        aiPosition = new Point(5, 9); //TODO is this the right default spot for the AI? - CR
+        aiPosition = new Point(5, 1);
         numAIWallsRemaining = 10; //The AI starts with 10 walls
     }
 
