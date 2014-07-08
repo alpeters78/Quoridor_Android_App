@@ -96,40 +96,134 @@ public class User
             }
             return true;
         }
-        //Next, check to see if the new position is jumping the AI's pawn
+        //Next, check to see if the AI's pawn is next to the user's pawn
         else if(userPosition.x == anAIPawnPosition.x && userPosition.y == anAIPawnPosition.y + 1)
         {
-            //The AI's pawn is in front of the user's pawn
-            if(aPossibleNewPawnPosition.equals(userPosition.x, userPosition.y - 2))
+            //The AI's pawn is directly in front of the user's pawn, now check if there is a wall or edge behind the AI
+            if(aHBlockedPathList.contains(new Point(userPosition.x, userPosition.y - 2)) || anAIPawnPosition.y == 1)
             {
-                //The user is trying to jump straight ahead, check for a blocked path (wall)
-                if(aHBlockedPathList.contains(new Point(userPosition.x, userPosition.y - 2)))
+                //The AI's pawn has a wall behind it (or edge of the board), so the user should be allowed to jump left or right
+                if(aPossibleNewPawnPosition.equals(userPosition.x - 1, userPosition.y - 1) || aPossibleNewPawnPosition.equals(userPosition.x + 1, userPosition.y - 1))
                 {
-                    //There is a wall there blocking the path
-                    return false;
+                    //Everything checks out, so let the user jump left or right
+                    return true;
                 }
                 else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
+            }
+            else
+            {
+                //There is not a wall behind the AI's pawn, so the only valid jump position is directly behind the AI's pawn
+                if(aPossibleNewPawnPosition.equals(userPosition.x, userPosition.y - 2))
                 {
                     //Everything checks out, so let the user jump away!
                     return true;
                 }
+                else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
             }
-            //TODO finish logic
         }
         else if(userPosition.x == anAIPawnPosition.x && userPosition.y == anAIPawnPosition.y - 1)
         {
-            //The AI's pawn is behind the user's pawn
-            //TODO finish logic
+            //The AI's pawn is directly behind the user's pawn, now check if there is a wall in front of the AI's pawn
+            if(aHBlockedPathList.contains(new Point(userPosition.x, userPosition.y + 1)))
+            {
+                //The AI's pawn has a wall or edge in front of it, so the user should be allowed to jump left or right
+                if(aPossibleNewPawnPosition.equals(userPosition.x - 1, userPosition.y + 1) || aPossibleNewPawnPosition.equals(userPosition.x + 1, userPosition.y + 1))
+                {
+                    //Everything checks out, so let the user jump left or right
+                    return true;
+                }
+                else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
+            }
+            else
+            {
+                //There is not a wall or edge in front of the AI's pawn, so the only valid jump position is directly in front of the AI's pawn
+                if(aPossibleNewPawnPosition.equals(userPosition.x, userPosition.y + 2))
+                {
+                    //Everything checks out, so let the user jump away!
+                    return true;
+                }
+                else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
+            }
         }
         else if(userPosition.x == anAIPawnPosition.x + 1 && userPosition.y == anAIPawnPosition.y)
         {
-            //The AI's pawn is to the left of the user's pawn
-            //TODO finish logic
+            //The AI's pawn is directly to the left of the user's pawn, now check if there is a wall or edge to the left of the AI's pawn
+            if(aHBlockedPathList.contains(new Point(userPosition.x - 2, userPosition.y)) || anAIPawnPosition.x == 1)
+            {
+                //The AI's pawn has a wall or edge to the left of it, so the user should be allowed to jump up or down
+                if(aPossibleNewPawnPosition.equals(userPosition.x - 1, userPosition.y - 1) || aPossibleNewPawnPosition.equals(userPosition.x - 1, userPosition.y + 1))
+                {
+                    //Everything checks out, so let the user jump up or down
+                    return true;
+                }
+                else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
+            }
+            else
+            {
+                //There is not a wall or edge to the left of the AI's pawn, so the only valid jump position is directly left of the AI's pawn
+                if(aPossibleNewPawnPosition.equals(userPosition.x - 2, userPosition.y))
+                {
+                    //Everything checks out, so let the user jump away!
+                    return true;
+                }
+                else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
+            }
         }
         else if(userPosition.x == anAIPawnPosition.x - 1 && userPosition.y == anAIPawnPosition.y)
         {
-            //The AI's pawn is to the right of the user's pawn
-            //TODO finish logic
+            //The AI's pawn is directly to the right of the user's pawn, now check if there is a wall or edge to the right of the AI's pawn
+            if(aHBlockedPathList.contains(new Point(userPosition.x + 1, userPosition.y)) || anAIPawnPosition.x == 9)
+            {
+                //The AI's pawn has a wall or edge to the right of it, so the user should be allowed to jump up or down
+                if(aPossibleNewPawnPosition.equals(userPosition.x + 1, userPosition.y - 1) || aPossibleNewPawnPosition.equals(userPosition.x + 1, userPosition.y + 1))
+                {
+                    //Everything checks out, so let the user jump up or down
+                    return true;
+                }
+                else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
+            }
+            else
+            {
+                //There is not a wall or edge to the right of the AI's pawn, so the only valid jump position is directly left of the AI's pawn
+                if(aPossibleNewPawnPosition.equals(userPosition.x + 2, userPosition.y))
+                {
+                    //Everything checks out, so let the user jump away!
+                    return true;
+                }
+                else
+                {
+                    //The user tried to jump to an invalid position
+                    return false;
+                }
+            }
         }
 
         return false;
