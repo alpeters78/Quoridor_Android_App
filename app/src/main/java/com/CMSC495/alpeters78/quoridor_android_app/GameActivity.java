@@ -23,6 +23,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
     public int aiResID;
     public boolean orientation = true; //true= Horizontal false= Vertical
     public boolean moveMade = false;
+    private boolean win = false;
+    private boolean didUserWin = false;
+    private boolean didAIWin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +52,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
 
 
-        // the loop will be set up after all the components are working properly.
-        //TODO start game Loop while(!win){}
-        //TODO setup radio buttons to call clickListeners inside loop
-        //TODO boolean win == checkForWin(); if true break; and call popup
-        //TODO AI turn
-        //TODO win == checkForWin(); if true break; and call popup
-        //TODO end Loop
+
+
 
 
 
@@ -99,6 +97,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
+        //First wait for the user to move.
+        System.out.println("onClick method was invoked.");
         //TODO conditional will be added after the radio buttons are set up.
         pawnClick(view);
 
@@ -109,6 +109,41 @@ public class GameActivity extends Activity implements View.OnClickListener {
             hWallClick(view);
         }
 
+        //EVERYTHING IN HERE IS FOR TESTING, FEEL FREE TO CHANGE ANY OF IT AS YOU WANT.  However, this method is where the game "loop" will be.
+
+
+        didUserWin = checkForWin(); //Check to see if user won.
+        if(didUserWin) {
+            //The user won.
+            Toast.makeText(GameActivity.this, "You Won!!!", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            //The user's turn is over and he/she did not win, now let the AI make a move.
+            Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+            if(newWall != null)
+            {
+                if(newWall.getOrientation())
+                    setAIVerWallImage(newWall.getPosition());
+                else
+                    setAIHorWallImage(newWall.getPosition());
+            }
+            else
+            {
+                //A wall was not placed.
+                System.out.println("A Wall is already in that spot");
+                ai.makeGoodAIPawnMove();
+            }
+            didAIWin = checkForWin();
+            if(didAIWin) {
+                //The AI won.
+                Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        /*if(didUserWin || didAIWin) {
+            //TODO create popup and stop the game
+        }*/
     }
 
     public boolean setPawnImage(int resID, Point aPossiblePawnPosition){
@@ -133,7 +168,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public boolean setHorWallImage(int wallID, int path1ID, int path2ID, Point aPossibleWallPosition){
+    public boolean setHorWallImage(int wallID, int path1ID, int path2ID, Point aPossibleWallPosition) {
 
         if (user.isValidHorizontalWallMove(aPossibleWallPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList)) {
 
@@ -144,7 +179,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             ImageView center = (ImageView) findViewById(wallID);
             center.setImageResource(R.drawable.ai_pawn);
-
 
             ImageView path2 = (ImageView) findViewById(path2ID);
             path2.setImageResource(R.drawable.h_wall);
@@ -157,7 +191,23 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     }
 
-    public boolean setVerWallImage(int wallID, int path1ID, int path2ID, Point aPossibleWallPosition){
+    public void setAIHorWallImage(Point aNewWallPosition) {
+
+        String path1ID = "path" + aNewWallPosition.x + aNewWallPosition.y + "h";
+        String wallID = "wall" + aNewWallPosition.x + aNewWallPosition.y;
+        String path2ID = "path" + (aNewWallPosition.x + 1) + aNewWallPosition.y + "h";
+
+        ImageView path1 = (ImageView) findViewById(getResources().getIdentifier(path1ID, "id", getPackageName()));
+        path1.setImageResource(R.drawable.h_wall);
+
+        ImageView center = (ImageView) findViewById(getResources().getIdentifier(wallID, "id", getPackageName()));
+        center.setImageResource(R.drawable.ai_pawn);
+
+        ImageView path2 = (ImageView) findViewById(getResources().getIdentifier(path2ID, "id", getPackageName()));
+        path2.setImageResource(R.drawable.h_wall);
+    }
+
+    public boolean setVerWallImage(int wallID, int path1ID, int path2ID, Point aPossibleWallPosition) {
 
         if (user.isValidVerticalWallMove(aPossibleWallPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList)) {
 
@@ -169,7 +219,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
             ImageView center = (ImageView) findViewById(wallID);
             center.setImageResource(R.drawable.ai_pawn);
 
-
             ImageView path2 = (ImageView) findViewById(path2ID);
             path2.setImageResource(R.drawable.v_wall);
 
@@ -179,6 +228,22 @@ public class GameActivity extends Activity implements View.OnClickListener {
             return false;
         }
 
+    }
+
+    public void setAIVerWallImage(Point aNewWallPosition) {
+
+        String path1ID = "path" + aNewWallPosition.x + aNewWallPosition.y + "v";
+        String wallID = "wall" + aNewWallPosition.x + aNewWallPosition.y;
+        String path2ID = "path" + aNewWallPosition.x + (aNewWallPosition.y + 1) + "v";
+
+        ImageView path1 = (ImageView) findViewById(getResources().getIdentifier(path1ID, "id", getPackageName()));
+        path1.setImageResource(R.drawable.v_wall);
+
+        ImageView center = (ImageView) findViewById(getResources().getIdentifier(wallID, "id", getPackageName()));
+        center.setImageResource(R.drawable.ai_pawn);
+
+        ImageView path2 = (ImageView) findViewById(getResources().getIdentifier(path2ID, "id", getPackageName()));
+        path2.setImageResource(R.drawable.v_wall);
     }
 
     /**
@@ -944,7 +1009,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
     /**
      *
      */
-
     public void hWallClick(View view) {
         boolean moveMade = false;
         //while loop allows the user to keep making selections until a valid move is made.

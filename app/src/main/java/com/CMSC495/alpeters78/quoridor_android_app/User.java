@@ -79,9 +79,9 @@ public class User
         else if(userPosition.x != 1 && aPossibleNewPawnPosition.equals(userPosition.x - 1, userPosition.y))
         {
             //The new position is a left move, see if a wall is blocking its path
-            if(aHBlockedPathList.contains(new Point(userPosition.x - 1, userPosition.y)))
+            if(aVBlockedPathList.contains(new Point(userPosition.x - 1, userPosition.y)))
             {
-                //The position was a backward move, but the path is blocked
+                //The position was a left move, but the path is blocked
                 return false;
             }
             return true;
@@ -89,9 +89,9 @@ public class User
         else if(userPosition.x != 9 && aPossibleNewPawnPosition.equals(userPosition.x + 1, userPosition.y))
         {
             //The new position is a right move, see if a wall is blocking its path
-            if(aHBlockedPathList.contains(new Point(userPosition)))
+            if(aVBlockedPathList.contains(new Point(userPosition)))
             {
-                //The position was a backward move, but the path is blocked
+                //The position was a right move, but the path is blocked
                 return false;
             }
             return true;
@@ -164,7 +164,7 @@ public class User
         else if(userPosition.x == anAIPawnPosition.x + 1 && userPosition.y == anAIPawnPosition.y)
         {
             //The AI's pawn is directly to the left of the user's pawn, now check if there is a wall or edge to the left of the AI's pawn
-            if(aHBlockedPathList.contains(new Point(userPosition.x - 2, userPosition.y)) || anAIPawnPosition.x == 1)
+            if(aVBlockedPathList.contains(new Point(userPosition.x - 2, userPosition.y)) || anAIPawnPosition.x == 1)
             {
                 //The AI's pawn has a wall or edge to the left of it, so the user should be allowed to jump up or down
                 if(aPossibleNewPawnPosition.equals(userPosition.x - 1, userPosition.y - 1) || aPossibleNewPawnPosition.equals(userPosition.x - 1, userPosition.y + 1))
@@ -196,7 +196,7 @@ public class User
         else if(userPosition.x == anAIPawnPosition.x - 1 && userPosition.y == anAIPawnPosition.y)
         {
             //The AI's pawn is directly to the right of the user's pawn, now check if there is a wall or edge to the right of the AI's pawn
-            if(aHBlockedPathList.contains(new Point(userPosition.x + 1, userPosition.y)) || anAIPawnPosition.x == 9)
+            if(aVBlockedPathList.contains(new Point(userPosition.x + 1, userPosition.y)) || anAIPawnPosition.x == 9)
             {
                 //The AI's pawn has a wall or edge to the right of it, so the user should be allowed to jump up or down
                 if(aPossibleNewPawnPosition.equals(userPosition.x + 1, userPosition.y - 1) || aPossibleNewPawnPosition.equals(userPosition.x + 1, userPosition.y + 1))

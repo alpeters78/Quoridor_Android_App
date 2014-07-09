@@ -30,14 +30,14 @@ public class AI
      *              Point - the users current position.
      * @param aWallArray
      *              ArrayList<Wall> - an ArrayList of walls on the game board.
-     * @param aBlockedPathList
+     * @param aHorizontalBlockedPathList
      *              ArrayList<Point> - an ArrayList of blocked paths on the game board.
      * @return boolean
      *              True if a wall was placed, false otherwise.
      */
-    private boolean blockUserPathWithWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aBlockedPathList)
+    public Wall blockUserPathWithWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
-        Wall wall;
+        Wall wall = null;
         Iterator<Wall> wallIterator;
         Iterator<Point> blockedPathIterator1;
         Iterator<Point> blockedPathIterator2;
@@ -51,13 +51,18 @@ public class AI
         boolean isLeftPathBlocked = false; //Assume the left path is not blocked until is is checked later on.
         boolean isRightPathBlocked = false; //Assume the left path is not blocked until is is checked later on.
 
-        //First check to see if the user's path forward is already blocked.
-        blockedPathIterator1 = aBlockedPathList.iterator();
+        //First check to see if the AI has any walls left
+        if(numAIWallsRemaining == 0)
+        {
+            return wall; //Return the null wall.
+        }
+        //Next check to see if the user's path forward is already blocked.
+        blockedPathIterator1 = aHorizontalBlockedPathList.iterator();
         while(blockedPathIterator1.hasNext())
         {
             Point tempPoint = blockedPathIterator1.next();
             if(tempPoint.x == aUserPosition.x && tempPoint.y == aUserPosition.y - 1)
-                return false; //The user's path forward is already being blocked, so return false.
+                return wall; //The user's path forward is already being blocked, so return null.
         }
 
         //Now that we know the user's path forward is not being blocked, check to see if the left and right center wall positions are open.
@@ -78,7 +83,7 @@ public class AI
         //Now we know the user's path forward is not being blocked, and we know if the left and right center positions are open.
         if(aUserPosition.x != 1) //False if the user is on the left side of the board.
         {
-            blockedPathIterator2 = aBlockedPathList.iterator();
+            blockedPathIterator2 = aHorizontalBlockedPathList.iterator();
             while(blockedPathIterator2.hasNext())
             {
                 Point tempPoint = blockedPathIterator2.next();
@@ -96,7 +101,7 @@ public class AI
             //The left path is blocked, so try the right path.
             if(aUserPosition.x != 9) //False if the user is on the right side of the board.
             {
-                blockedPathIterator3 = aBlockedPathList.iterator();
+                blockedPathIterator3 = aHorizontalBlockedPathList.iterator();
                 while(blockedPathIterator3.hasNext())
                 {
                     Point tempPoint = blockedPathIterator3.next();
@@ -111,7 +116,7 @@ public class AI
 
             if(isRightPathBlocked)
             {
-                return false; //We now know that both the left path is blocked and the right path is blocked, so a wall will not fit there.
+                return wall; //We now know that both the left path is blocked and the right path is blocked, so a wall will not fit there. Return a null wall.
             }
             else
             {
@@ -122,13 +127,14 @@ public class AI
                 yRight = aUserPosition.y - 1;
                 Point tempLeftPoint = new Point(xLeft, yLeft);
                 Point tempRightPoint = new Point(xRight, yRight);
-                aBlockedPathList.add(tempLeftPoint);
-                aBlockedPathList.add(tempRightPoint);
+                aHorizontalBlockedPathList.add(tempLeftPoint);
+                aHorizontalBlockedPathList.add(tempRightPoint);
 
                 xCenter = aUserPosition.x;
                 yCenter = aUserPosition.y - 1;
-                Wall tempWall = new Wall(false, xCenter, yCenter);
-                aWallArray.add(tempWall);
+                wall = new Wall(false, xCenter, yCenter);
+                aWallArray.add(wall);
+                numAIWallsRemaining--;
             }
         }
         else
@@ -140,16 +146,17 @@ public class AI
             yRight = aUserPosition.y - 1;
             Point tempLeftPoint = new Point(xLeft, yLeft);
             Point tempRightPoint = new Point(xRight, yRight);
-            aBlockedPathList.add(tempLeftPoint);
-            aBlockedPathList.add(tempRightPoint);
+            aHorizontalBlockedPathList.add(tempLeftPoint);
+            aHorizontalBlockedPathList.add(tempRightPoint);
 
             xCenter = aUserPosition.x - 1;
             yCenter = aUserPosition.y - 1;
-            Wall tempWall = new Wall(false, xCenter, yCenter);
-            aWallArray.add(tempWall);
+            wall = new Wall(false, xCenter, yCenter);
+            aWallArray.add(wall);
+            numAIWallsRemaining--;
         }
 
-        return true;
+        return wall;
     }
 
     /**
@@ -158,12 +165,14 @@ public class AI
      * @return boolean
      *              True if a wall was placed, false otherwise.
      */
-    private boolean placeRandomWallNearUser()
+    public boolean placeRandomWallNearUser()
     {
         Wall wall;
         Iterator<Wall> iterator;
         int x;
         int y;
+
+        //TODO Complete this method.
 
         return false;
     }
@@ -174,9 +183,9 @@ public class AI
      * @return boolean
      *              True if a wall was placed, false otherwise.
      */
-    private boolean placeRandomWallNextToAnotherWall()
+    public boolean placeRandomWallNextToAnotherWall()
     {
-
+        //TODO Complete this method.
 
         return false;
     }
@@ -188,9 +197,9 @@ public class AI
      * @return boolean
      *              True if the AI's pawn was moved, false otherwise.
      */
-    private boolean makeGoodAIPawnMove()
+    public boolean makeGoodAIPawnMove()
     {
-
+        //TODO Complete this method.
 
         return false;
     }
@@ -205,7 +214,7 @@ public class AI
      * @return boolean
      *              True if the AI's pawn was moved, false otherwise.
      */
-    private boolean makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aBlockedPathList)
+    public boolean makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aBlockedPathList)
     {
         //First, check to see if the users pawn can be jumped.
         if(isPawnJumpPossible(aUserPosition, aBlockedPathList))
