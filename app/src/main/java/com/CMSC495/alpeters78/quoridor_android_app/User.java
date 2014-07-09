@@ -1,7 +1,8 @@
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.graphics.Point;
-
+import android.widget.ImageView;
+import com.CMSC495.alpeters78.quoridor_android_app.GameActivity;
 import java.util.ArrayList;
 
 /**
@@ -21,19 +22,6 @@ public class User
         oldUserPosition = new Point();
         numUserWallsRemaining = 10; //The user starts with 10 walls
 
-    }
-
-    public boolean undoLastMove()
-    {
-        if(oldUserPosition == null)
-        {
-            //Last move was a wall placement
-            //TODO Remove the wall that was placed - CR
-        }
-        else
-            userPosition = oldUserPosition;
-
-        return true;
     }
 
     /**
@@ -229,7 +217,7 @@ public class User
         return false;
     }
 
-    public boolean isValidHorizontalWallMove(Point aPossibleNewWallPosition, Point anAIPawnPosition, ArrayList<Point> aHBlockedPathList, ArrayList<Point> aVBlockedPathList)
+    public boolean isValidHorizontalWallMove(Point aPossibleNewWallPosition, Point anAIPawnPosition, ArrayList<Point> aHBlockedPathList, ArrayList<Point> aVBlockedPathList, ArrayList<Point> placedWalls)
     {
         Point newBlockedPath1 = new Point(aPossibleNewWallPosition);
         Point newBlockedPath2 = new Point(aPossibleNewWallPosition.x + 1, aPossibleNewWallPosition.y);
@@ -240,12 +228,16 @@ public class User
         }
         else
         {
-            //TODO Figure out the rest of the logic
-            return true;
+            if(aHBlockedPathList.contains(newBlockedPath1) || aHBlockedPathList.contains(newBlockedPath2) || placedWalls.contains(aPossibleNewWallPosition)){
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     }
 
-    public boolean isValidVerticalWallMove(Point aPossibleNewWallPosition, Point anAIPawnPosition, ArrayList<Point> aHBlockedPathList, ArrayList<Point> aVBlockedPathList)
+    public boolean isValidVerticalWallMove(Point aPossibleNewWallPosition, Point anAIPawnPosition, ArrayList<Point> aHBlockedPathList, ArrayList<Point> aVBlockedPathList, ArrayList<Point> placedWalls)
     {
         Point newBlockedPath1 = new Point(aPossibleNewWallPosition);
         Point newBlockedPath2 = new Point(aPossibleNewWallPosition.x, aPossibleNewWallPosition.y + 1);
@@ -256,8 +248,12 @@ public class User
         }
         else
         {
-            //TODO Figure out the rest of the logic
-            return true;
+            if(aVBlockedPathList.contains(newBlockedPath1) || aVBlockedPathList.contains(newBlockedPath2) || placedWalls.contains(aPossibleNewWallPosition)){
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     }
 

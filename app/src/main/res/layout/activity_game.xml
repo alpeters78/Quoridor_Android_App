@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff60090e"
+
     android:orientation="vertical">
 
     <TextView
@@ -17,8 +17,8 @@
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tableLayout1"
-        android:layout_width="305dp"
-        android:layout_height="305dp"
+        android:layout_width="321dp"
+        android:layout_height="321dp"
         android:layout_gravity="center_horizontal|bottom">
 
 
@@ -37,10 +37,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path11v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -50,10 +50,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path21v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -63,10 +63,10 @@
                 android:clickable="true"  />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path31v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -76,10 +76,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path41v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -89,10 +89,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path51v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -102,10 +102,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path61v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -115,10 +115,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path71v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -128,10 +128,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path81v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -144,111 +144,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow1"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path11h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall11"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path21h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall21"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path31h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall31"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path41h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall41"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path51h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall51"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path61h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall61"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path71h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall71"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path81h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall81"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path91h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -267,10 +267,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path12v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -280,10 +280,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path22v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -293,10 +293,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path32v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -306,10 +306,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path42v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -319,10 +319,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path52v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -332,10 +332,10 @@
                 android:clickable="true"/>
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path62v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -345,10 +345,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path72v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -358,10 +358,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path82v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -375,111 +375,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow2"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path12h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall12"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path22h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall22"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path32h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall32"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path42h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall42"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path52h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall52"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path62h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall62"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path72h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall72"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path82h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall82"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path92h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -498,10 +498,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path13v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -511,10 +511,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path23v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -524,10 +524,10 @@
                 android:clickable="true"/>
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path33v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -537,10 +537,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path43v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -550,10 +550,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path53v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -563,10 +563,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path63v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -576,10 +576,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path73v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -589,10 +589,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path83v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -606,111 +606,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow3"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path13h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall13"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path23h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall23"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path33h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall33"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path43h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall43"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path53h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall53"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path63h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall63"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path73h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall73"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path83h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall83"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path93h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -729,10 +729,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path14v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -742,10 +742,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path24v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -755,10 +755,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path34v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -768,10 +768,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path44v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -781,10 +781,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path54v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -794,10 +794,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path64v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -807,10 +807,10 @@
                 android:clickable="true"/>
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path74v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -820,10 +820,10 @@
                 android:clickable="true" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path84v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -837,111 +837,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow4"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path14h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall14"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path24h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall24"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path34h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall34"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path44h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall44"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path54h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall54"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path64h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall64"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path74h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall74"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path84h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall84"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path94h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -959,10 +959,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path15v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -971,10 +971,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path25v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -983,10 +983,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path35v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -995,10 +995,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path45v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1007,10 +1007,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path55v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1019,10 +1019,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path65v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1031,10 +1031,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path75v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1043,10 +1043,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path85v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1059,111 +1059,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow5"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path15h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall15"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path25h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall25"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path35h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall35"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path45h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall45"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path55h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall55"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path65h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall65"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path75h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall75"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path85h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall85"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path95h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -1181,10 +1181,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path16v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1193,10 +1193,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path26v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1205,10 +1205,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path36v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1217,10 +1217,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path46v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1229,10 +1229,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path56v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1241,10 +1241,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path66v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1253,10 +1253,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path76v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1265,10 +1265,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path86v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1281,111 +1281,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow6"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path16h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall16"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path26h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall26"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path36h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall36"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path46h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall46"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path56h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall56"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path66h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall66"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path76h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall76"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path86h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall86"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path96h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -1403,10 +1403,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path17v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1415,10 +1415,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path27v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1427,10 +1427,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path37v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1439,10 +1439,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path47v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1451,10 +1451,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path57v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1463,10 +1463,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path67v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1475,10 +1475,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path77v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1487,10 +1487,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path87v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1503,111 +1503,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow7"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path17h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall17"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path27h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall27"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path37h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall37"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path47h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall47"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path57h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall57"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path67h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall67"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path77h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall77"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path87h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall87"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path97h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -1625,10 +1625,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path18v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1637,10 +1637,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path28v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1649,10 +1649,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path38v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1661,10 +1661,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path48v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1673,10 +1673,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path58v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1685,10 +1685,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path68v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1697,10 +1697,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path78v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1709,10 +1709,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path88v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1725,111 +1725,111 @@
 
         <TableRow
             android:id="@+id/tableWallRow8"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:padding="0dp" >
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path18h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall18"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path28h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall28"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path38h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall38"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path48h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall48"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path58h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall58"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path68h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall68"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path78h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall78"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path88h"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:id="@+id/wall88"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:id="@+id/path98h"
-                android:background="#ff60090e" />
+                />
 
         </TableRow>
 
@@ -1847,10 +1847,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path19v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1859,10 +1859,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path29v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1871,10 +1871,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path39v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1883,10 +1883,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path49v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1895,10 +1895,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path59v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1907,10 +1907,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path69v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1919,10 +1919,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path79v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1931,10 +1931,10 @@
                 android:background="#ff606060" />
 
             <ImageView
-                android:layout_width="10dp"
+                android:layout_width="12dp"
                 android:layout_height="25dp"
                 android:id="@+id/path89v"
-                android:background="#ff60090e" />
+                />
 
             <ImageView
                 android:layout_width="25dp"
@@ -1974,53 +1974,75 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="10"
+                android:id="@+id/userWalls"
+                android:textSize="15sp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:textColor="#ff000000"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/ai_walls"
                 android:id="@+id/textView7"
                 android:textSize="15sp"
                 android:paddingLeft="5dp"
                 android:textColor="#ff000000" />
-        </TableRow>
-    </TableLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/next"
-                android:id="@+id/textView8"
+                android:text="10"
+                android:id="@+id/aiWalls"
                 android:textSize="15sp"
                 android:paddingLeft="5dp"
+                android:paddingTop="5dp"
                 android:textColor="#ff000000"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"/>
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:id="@+id/textView8"
+        android:textSize="15sp"
+        android:paddingLeft="5dp"
+        android:textColor="#ff000000"
+        android:textStyle="bold|italic" />
 
 
 
-            <RadioGroup android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:id="@+id/radioGroup">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pawn"
-                    android:id="@+id/radioPawn"
-                    android:checked="true"
-                    android:onClick="radioButtonClick" />
+    <RadioGroup android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:id="@+id/radioGroup">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pawn"
+            android:id="@+id/radioPawn"
+            android:checked="true"
+            android:onClick="radioButtonClick" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/v_wall"
-                    android:id="@+id/radioVwall"
-                    android:onClick="radioButtonClick" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/v_wall"
+            android:id="@+id/radioVwall"
+            android:onClick="radioButtonClick" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/h_wall"
-                    android:id="@+id/radioHwall"
-                    android:onClick="radioButtonClick" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/h_wall"
+            android:id="@+id/radioHwall"
+            android:onClick="radioButtonClick" />
 
-            </RadioGroup>
+    </RadioGroup>
 
     <TableLayout
         android:layout_width="match_parent"
