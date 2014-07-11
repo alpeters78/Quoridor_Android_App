@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.widget.ImageView;
 import com.CMSC495.alpeters78.quoridor_android_app.GameActivity;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A User object holds the current User's position and the number of walls remaining.
@@ -38,6 +39,17 @@ public class User
      */
     public boolean isValidPawnMove(Point aPossibleNewPawnPosition, Point anAIPawnPosition, ArrayList<Point> aHBlockedPathList, ArrayList<Point> aVBlockedPathList)
     {
+       //TEST BLOCK
+        System.out.println("Previous move valid positions");
+        System.out.println("runs before move is made");
+        ArrayList<Point> validPositions = getUserValidNextPositions(anAIPawnPosition, userPosition, aHBlockedPathList, aVBlockedPathList);
+        Iterator<Point> validPositionsIterator = validPositions.iterator();
+        while(validPositionsIterator.hasNext()){
+
+            System.out.println(validPositionsIterator.next());
+        }
+        //END TEST BLOCK
+
         //First check to see if the new position is on top of the AI's pawn
         if(aPossibleNewPawnPosition.equals(anAIPawnPosition))
         {
@@ -221,7 +233,44 @@ public class User
     {
         Point newBlockedPath1 = new Point(aPossibleNewWallPosition);
         Point newBlockedPath2 = new Point(aPossibleNewWallPosition.x + 1, aPossibleNewWallPosition.y);
-        if(isAIPathCompletelyBlockedByNewHorizontalWall(newBlockedPath1, newBlockedPath2))
+        ArrayList<Point> newaHBlockedPathList = new ArrayList<Point>();
+
+        //add new paths
+
+        newaHBlockedPathList.add(newBlockedPath1);
+        newaHBlockedPathList.add(newBlockedPath2);
+        Iterator<Point> pathListIterator = aHBlockedPathList.iterator();
+        while(pathListIterator.hasNext()){
+            newaHBlockedPathList.add(pathListIterator.next());
+        }
+        boolean test1 = isWinningPathBlocked(userPosition, anAIPawnPosition, newaHBlockedPathList, aVBlockedPathList, 9);//test AI path
+        boolean test2 = isWinningPathBlocked(anAIPawnPosition, userPosition, newaHBlockedPathList, aVBlockedPathList, 1);//test User path
+
+        //TEST BLOCK
+        System.out.println("Is AI win blocked? " + test1);
+        System.out.println("Is User win blocked? " + test2);
+        System.out.println(newBlockedPath1);
+        System.out.println(newBlockedPath2);
+        System.out.println("Ai valid next position list");
+        ArrayList<Point> validPositions = getUserValidNextPositions(userPosition, anAIPawnPosition, aHBlockedPathList, aVBlockedPathList);
+        Iterator<Point> validPositionsIterator = validPositions.iterator();
+        while(validPositionsIterator.hasNext()){
+            System.out.println(validPositionsIterator.next());
+        }
+        System.out.println("User valid next position list");
+        ArrayList<Point> validUserPositions = getUserValidNextPositions(anAIPawnPosition, userPosition, aHBlockedPathList, aVBlockedPathList);
+        Iterator<Point> validUserPositionsIterator = validUserPositions.iterator();
+        while(validUserPositionsIterator.hasNext()){
+            System.out.println(validUserPositionsIterator.next());
+        }
+        System.out.println("path1 path2  wallCenter");
+        boolean path1 = aHBlockedPathList.contains(newBlockedPath1);
+        boolean path2 = aHBlockedPathList.contains(newBlockedPath2);
+        boolean wallCenter = placedWalls.contains(aPossibleNewWallPosition);
+        System.out.println(path1 + " " + path2 + " " + wallCenter);
+        //END TEST BLOCK
+
+        if(test1 || test2)
         {
             //The placement of the new horizontal wall completely blocks the AI's path to win; therefore, it is an invalid move
             return false;
@@ -241,13 +290,52 @@ public class User
     {
         Point newBlockedPath1 = new Point(aPossibleNewWallPosition);
         Point newBlockedPath2 = new Point(aPossibleNewWallPosition.x, aPossibleNewWallPosition.y + 1);
-        if(isAIPathCompletelyBlockedByNewVerticalWall(newBlockedPath1, newBlockedPath2))
+        ArrayList<Point> newaVBlockedPathList = new ArrayList<Point>();
+
+        //add new paths
+        newaVBlockedPathList.add(newBlockedPath1);
+        newaVBlockedPathList.add(newBlockedPath2);
+
+        Iterator<Point> pathListIterator = aVBlockedPathList.iterator();
+        while(pathListIterator.hasNext()){
+            newaVBlockedPathList.add(pathListIterator.next());
+        }
+
+        boolean test1 = isWinningPathBlocked(userPosition, anAIPawnPosition, aHBlockedPathList, newaVBlockedPathList, 9);//test AI path
+        boolean test2 = isWinningPathBlocked(anAIPawnPosition, userPosition, aHBlockedPathList, newaVBlockedPathList, 1);//test User path
+
+        //TEST BLOCK
+        System.out.println("Is AI win blocked? " + test1);
+        System.out.println("Is User win blocked? " + test2);
+        System.out.println(newBlockedPath1);
+        System.out.println(newBlockedPath2);
+        System.out.println("Ai valid next position list");
+        ArrayList<Point> validPositions = getUserValidNextPositions(userPosition, anAIPawnPosition, aHBlockedPathList, aVBlockedPathList);
+        Iterator<Point> validPositionsIterator = validPositions.iterator();
+        while(validPositionsIterator.hasNext()){
+            System.out.println(validPositionsIterator.next());
+        }
+        System.out.println("User valid next position list");
+        ArrayList<Point> validUserPositions = getUserValidNextPositions(anAIPawnPosition, userPosition, aHBlockedPathList, aVBlockedPathList);
+        Iterator<Point> validUserPositionsIterator = validUserPositions.iterator();
+        while(validUserPositionsIterator.hasNext()){
+            System.out.println(validUserPositionsIterator.next());
+        }
+        System.out.println("path1 path2  wallCenter");
+        boolean path1 = aVBlockedPathList.contains(newBlockedPath1);
+        boolean path2 = aVBlockedPathList.contains(newBlockedPath2);
+        boolean wallCenter = placedWalls.contains(aPossibleNewWallPosition);
+        System.out.println(path1 + " " + path2 + " " + wallCenter);
+        //END TEST BLOCK
+
+        if(test1 || test2)
         {
             //The placement of the new vertical wall completely blocks the AI's path to win; therefore, it is an invalid move
             return false;
         }
         else
         {
+            //check path's and center against lists
             if(aVBlockedPathList.contains(newBlockedPath1) || aVBlockedPathList.contains(newBlockedPath2) || placedWalls.contains(aPossibleNewWallPosition)){
                 return false;
             }
@@ -271,15 +359,192 @@ public class User
         userPosition.set(aValidNewPosition.x, aValidNewPosition.y);
     }
 
-    private boolean isAIPathCompletelyBlockedByNewHorizontalWall(Point aNewBlockedPath1, Point aNewBlockedPath2)
-    {
-        //TODO Figure out this method
-        return false;
+    public boolean isWinningPathBlocked(Point aiCurrentPosition, Point userCurrentPosition, ArrayList<Point> hBlockedPathList, ArrayList<Point> vBlockedPathList, int winningNumber){
+        //works for user and Ai by passing winning y-coordinate.
+        ArrayList<Point> tempPositionsList;
+        ArrayList<Point> nextValidPosition = getUserValidNextPositions(aiCurrentPosition, userCurrentPosition, hBlockedPathList, vBlockedPathList);
+        ArrayList<ArrayList> arraysOfPossibleMoves = new ArrayList<ArrayList>();
+        ArrayList<ArrayList> newArraysOfPossibleMoves = new ArrayList<ArrayList>();
+        ArrayList<ArrayList> usedArrays = new ArrayList<ArrayList>();
+        ArrayList<Point> usedPoints = new ArrayList<Point>();
+        Point tempPosition;
+
+        usedPoints.add(userCurrentPosition);
+        arraysOfPossibleMoves.add(nextValidPosition); //get first array based on input position
+        for(int k = 0; k < 50; k++) {  //50 - estimated max number of moves needed to win.
+            for (int i = arraysOfPossibleMoves.size() - 1; i >= 0; i--) { //check each ArrayList in the ArrayList<ArrayList>
+                tempPositionsList = arraysOfPossibleMoves.get(i);
+                if (!usedArrays.contains(tempPositionsList)) {  //Don't check arrays already checked
+                    for (int j = tempPositionsList.size() - 1; j >= 0; j--) { //check each point in the ArrayList
+                        tempPosition = tempPositionsList.get(j);
+                        if (!usedPoints.contains(tempPosition)) { //Don't check points already checked
+                            newArraysOfPossibleMoves.add(getUserValidNextPositions(aiCurrentPosition, tempPosition, hBlockedPathList, vBlockedPathList)); //Get all valid positions from checked point
+                            usedPoints.add(tempPosition); //add to list of checked points
+                            if (tempPosition.y == winningNumber) { //test for win
+                                return false;
+                            }
+                            usedArrays.add(tempPositionsList); //add to list of checked ArrayLists
+                        }
+
+                    }
+                }
+            }
+            arraysOfPossibleMoves = newArraysOfPossibleMoves; //Update ArrayList of ArrayLists to check
+        }
+        return true;
     }
 
-    private boolean isAIPathCompletelyBlockedByNewVerticalWall(Point aNewBlockedPath1, Point aNewBlockedPath2)
-    {
-        //TODO Figure out this method
-        return false;
+    public ArrayList<Point> getUserValidNextPositions(Point aiPosition, Point userPosition, ArrayList<Point> hBlockedPathList, ArrayList<Point> vBlockedPathList){
+        //create needed lists
+        ArrayList<Point> nextValidPositions = new ArrayList<Point>();
+        ArrayList<Point> allPossibleMovePositions = new ArrayList<Point>();
+        ArrayList<Point> allPossibleJumpPositions = new ArrayList<Point>();
+        ArrayList<Point> allPossibleMovePaths = new ArrayList<Point>();
+        ArrayList<Point> allPossibleJumpPaths = new ArrayList<Point>();
+
+        // Define all possible moves and paths
+        Point moveForward = new Point(userPosition.x, userPosition.y-1);
+        Point pathForward = new Point(userPosition.x, userPosition.y-1); //Horizontal path
+        Point moveBack = new Point(userPosition.x,userPosition.y+1);
+        Point pathBack = new Point(userPosition.x,userPosition.y); //Horizontal path
+        Point moveLeft = new Point(userPosition.x-1,userPosition.y);
+        Point pathLeft = new Point(userPosition.x-1,userPosition.y); //Vertical path
+        Point moveRight = new Point(userPosition.x+1,userPosition.y);
+        Point pathRight = new Point(userPosition.x,userPosition.y); //Vertical path
+
+        Point jumpForward = new Point(userPosition.x,userPosition.y-2);
+        Point pathJumpForward = new Point(userPosition.x,userPosition.y-2); //Horizontal path
+        Point jumpForwardRight = new Point(userPosition.x+1,userPosition.y-1);
+        Point jumpForwardLeft = new Point(userPosition.x-1,userPosition.y-1);
+
+        Point jumpBack = new Point(userPosition.x,userPosition.y+2);
+        Point pathJumpBack = new Point(userPosition.x,userPosition.y+1); //Horizontal path
+        Point jumpBackRight = new Point(userPosition.x+1,userPosition.y+1);
+        Point jumpBackLeft = new Point(userPosition.x-1,userPosition.y+1);
+
+        Point jumpLeft = new Point(userPosition.x-2,userPosition.y);
+        Point pathJumpLeft = new Point(userPosition.x-2,userPosition.y); //Vertical path
+        Point jumpLeftForward = new Point(userPosition.x-1,userPosition.y-1);
+        Point jumpLeftBack = new Point(userPosition.x-1,userPosition.y+1);
+
+        Point jumpRight = new Point(userPosition.x+2,userPosition.y);
+        Point pathJumpRight = new Point(userPosition.x+1,userPosition.y); //Vertical path
+        Point jumpRightForward = new Point(userPosition.x+1,userPosition.y-1);
+        Point jumpRightBack = new Point(userPosition.x+1,userPosition.y+1);
+
+        //add all moves to an ArrayList
+        allPossibleMovePositions.add(moveForward); //0
+        allPossibleMovePositions.add(moveBack);    //1
+        allPossibleMovePositions.add(moveLeft);    //2
+        allPossibleMovePositions.add(moveRight);   //3
+
+        //add all move paths to an ArrayList
+        allPossibleMovePaths.add(pathForward);     //0
+        allPossibleMovePaths.add(pathBack);        //1
+        allPossibleMovePaths.add(pathLeft);        //2
+        allPossibleMovePaths.add(pathRight);       //3
+
+        //add all jumps to an ArrayList
+        allPossibleJumpPositions.add(jumpForward); //0
+        allPossibleJumpPositions.add(jumpBack);    //1
+        allPossibleJumpPositions.add(jumpLeft);    //2
+        allPossibleJumpPositions.add(jumpRight);   //3
+
+        //add all jump paths to an ArrayList
+        allPossibleJumpPaths.add(pathJumpForward);  //0
+        allPossibleJumpPaths.add(pathJumpBack);     //1
+        allPossibleJumpPaths.add(pathJumpLeft);     //2
+        allPossibleJumpPaths.add(pathJumpRight);    //3
+
+        //test all possible moves
+        //is the possible move on the game board
+        for(int i=0; i < 4; i++){
+            Point testMove = allPossibleMovePositions.get(i);
+            //is the possible move on the game board
+            if((testMove.x > 0) && (testMove.x < 10) && (testMove.y > 0) && (testMove.y < 10)){
+                Point testPath = allPossibleMovePaths.get(i);
+                // test if move paths are on blocked path list for specific orientation
+                // before test for jump if there is a wall between the user and AI jump is not allowed.
+                if(i < 2){  //0,1 - horizontal  2,3 - vertical
+                    if(!hBlockedPathList.contains(testPath)){  //check horizontal paths
+                        if(!(aiPosition.x == testMove.x && aiPosition.y == testMove.y)){            //check for jump
+                            nextValidPositions.add(testMove);  //Move is valid, add to list.
+                        }
+                        else{  //jump is allowed
+                            switch (i){ //get jump direction
+                                case 0:
+                                    if(!hBlockedPathList.contains(testPath) && (jumpForward.x > 0) && (jumpForward.x < 10) && (jumpForward.y > 0) && (jumpForward.y < 10)){  //check for blocked path
+                                        nextValidPositions.add(jumpForward);
+                                    }
+                                    else{ //test diagonal moves are on the board
+                                        if((jumpForwardLeft.x > 0) && (jumpForwardLeft.x < 10) && (jumpForwardLeft.y > 0) && (jumpForwardLeft.y < 10)){
+                                            nextValidPositions.add(jumpForwardLeft);
+                                        }
+                                        if((jumpForwardRight.x > 0) && (jumpForwardRight.x < 10) && (jumpForwardRight.y > 0) && (jumpForwardRight.y < 10)){
+                                            nextValidPositions.add(jumpForwardRight);
+                                        }
+                                    }
+                                    break;
+                                case 1:
+                                    if(!hBlockedPathList.contains(testPath) && (jumpBack.x > 0) && (jumpBack.x < 10) && (jumpBack.y > 0) && (jumpBack.y < 10)){  //check for blocked path
+                                        nextValidPositions.add(jumpBack);
+                                    }
+                                    else{ //test diagonal moves are on the board
+                                        if((jumpBackLeft.x > 0) && (jumpBackLeft.x < 10) && (jumpBackLeft.x > 0) && (jumpBackLeft.x < 10)){
+                                            nextValidPositions.add(jumpBackLeft);
+                                        }
+                                        if((jumpBackRight.x > 0) && (jumpBackRight.x < 10) && (jumpBackRight.x > 0) && (jumpBackRight.x < 10)){
+                                            nextValidPositions.add(jumpBackRight);
+                                        }
+                                    }
+                                    break;
+
+                            }
+                        }
+                    }
+                }
+                else{
+                    if(!vBlockedPathList.contains(testPath)){  //check vertical paths
+                        if(aiPosition != testMove){            //check for jump
+                            nextValidPositions.add(testMove);  //Move is valid, add to list.
+                        }
+                        else{  //jump is allowed
+                            switch (allPossibleJumpPositions.indexOf(testMove)){ //get jump direction
+                                case 2:
+                                    if(!hBlockedPathList.contains(testPath) && (jumpLeft.x > 0) && (jumpLeft.x < 10) && (jumpLeft.y > 0) && (jumpLeft.y < 10)){  //check for blocked path
+                                        nextValidPositions.add(jumpLeft);
+                                    }
+                                    else{ //test diagonal moves are on the board
+                                        if((jumpLeftForward.x > 0) && (jumpLeftForward.x < 10) && (jumpLeftForward.x > 0) && (jumpLeftForward.x < 10)){
+                                            nextValidPositions.add(jumpLeftForward);
+                                        }
+                                        if((jumpLeftBack.x > 0) && (jumpLeftBack.x < 10) && (jumpLeftBack.x > 0) && (jumpLeftBack.x < 10)){
+                                            nextValidPositions.add(jumpRightForward);
+                                        }
+                                    }
+                                    break;
+                                case 3:
+                                    if(!hBlockedPathList.contains(testPath) && (jumpRight.x > 0) && (jumpRight.x < 10) && (jumpRight.y > 0) && (jumpRight.y < 10)){  //check for blocked path
+                                        nextValidPositions.add(jumpRight);
+                                    }
+                                    else{ //test diagonal moves are on the board
+                                        if((jumpRightForward.x > 0) && (jumpRightForward.x < 10) && (jumpRightForward.x > 0) && (jumpRightForward.x < 10)){
+                                            nextValidPositions.add(jumpLeftBack);
+                                        }
+                                        if((jumpRightBack.x > 0) && (jumpRightBack.x < 10) && (jumpRightBack.x > 0) && (jumpRightBack.x < 10)){
+                                            nextValidPositions.add(jumpRightBack);
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return nextValidPositions;
     }
+
+
 }

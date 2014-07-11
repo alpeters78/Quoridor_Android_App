@@ -3,7 +3,6 @@ package com.CMSC495.alpeters78.quoridor_android_app;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+
 
 public class GameActivity extends Activity implements View.OnClickListener {
 
@@ -101,7 +101,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         //EVERYTHING IN HERE IS FOR TESTING, FEEL FREE TO CHANGE ANY OF IT AS YOU WANT.  However, this method is where the game "loop" will be.
 
-
         didUserWin = checkForWin(); //Check to see if user won.
         if(didUserWin) {
             //The user won.
@@ -135,12 +134,15 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 setWallCLickListenersOFF();
                 Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
             }
+
         }
 
         /*if(didUserWin || didAIWin) {
             //TODO create popup and stop the game
         }*/
     }
+
+
 
     public boolean setPawnImage(int resID, Point aPossiblePawnPosition){
         if (user.isValidPawnMove(aPossiblePawnPosition, ai.aiPosition , hBlockedPathList, vBlockedPathList)) {
@@ -156,6 +158,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             //new position is set to current
             currentResID = resID;
             user.setNewUserPosition(aPossiblePawnPosition);
+
+
 
             return true;
         } else {
@@ -192,6 +196,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             String wallsRemaining = String.valueOf(user.numUserWallsRemaining);
             TextView text = (TextView) findViewById(R.id.userWalls);
             text.setText(wallsRemaining);
+
+
 
             return true;
         } else {
