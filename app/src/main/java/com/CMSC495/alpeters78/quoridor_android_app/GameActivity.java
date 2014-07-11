@@ -3,6 +3,7 @@ package com.CMSC495.alpeters78.quoridor_android_app;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
-
 
 public class GameActivity extends Activity implements View.OnClickListener {
 
@@ -48,6 +48,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //Initialize listeners
         setPawnClickListeners();
         setWallClickListeners();
+        setWallCLickListenersOFF();
     }
 
     @Override
@@ -92,14 +93,17 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         pawnClick(view);
 
-        if (orientation == true){
+        if (orientation == true) {
             vWallClick(view);
         }
-        else if (orientation == false){
+        else if (orientation == false) {
             hWallClick(view);
         }
 
-        //EVERYTHING IN HERE IS FOR TESTING, FEEL FREE TO CHANGE ANY OF IT AS YOU WANT.  However, this method is where the game "loop" will be.
+        //Turn off all clicks since the user turn is over.
+        setPawnCLickListenersOFF();
+        setWallCLickListenersOFF();
+
 
         didUserWin = checkForWin(); //Check to see if user won.
         if(didUserWin) {
@@ -108,41 +112,42 @@ public class GameActivity extends Activity implements View.OnClickListener {
             setWallCLickListenersOFF();
             Toast.makeText(GameActivity.this, "You Won!!!", Toast.LENGTH_SHORT).show();
         }
-        else
-        {
+        else {
             //The user's turn is over and he/she did not win, now let the AI make a move.
 
             Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
-            if(newWall != null)
-            {
-                if(newWall.getOrientation())
+            if (newWall != null) {
+                if (newWall.getOrientation())
                     setAIVerWallImage(newWall.getPosition());
                 else
                     setAIHorWallImage(newWall.getPosition());
 
-            }
-            else
-            {
+            } else {
                 //A wall was not placed.
-                System.out.println("A Wall is already in that spot");
-                ai.makeGoodAIPawnMove();
+                System.out.println("A Wall is already in that spot or the AI is out of walls.");
+
+                //ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
+                ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
+                setAIPawnImage();
             }
+
             didAIWin = checkForWin();
-            if(didAIWin) {
+            if (didAIWin) {
                 //The AI won.
                 setPawnCLickListenersOFF();  //Turn off all clicks after win.
                 setWallCLickListenersOFF();
                 Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
             }
-
         }
 
         /*if(didUserWin || didAIWin) {
             //TODO create popup and stop the game
         }*/
+
+        //Turn back on the clicks since no one won.
+        setPawnClickListenersON();
+        setWallClickListenersON();
     }
-
-
 
     public boolean setPawnImage(int resID, Point aPossiblePawnPosition){
         if (user.isValidPawnMove(aPossiblePawnPosition, ai.aiPosition , hBlockedPathList, vBlockedPathList)) {
@@ -159,13 +164,31 @@ public class GameActivity extends Activity implements View.OnClickListener {
             currentResID = resID;
             user.setNewUserPosition(aPossiblePawnPosition);
 
-
-
             return true;
         } else {
 
             return false;
         }
+    }
+
+    /**
+     * Updates the AI's pawn position on the game board after an AI pawn move.
+     */
+    public void setAIPawnImage()
+    {
+        String newPawnId = "pawn" + ai.aiPosition.x + ai.aiPosition.y;
+        int newAIResID = getResources().getIdentifier(newPawnId, "id", getPackageName());
+
+        //Set previous position to blank
+        ImageView oldPosition = (ImageView) findViewById(aiResID);
+        oldPosition.setImageResource(R.drawable.blank);
+
+        //Set image of new position to AI pawn
+        ImageView newPosition = (ImageView) findViewById(newAIResID);
+        newPosition.setImageResource(R.drawable.ai_pawn);
+
+        //Set new resource id to current
+        aiResID = newAIResID;
     }
 
     public boolean setHorWallImage(int wallID, int path1ID, int path2ID, Point aPossibleWallPosition) {
@@ -196,8 +219,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
             String wallsRemaining = String.valueOf(user.numUserWallsRemaining);
             TextView text = (TextView) findViewById(R.id.userWalls);
             text.setText(wallsRemaining);
-
-
 
             return true;
         } else {
