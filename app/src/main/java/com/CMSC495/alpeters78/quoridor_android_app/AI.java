@@ -199,11 +199,88 @@ public class AI
      * @return boolean
      *              True if the AI's pawn was moved, false otherwise.
      */
-    public boolean makeGoodAIPawnMove()
+    public boolean makeGoodAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
-        //TODO Complete this method.
+        //TODO I thought I would give a recursion an attempt.  However, it seems I have failed so far.  Feel free to take a look and see where I went wrong.
+        int downMoveCount = 0;
+        int upMoveCount = 0;
+        int leftMoveCount = 0;
+        int rightMoveCount = 0;
 
-        return false;
+        if(canAIMoveDown(aUserPosition, aiPosition, aHorizontalBlockedPathList))
+            downMoveCount = nextMove(aUserPosition, new Point(aiPosition.x, aiPosition.y + 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, downMoveCount);
+
+        if(canAIMoveUp(aUserPosition, aiPosition, aHorizontalBlockedPathList))
+            upMoveCount = nextMove(aUserPosition, new Point(aiPosition.x, aiPosition.y - 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, upMoveCount);
+
+        if(canAIMoveLeft(aUserPosition, aiPosition, aVerticalBlockedPathList))
+            leftMoveCount = nextMove(aUserPosition, new Point(aiPosition.x - 1, aiPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, leftMoveCount);
+
+        if(canAIMoveRight(aUserPosition, aiPosition, aVerticalBlockedPathList))
+            rightMoveCount = nextMove(aUserPosition, new Point(aiPosition.x + 1, aiPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, rightMoveCount);
+
+        if(downMoveCount <= upMoveCount)
+        {
+            if(downMoveCount <= leftMoveCount)
+        {
+                if(downMoveCount <= rightMoveCount)
+                {
+                    //A down move is the most efficient.
+                    aiPosition.set(aiPosition.x, aiPosition.y + 1);
+                    return true;
+                }
+            }
+        }
+
+        if(upMoveCount <= leftMoveCount)
+        {
+            if(upMoveCount <= rightMoveCount)
+            {
+                //An up move is the most efficient.
+                aiPosition.set(aiPosition.x, aiPosition.y - 1);
+                return true;
+            }
+        }
+
+        if(leftMoveCount <= rightMoveCount)
+        {
+            //A left move is the most efficient.
+            aiPosition.set(aiPosition.x - 1, aiPosition.y);
+            return true;
+        }
+        else
+        {
+            //A right move is the most efficient.
+            aiPosition.set(aiPosition.x + 1, aiPosition.y);
+            return true;
+        }
+    }
+
+    private int nextMove(Point aUserPosition, Point aNextPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList, int aMoveCount)
+    {
+        if(aNextPosition.y == 9)
+            return aMoveCount;
+        else
+        {
+            if(aMoveCount > 20)
+                return 21;
+            else
+            {
+                if(canAIMoveDown(aUserPosition, aNextPosition, aHorizontalBlockedPathList))
+                    return nextMove(aUserPosition, new Point(aNextPosition.x, aNextPosition.y + 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, aMoveCount++);
+
+                if(canAIMoveUp(aUserPosition, aNextPosition, aHorizontalBlockedPathList))
+                    return nextMove(aUserPosition, new Point(aNextPosition.x, aNextPosition.y - 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, aMoveCount++);
+
+                if(canAIMoveLeft(aUserPosition, aNextPosition, aVerticalBlockedPathList))
+                    return nextMove(aUserPosition, new Point(aNextPosition.x - 1, aNextPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, aMoveCount++);
+
+                if(canAIMoveRight(aUserPosition, aNextPosition, aVerticalBlockedPathList))
+                    return nextMove(aUserPosition, new Point(aNextPosition.x + 1, aNextPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, aMoveCount++);
+            }
+        }
+
+        return 21;
     }
 
     /**
@@ -215,10 +292,8 @@ public class AI
      *              An ArrayList of horizontal blocked paths on the game board.
      * @param aVerticalBlockedPathList
      *              An ArrayList of vertical blocked paths on the game board.
-     * @return boolean
-     *              True if the AI's pawn was moved, false otherwise.
      */
-    public boolean makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
+    public void makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
         //TODO I am NOT really happy with this method, and I think it could be tweaked as we decide how the AI should work
 
@@ -230,7 +305,7 @@ public class AI
             {
                 //The path behind the user is NOT blocked, so jump the user.
                 aiPosition.y = aiPosition.y + 2;
-                return true; //The AI made its move by jumping the user's pawn.
+                return; //The AI made its move by jumping the user's pawn.
             }
             else
             {
@@ -241,46 +316,85 @@ public class AI
 
         //The AI pawn cannot jump the user's pawn.
         //Now, get all of the possible moves for the AI's pawn.
-        boolean canMoveLeft = canAIMoveLeft(aUserPosition, aVerticalBlockedPathList);
-        boolean canMoveRight = canAIMoveRight(aUserPosition, aVerticalBlockedPathList);
-        boolean canMoveUp = canAIMoveUp(aUserPosition, aHorizontalBlockedPathList);
-        boolean canMoveDown = canAIMoveDown(aUserPosition, aHorizontalBlockedPathList);
+        boolean canMoveLeft = canAIMoveLeft(aUserPosition, aiPosition, aVerticalBlockedPathList);
+        boolean canMoveRight = canAIMoveRight(aUserPosition, aiPosition, aVerticalBlockedPathList);
+        boolean canMoveUp = canAIMoveUp(aUserPosition, aiPosition, aHorizontalBlockedPathList);
+        boolean canMoveDown = canAIMoveDown(aUserPosition, aiPosition, aHorizontalBlockedPathList);
 
-
-
-        boolean[] moveArray = new boolean[3];
-        int moveArraySize = 0;
-
-        if(canMoveLeft)
-        {
-            moveArray[moveArraySize] = canMoveLeft;
-            moveArraySize++;
-        }
-        if(canMoveRight)
-        {
-            moveArray[moveArraySize] = canMoveRight;
-            moveArraySize++;
-        }
-        if(canMoveDown)
-        {
-            moveArray[moveArraySize] = canMoveDown;
-            moveArraySize++;
-        }
-
+        boolean hasMoved = false;
         Random random = new Random();
-        int index = random.nextInt(moveArraySize);
 
-        switch(index)
+        //Keep trying random moves until one of them is valid.  There are extra left, right, and down moves since they are better than up moves.
+        while(!hasMoved)
         {
-            case 0: aiPosition.set(aiPosition.x - 1, aiPosition.y);
-                    return true;
-            case 1: aiPosition.set(aiPosition.x - 1, aiPosition.y);
-                return true;
-            case 2: aiPosition.set(aiPosition.x - 1, aiPosition.y);
-                return true;
-        }
+            int index = random.nextInt(9);
 
-        return true;
+            switch (index) {
+                case 0:
+                    if(canMoveUp)
+                    {
+                        aiPosition.set(aiPosition.x, aiPosition.y - 1);
+                        hasMoved = canMoveUp;
+                        break;
+                    }
+                case 1:
+                    if(canMoveLeft)
+                    {
+                        aiPosition.set(aiPosition.x - 1, aiPosition.y);
+                        hasMoved = canMoveLeft;
+                        break;
+                    }
+                case 2:
+                    if(canMoveLeft)
+                    {
+                        aiPosition.set(aiPosition.x - 1, aiPosition.y);
+                        hasMoved = canMoveLeft;
+                        break;
+                    }
+                case 3:
+                    if(canMoveRight)
+                    {
+                        aiPosition.set(aiPosition.x + 1, aiPosition.y);
+                        hasMoved = canMoveRight;
+                        break;
+                    }
+                case 4:
+                    if(canMoveRight)
+                    {
+                        aiPosition.set(aiPosition.x + 1, aiPosition.y);
+                        hasMoved = canMoveRight;
+                        break;
+                    }
+                case 5:
+                    if(canMoveDown)
+                    {
+                        aiPosition.set(aiPosition.x, aiPosition.y + 1);
+                        hasMoved = canMoveDown;
+                        break;
+                    }
+                case 6:
+                    if(canMoveDown)
+                    {
+                        aiPosition.set(aiPosition.x, aiPosition.y + 1);
+                        hasMoved = canMoveDown;
+                        break;
+                    }
+                case 7:
+                    if(canMoveDown)
+                    {
+                        aiPosition.set(aiPosition.x, aiPosition.y + 1);
+                        hasMoved = canMoveDown;
+                        break;
+                    }
+                case 8:
+                    if(canMoveDown)
+                    {
+                        aiPosition.set(aiPosition.x, aiPosition.y + 1);
+                        hasMoved = canMoveDown;
+                        break;
+                    }
+            }
+        }
     }
 
     /**
@@ -321,24 +435,30 @@ public class AI
      *              An ArrayList of vertical blocked paths on the game board.
      * @return
      */
-    private boolean canAIMoveLeft(Point aUserPosition, ArrayList<Point> aVerticalBlockedPathList)
+    private boolean canAIMoveLeft(Point aUserPosition, Point anAIPosition, ArrayList<Point> aVerticalBlockedPathList)
     {
-        //First check to see if the user is to the left of the AI.
-        if(aUserPosition.equals(aiPosition.x - 1, aiPosition.y))
+        //Check to see if the AI Position is out of bounds.
+        if(anAIPosition.x < 1 || 9 < anAIPosition.x || anAIPosition.y < 1 || 9 < anAIPosition.y)
             return false;
+
+        //First check to see if the user is to the left of the AI.
+        if(aUserPosition.equals(anAIPosition.x - 1, anAIPosition.y))
+            return false;
+
+        //Now check for the edge of the board
+        if(aiPosition.x == 1)
+            return false;
+
+        //The position is not taken by the user's pawn, now test for wall.
+        if(aVerticalBlockedPathList.contains(new Point(anAIPosition.x - 1, anAIPosition.y)))
+        {
+            //There is a wall blocking the path to that position.
+            return false;
+        }
         else
         {
-            //The position is not taken by the user's pawn, now test for wall.
-            if(aVerticalBlockedPathList.contains(new Point(aiPosition.x - 1, aiPosition.y)))
-            {
-                //There is a wall blocking the path to that position.
-                return false;
-            }
-            else
-            {
-                //No wall, and no user pawn.  The move is valid.
-                return true;
-            }
+            //No wall, and no user pawn.  The move is valid.
+            return true;
         }
     }
 
@@ -352,24 +472,30 @@ public class AI
      *              An ArrayList of vertical blocked paths on the game board.
      * @return
      */
-    private boolean canAIMoveRight(Point aUserPosition, ArrayList<Point> aVerticalBlockedPathList)
+    private boolean canAIMoveRight(Point aUserPosition, Point anAIPosition, ArrayList<Point> aVerticalBlockedPathList)
     {
-        //First check to see if the user is to the right of the AI.
-        if(aUserPosition.equals(aiPosition.x + 1, aiPosition.y))
+        //Check to see if the AI Position is out of bounds.
+        if(anAIPosition.x < 1 || 9 < anAIPosition.x || anAIPosition.y < 1 || 9 < anAIPosition.y)
             return false;
+
+        //First check to see if the user is to the right of the AI.
+        if(aUserPosition.equals(anAIPosition.x + 1, anAIPosition.y))
+            return false;
+
+        //Now check for the edge of the board
+        if(aiPosition.x == 9)
+            return false;
+
+        //The position is not taken by the user's pawn, now test for wall.
+        if(aVerticalBlockedPathList.contains(anAIPosition))
+        {
+            //There is a wall blocking the path to that position.
+            return false;
+        }
         else
         {
-            //The position is not taken by the user's pawn, now test for wall.
-            if(aVerticalBlockedPathList.contains(aiPosition))
-            {
-                //There is a wall blocking the path to that position.
-                return false;
-            }
-            else
-            {
-                //No wall, and no user pawn.  The move is valid.
-                return true;
-            }
+            //No wall, and no user pawn.  The move is valid.
+            return true;
         }
     }
 
@@ -383,24 +509,31 @@ public class AI
      *              An ArrayList of horizontal blocked paths on the game board.
      * @return
      */
-    private boolean canAIMoveUp(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList)
+    private boolean canAIMoveUp(Point aUserPosition, Point anAIPosition, ArrayList<Point> aHorizontalBlockedPathList)
     {
-        //First check to see if the user is above the AI.
-        if(aUserPosition.equals(aiPosition.x, aiPosition.y - 1))
+        //Check to see if the AI Position is out of bounds.
+        if(anAIPosition.x < 1 || 9 < anAIPosition.x || anAIPosition.y < 1 || 9 < anAIPosition.y)
             return false;
+
+        //First check to see if the user is above the AI.
+        if(aUserPosition.equals(anAIPosition.x, anAIPosition.y - 1))
+            return false;
+
+        //Now check for the edge of the board
+        if(aiPosition.y == 1)
+            return false;
+
+        //The position is not taken by the user's pawn, now test for wall.
+        System.out.println("Possible AI Position in canAIMoveUp()  " + anAIPosition.toString());
+        if(aHorizontalBlockedPathList.contains(new Point(anAIPosition.x, anAIPosition.y - 1)))
+        {
+            //There is a wall blocking the path to that position.
+            return false;
+        }
         else
         {
-            //The position is not taken by the user's pawn, now test for wall.
-            if(aHorizontalBlockedPathList.contains(new Point(aiPosition.x, aiPosition.y - 1)))
-            {
-                //There is a wall blocking the path to that position.
-                return false;
-            }
-            else
-            {
-                //No wall, and no user pawn.  The move is valid.
-                return true;
-            }
+            //No wall, and no user pawn.  The move is valid.
+            return true;
         }
     }
 
@@ -414,24 +547,26 @@ public class AI
      *              An ArrayList of horizontal blocked paths on the game board.
      * @return
      */
-    private boolean canAIMoveDown(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList)
+    private boolean canAIMoveDown(Point aUserPosition, Point anAIPosition, ArrayList<Point> aHorizontalBlockedPathList)
     {
-        //First check to see if the user is above the AI.
-        if(aUserPosition.equals(aiPosition.x, aiPosition.y + 1))
+        //Check to see if the AI Position is out of bounds.
+        if(anAIPosition.x < 1 || 9 < anAIPosition.x || anAIPosition.y < 1 || 9 < anAIPosition.y)
             return false;
+
+        //First check to see if the user is above the AI.
+        if(aUserPosition.equals(anAIPosition.x, anAIPosition.y + 1))
+            return false;
+
+        //The position is not taken by the user's pawn, now test for wall.
+        if(aHorizontalBlockedPathList.contains(anAIPosition))
+        {
+            //There is a wall blocking the path to that position.
+            return false;
+        }
         else
         {
-            //The position is not taken by the user's pawn, now test for wall.
-            if(aHorizontalBlockedPathList.contains(aiPosition))
-            {
-                //There is a wall blocking the path to that position.
-                return false;
-            }
-            else
-            {
-                //No wall, and no user pawn.  The move is valid.
-                return true;
-            }
+            //No wall, and no user pawn.  The move is valid.
+            return true;
         }
     }
 }
