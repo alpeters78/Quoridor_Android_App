@@ -3,7 +3,6 @@ package com.CMSC495.alpeters78.quoridor_android_app;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,53 +99,50 @@ public class GameActivity extends Activity implements View.OnClickListener {
             hWallClick(view);
         }
 
-        //Turn off all clicks since the user turn is over.
-        setPawnCLickListenersOFF();
-        setWallCLickListenersOFF();
-
-
-        didUserWin = checkForWin(); //Check to see if user won.
-        if(didUserWin) {
-            //The user won.
-            setPawnCLickListenersOFF();  //Turn off all clicks after win.
+        if(moveMade) {
+            //Turn off all clicks since the user turn is over.
+            setPawnCLickListenersOFF();
             setWallCLickListenersOFF();
-            Toast.makeText(GameActivity.this, "You Won!!!", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            //The user's turn is over and he/she did not win, now let the AI make a move.
 
-            Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
-            if (newWall != null) {
-                if (newWall.getOrientation())
-                    setAIVerWallImage(newWall.getPosition());
-                else
-                    setAIHorWallImage(newWall.getPosition());
-
+            didUserWin = checkForWin(); //Check to see if user won.
+            if (didUserWin) {
+                //The user won.
+                Toast.makeText(GameActivity.this, "You Won!!!", Toast.LENGTH_SHORT).show();
             } else {
-                //A wall was not placed.
-                System.out.println("A Wall is already in that spot or the AI is out of walls.");
+                //The user's turn is over and he/she did not win, now let the AI make a move.
 
-                //ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
-                ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
-                setAIPawnImage();
-            }
+                Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+                if (newWall != null) {
+                    if (newWall.getOrientation())
+                        setAIVerWallImage(newWall.getPosition());
+                    else
+                        setAIHorWallImage(newWall.getPosition());
 
-            didAIWin = checkForWin();
-            if (didAIWin) {
-                //The AI won.
-                setPawnCLickListenersOFF();  //Turn off all clicks after win.
-                setWallCLickListenersOFF();
-                Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
+                } else {
+                    //A wall was not placed.
+                    System.out.println("A Wall is already in that spot or the AI is out of walls.");
+
+                    //ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
+                    ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
+                    setAIPawnImage();
+                }
+
+                didAIWin = checkForWin();
+                if (didAIWin) {
+                    //The AI won.
+                    Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
+                }
             }
-        }
 
         /*if(didUserWin || didAIWin) {
             //TODO create popup and stop the game
         }*/
 
-        //Turn back on the clicks since no one won.
-        setPawnClickListenersON();
-        setWallClickListenersON();
+            //Turn back on the clicks since no one won.
+            setPawnClickListenersON();
+            setWallClickListenersON();
+            moveMade = false;
+        }
     }
 
     public boolean setPawnImage(int resID, Point aPossiblePawnPosition){
@@ -314,11 +310,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
      */
     public void pawnClick(View view){
 
-        //while loop allows the user to keep making selections until a valid move is made.
-        // turned off for testing
-        //while(!moveMade){
             switch (view.getId()) {
-
                 //row 1
                 case R.id.pawn11:
                     if (setPawnImage(R.id.pawn11, new Point(1, 1))) {
@@ -1066,17 +1058,14 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         break;
                     }
             }
-        //}
+
     }
 
     /**
      *
      */
     public void hWallClick(View view) {
-        boolean moveMade = false;
-        //while loop allows the user to keep making selections until a valid move is made.
-        // turned off for testing
-        //while(!moveMade){
+
             switch (view.getId()) {
 
                 //row 1
@@ -1607,17 +1596,14 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     }
                     break;
             }
-        //}
     }
 
     /**
      *
      */
     public void vWallClick(View view) {
-        boolean moveMade = false;
-        //while loop allows the user to keep making selections until a valid move is made.
-        // turned off for testing
-        //while(!moveMade){
+
+
             switch (view.getId()) {
 
                 //row 1
@@ -2148,7 +2134,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     }
                     break;
             }
-        //}
     }
 
     /**

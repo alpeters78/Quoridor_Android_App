@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.CMSC495.alpeters78.quoridor_android_app.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,12 +17,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.CMSC495.alpeters78.quoridor_android_app.GameActivity"
+            android:name=".GameActivity"
             android:label="@string/title_activity_game"
-            android:parentActivityName="com.CMSC495.alpeters78.quoridor_android_app.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.CMIS495.alpeters78.quoridor_android_app.MyActivity" />
+        </activity>
+        <activity
+            android:name=".RulesActivity"
+            android:label="@string/title_activity_rules"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.CMSC495.alpeters78.quoridor_android_app.MainActivity" />
         </activity>
     </application>
 
