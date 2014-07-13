@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
+
+
 public class GameActivity extends Activity implements View.OnClickListener {
 
     //Instance variables
@@ -88,8 +90,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        //First wait for the user to move.
-        System.out.println("onClick method was invoked.");
+
 
         pawnClick(view);
 
@@ -135,18 +136,59 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 }
             }
 
-        if(didUserWin || didAIWin) {
-            setPawnCLickListenersOFF();
-            setWallCLickListenersOFF();
-            return;
-            //TODO create popup and stop the game
-        }
+            if(didUserWin || didAIWin) {
+                setPawnCLickListenersOFF();
+                setWallCLickListenersOFF();
+                return;
+                //TODO create popup and stop the game
+            }
+            else {
 
-            //Turn back on the clicks since no one won.
-            setPawnClickListenersON();
-            setWallClickListenersON();
+                //Turn back on the correct clickListeners since no one won.
+                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+                int checkedID = radioGroup.getCheckedRadioButtonId();
+                if (checkedID == R.id.radioPawn && (!didUserWin && !didAIWin)) {
+                    setPawnClickListenersON();
+                    setWallCLickListenersOFF();
+                } else if (checkedID == R.id.radioVwall && (!didUserWin && !didAIWin)) {
+                    orientation = true;
+                    setWallClickListenersON();
+                    setPawnCLickListenersOFF();
+                } else if (checkedID == R.id.radioHwall && (!didUserWin && !didAIWin)) {
+                    orientation = false;
+                    setWallClickListenersON();
+                    setPawnCLickListenersOFF();
+                }
+            }
             moveMade = false;
         }
+        //TEST BLOCK
+
+        //First wait for the user to move.
+        System.out.println("onClick method was invoked.");
+
+        //print out wall centers
+        System.out.println("Wall Array");
+        for(int i = wallArray.size()-1; i > 0; i--) {
+            Wall wallCenterPoint = wallArray.get(i);
+            System.out.println(wallCenterPoint.getPosition());
+        }
+        System.out.println("Placed Walls");
+        for(int i = placedWalls.size()-1; i > 0; i--) {
+            System.out.println(placedWalls.get(i));
+        }
+        System.out.println("H Blocked Paths");
+        for(int i = hBlockedPathList.size()-1; i > 0; i--) {
+            System.out.println(hBlockedPathList.get(i));
+        }
+        System.out.println("V Blocked Paths");
+        for(int i = vBlockedPathList.size()-1; i > 0; i--) {
+            System.out.println(vBlockedPathList.get(i));
+        }
+
+
+
+        //END TEST BLOCK
     }
 
     public boolean setPawnImage(int resID, Point aPossiblePawnPosition){
@@ -211,6 +253,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
             placedWalls.add(aPossibleWallPosition);
             hBlockedPathList.add(blockedPath1);
             hBlockedPathList.add(blockedPath2);
+            //Sync wall lists.
+            Wall newWallPosition = new Wall(false,aPossibleWallPosition.x,aPossibleWallPosition.y);
+            wallArray.add(newWallPosition);
 
             //take away one wall
             user.numUserWallsRemaining--;
@@ -248,6 +293,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
         placedWalls.add(aNewWallPosition);
         hBlockedPathList.add(blockedPath1);
         hBlockedPathList.add(blockedPath2);
+
+        //Update display
+        String wallsRemaining = String.valueOf(ai.numAIWallsRemaining);
+        TextView text = (TextView) findViewById(R.id.aiWalls);
+        text.setText(wallsRemaining);
     }
 
     public boolean setVerWallImage(int wallID, int path1ID, int path2ID, Point aPossibleWallPosition) {
@@ -270,6 +320,10 @@ public class GameActivity extends Activity implements View.OnClickListener {
             placedWalls.add(aPossibleWallPosition);
             vBlockedPathList.add(blockedPath1);
             vBlockedPathList.add(blockedPath2);
+
+            //Sync wall lists.
+            Wall newWallPosition = new Wall(true,aPossibleWallPosition.x,aPossibleWallPosition.y);
+            wallArray.add(newWallPosition);
 
             //take away one wall
             user.numUserWallsRemaining--;
@@ -307,6 +361,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
         placedWalls.add(aNewWallPosition);
         vBlockedPathList.add(blockedPath1);
         vBlockedPathList.add(blockedPath2);
+
+        //Update display
+        String wallsRemaining = String.valueOf(ai.numAIWallsRemaining);
+        TextView text = (TextView) findViewById(R.id.aiWalls);
+        text.setText(wallsRemaining);
     }
 
     /**
