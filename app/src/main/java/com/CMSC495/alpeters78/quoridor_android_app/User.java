@@ -359,7 +359,7 @@ public class User
         userPosition.set(aValidNewPosition.x, aValidNewPosition.y);
     }
 
-    public boolean isWinningPathBlocked(Point aiCurrentPosition, Point userCurrentPosition, ArrayList<Point> hBlockedPathList, ArrayList<Point> vBlockedPathList, int winningNumber){
+    public static boolean isWinningPathBlocked(Point aiCurrentPosition, Point userCurrentPosition, ArrayList<Point> hBlockedPathList, ArrayList<Point> vBlockedPathList, int winningNumber){
         //works for user and Ai by passing winning y-coordinate.
         ArrayList<Point> tempPositionsList;
         ArrayList<Point> nextValidPosition = getUserValidNextPositions(aiCurrentPosition, userCurrentPosition, hBlockedPathList, vBlockedPathList);
@@ -394,7 +394,7 @@ public class User
         return true;
     }
 
-    public ArrayList<Point> getUserValidNextPositions(Point aiPosition, Point userPosition, ArrayList<Point> hBlockedPathList, ArrayList<Point> vBlockedPathList){
+    public static ArrayList<Point> getUserValidNextPositions(Point aiPosition, Point userPosition, ArrayList<Point> hBlockedPathList, ArrayList<Point> vBlockedPathList){
         //create needed lists
         ArrayList<Point> nextValidPositions = new ArrayList<Point>();
         ArrayList<Point> allPossibleMovePositions = new ArrayList<Point>();

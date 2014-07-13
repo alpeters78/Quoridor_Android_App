@@ -47,7 +47,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //Initialize listeners
         setPawnClickListeners();
         setWallClickListeners();
-        setWallCLickListenersOFF();
+        setWallCLickListenersOFF(); //TODO This is not working.  A Wall can still be placed even before the wall radio button is selected.
+        //TODO We need to prevent the screen from rotating since we don't have a horizontal view setup.
     }
 
     @Override
@@ -105,15 +106,15 @@ public class GameActivity extends Activity implements View.OnClickListener {
             setWallCLickListenersOFF();
 
             didUserWin = checkForWin(); //Check to see if user won.
-            if (didUserWin) {
+            if(didUserWin) {
                 //The user won.
                 Toast.makeText(GameActivity.this, "You Won!!!", Toast.LENGTH_SHORT).show();
             } else {
                 //The user's turn is over and he/she did not win, now let the AI make a move.
 
                 Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
-                if (newWall != null) {
-                    if (newWall.getOrientation())
+                if(newWall != null && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9))) {
+                    if(newWall.getOrientation())
                         setAIVerWallImage(newWall.getPosition());
                     else
                         setAIHorWallImage(newWall.getPosition());
@@ -122,21 +123,24 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     //A wall was not placed.
                     System.out.println("A Wall is already in that spot or the AI is out of walls.");
 
-                    //ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
-                    ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
+                    ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
+                    //ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
                     setAIPawnImage();
                 }
 
                 didAIWin = checkForWin();
-                if (didAIWin) {
+                if(didAIWin) {
                     //The AI won.
                     Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
                 }
             }
 
-        /*if(didUserWin || didAIWin) {
+        if(didUserWin || didAIWin) {
+            setPawnCLickListenersOFF();
+            setWallCLickListenersOFF();
+            return;
             //TODO create popup and stop the game
-        }*/
+        }
 
             //Turn back on the clicks since no one won.
             setPawnClickListenersON();
@@ -202,8 +206,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             path2.setImageResource(R.drawable.h_path);
 
             //add blocked paths and wall centers to array lists
-            Point blockedPath1 = new Point(aPossibleWallPosition.x,aPossibleWallPosition.y);
-            Point blockedPath2 = new Point(aPossibleWallPosition.x + 1,aPossibleWallPosition.y);
+            Point blockedPath1 = new Point(aPossibleWallPosition.x, aPossibleWallPosition.y);
+            Point blockedPath2 = new Point(aPossibleWallPosition.x + 1, aPossibleWallPosition.y);
             placedWalls.add(aPossibleWallPosition);
             hBlockedPathList.add(blockedPath1);
             hBlockedPathList.add(blockedPath2);
@@ -239,8 +243,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         ImageView path2 = (ImageView) findViewById(getResources().getIdentifier(path2ID, "id", getPackageName()));
         path2.setImageResource(R.drawable.h_path);
 
-        Point blockedPath1 = new Point(aNewWallPosition.x,aNewWallPosition.y);
-        Point blockedPath2 = new Point(aNewWallPosition.x + 1,aNewWallPosition.y);
+        Point blockedPath1 = new Point(aNewWallPosition.x, aNewWallPosition.y);
+        Point blockedPath2 = new Point(aNewWallPosition.x + 1, aNewWallPosition.y);
         placedWalls.add(aNewWallPosition);
         hBlockedPathList.add(blockedPath1);
         hBlockedPathList.add(blockedPath2);
