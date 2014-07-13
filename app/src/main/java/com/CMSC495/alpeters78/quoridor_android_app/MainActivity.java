@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
 
 
         Button startButton = (Button) findViewById(R.id.start_button);
-        Button exitButton = (Button) findViewById(R.id.exit_button);
+        Button rulesButton = (Button) findViewById(R.id.rules_button);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
         });
 
-        exitButton.setOnClickListener(new View.OnClickListener() {
+        rulesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, RulesActivity.class);

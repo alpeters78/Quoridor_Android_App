@@ -1,12 +1,17 @@
 package com.CMSC495.alpeters78.quoridor_android_app;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +115,31 @@ public class GameActivity extends Activity implements View.OnClickListener {
             if(didUserWin) {
                 //The user won.
                 Toast.makeText(GameActivity.this, "You Won!!!", Toast.LENGTH_SHORT).show();
+
+                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.user_won_popup, null);
+                final PopupWindow popupWindow = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+
+                Button newGameButton = (Button) popupView.findViewById(R.id.new_game_button);
+                Button mainMenuButton = (Button) popupView.findViewById(R.id.main_menu_button);
+
+                newGameButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                mainMenuButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                popupWindow.showAsDropDown((ImageView) findViewById(R.id.pawn32), -35, 0);
             } else {
                 //The user's turn is over and he/she did not win, now let the AI make a move.
 
@@ -133,6 +163,31 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 if(didAIWin) {
                     //The AI won.
                     Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
+
+                    LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.ai_won_popup, null);
+                    final PopupWindow popupWindow = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+
+                    Button newGameButton = (Button) popupView.findViewById(R.id.new_game_button);
+                    Button mainMenuButton = (Button) popupView.findViewById(R.id.main_menu_button);
+
+                    newGameButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    mainMenuButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    popupWindow.showAsDropDown((ImageView) findViewById(R.id.pawn12), 36, 0);
                 }
             }
 
