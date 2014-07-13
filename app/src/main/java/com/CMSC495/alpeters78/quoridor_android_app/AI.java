@@ -237,7 +237,6 @@ public class AI
         int index = 1;
         while(pathNotFound)
         {
-            System.out.println("The Index: " + index);
             //Add the next round of moves
             moveCounts.add(new ArrayList<Node<Point>>());
             length = moveCounts.get(index - 1).size();
