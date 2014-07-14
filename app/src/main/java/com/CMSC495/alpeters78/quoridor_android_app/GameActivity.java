@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class GameActivity extends Activity implements View.OnClickListener {
 
     //Instance variables
-    public ArrayList<Wall> wallArray = new ArrayList<Wall>(); //Stores the details of the walls on the board - //TODO are you using this?
+    public ArrayList<Wall> wallArray = new ArrayList<Wall>(); //Stores the details of the walls on the board - //TODO are you using this?  Yes I am.
     public ArrayList<Point> placedWalls = new ArrayList<Point>();//stores the center point of the placed walls
     public ArrayList<Point> hBlockedPathList = new ArrayList<Point>(); //The paths that are blocked by horizontal walls
     public ArrayList<Point> vBlockedPathList = new ArrayList<Point>(); //The paths that are blocked by horizontal walls
@@ -141,7 +141,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             } else {
                 //The user's turn is over and he/she did not win, now let the AI make a move.
 
-                Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+                //Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+                Wall newWall = ai.placeRandomWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
                 if(newWall != null && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9))) {
                     if(newWall.getOrientation())
                         setAIVerWallImage(newWall.getPosition());

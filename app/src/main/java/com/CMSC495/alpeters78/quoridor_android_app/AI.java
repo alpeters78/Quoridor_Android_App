@@ -32,13 +32,15 @@ public class AI
      * the user's path.
      *
      * @param aUserPosition
-     *              Point - the users current position.
+     *              The position of the user's pawn.
      * @param aWallArray
-     *              ArrayList<Wall> - an ArrayList of walls on the game board.
+     *              An ArrayList of walls on the game board.
      * @param aHorizontalBlockedPathList
-     *              ArrayList<Point> - an ArrayList of blocked paths on the game board.
-     * @return boolean
-     *              True if a wall was placed, false otherwise.
+     *              An ArrayList of blocked horizontal paths on the game board.
+     * @param aVerticalBlockedPathList
+     *              An ArrayList of blocked vertical paths on the game board.
+     * @return Wall
+     *              The wall that the AI placed on the board.  Null if the AI did not place a wall.
      */
     public Wall blockUserPathWithWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
@@ -191,18 +193,112 @@ public class AI
     }
 
     /**
-     * Places a Wall somewhere next to another wall already on the board.
+     * Places a Wall somewhere in front of the user.
      *
-     * @return boolean
-     *              True if a wall was placed, false otherwise.
+     * @param aUserPosition
+     *              The position of the user's pawn.
+     * @param aWallArray
+     *              An ArrayList of walls on the game board.
+     * @param aHorizontalBlockedPathList
+     *              An ArrayList of blocked horizontal paths on the game board.
+     * @param aVerticalBlockedPathList
+     *              An ArrayList of blocked vertical paths on the game board.
+     * @return Wall
+     *              The wall that the AI placed on the board.  Null if the AI did not place a wall.
      */
-    public boolean placeRandomWallNextToAnotherWall()
+    public Wall placeRandomWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
-        //TODO Complete this method.
+        //TODO Right now this method only places horizontal walls.  However, it could be easily changed to place vertical walls too.
+        Wall wall = null;
+        int xLeft; //The x coordinate for the left blocked path by the wall to be placed
+        int yLeft; //The y coordinate for the left blocked path by the wall to be placed
+        int xRight; //The x coordinate for the right blocked path by the wall to be placed
+        int yRight; //The y coordinate for the right blocked path by the wall to be placed
+        int xCenter; //The x coordinate for the center point of the wall to be placed
+        int yCenter; //The y coordinate for the center point of the wall to be placed
+        boolean wallNotPlaced = true;
 
-        return false;
+        //First check to see if the AI has any walls left
+        if(numAIWallsRemaining == 0)
+        {
+            return wall; //Return the null wall since there are no remaining walls.
+        }
+
+        //Get a random y value somewhere between row 0 and the users row.
+        Random random = new Random();
+
+        //Keep trying until a valid position is found.
+        int index = 0;
+        while(wallNotPlaced)
+        {
+            yCenter = random.nextInt(aUserPosition.y - 1) + 1; //Add 1 since there is not a row 0.
+
+            //Get a random x value that still blocks the user's path.
+            if(aUserPosition.x == 1)
+            {
+                //The user is on the left edge of the board.
+                xCenter = 1;
+
+            }
+            else if(aUserPosition.x == 9)
+            {
+                //The user is on the right edge of the board.
+                xCenter = 8;
+            }
+            else
+            {
+                xCenter = aUserPosition.x - random.nextInt(2);
+            }
+
+            //We have the center points for the wall.  Now check to see if there is a wall already there.
+            Wall tempHorizontalWall = new Wall(false, xCenter, yCenter);
+            Wall tempVerticalWall = new Wall(true, xCenter, yCenter);
+            if(aWallArray.contains(tempHorizontalWall) || aWallArray.contains(tempVerticalWall))
+                wallNotPlaced = true; //I know this is not needed because wallNotPlaced is already true, but I think it makes it easier to follow.
+            else
+            {
+                //The center points are open, now check to make sure the sides of the wall are not going to overlap with another wall.
+                xLeft = xCenter;
+                yLeft = yCenter;
+                xRight = xCenter + 1;
+                yRight = yCenter;
+                Point tempLeftPath = new Point(xLeft, yLeft);
+                Point tempRightPath = new Point(xRight, yRight);
+
+                if(aHorizontalBlockedPathList.contains(tempLeftPath) || aHorizontalBlockedPathList.contains(tempRightPath))
+                    wallNotPlaced = true; //This new wall would overlap with an existing wall.
+                else
+                {
+                    //The center point and the sides of the wall all check out.  Place the wall!
+                    aHorizontalBlockedPathList.add(tempLeftPath);
+                    aHorizontalBlockedPathList.add(tempRightPath);
+
+                    wall = new Wall(false, xCenter, yCenter);
+                    aWallArray.add(wall);
+                    numAIWallsRemaining--;
+                    wallNotPlaced = false;
+                }
+            }
+            index++;
+            if(index > 500)
+                return wall;
+        }
+
+        return wall;
     }
 
+    /**
+     * Finds the shortest path to the other side of the board, and moves the AI's pawn one position down that path.
+     *
+     * @param aUserPosition
+     *              The position of the user's pawn.
+     * @param aHorizontalBlockedPathList
+     *              An ArrayList of horizontal blocked paths on the game board.
+     * @param aVerticalBlockedPathList
+     *              An ArrayList of vertical blocked paths on the game board.
+     * @return boolean
+     *              True if the shortest path was found, false otherwise.
+     */
     public boolean makeGoodAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
         ArrayList<ArrayList<Node<Point>>> moveCounts = new ArrayList<ArrayList<Node<Point>>>();
