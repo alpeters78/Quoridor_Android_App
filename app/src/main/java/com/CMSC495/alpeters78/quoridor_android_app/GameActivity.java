@@ -95,14 +95,12 @@ public class GameActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-
-
         pawnClick(view);
 
-        if (orientation == true) {
+        if (orientation) {
             vWallClick(view);
         }
-        else if (orientation == false) {
+        else if (!orientation) {
             hWallClick(view);
         }
 
@@ -142,8 +140,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 //The user's turn is over and he/she did not win, now let the AI make a move.
 
                 //Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
-                Wall newWall = ai.placeRandomWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
-                if(newWall != null && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9))) {
+                Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+                if(newWall != null && (!User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9))) {
                     if(newWall.getOrientation())
                         setAIVerWallImage(newWall.getPosition());
                     else
@@ -152,7 +150,20 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 } else {
                     //A wall was not placed.
                     System.out.println("A Wall is already in that spot or the AI is out of walls.");
-
+                    if(newWall != null && !newWall.getOrientation()){ //Remove Horizontal wall that blocks winning path from all lists.
+                        Point temp1 = newWall.getPosition();
+                        Point temp2 = new Point(newWall.getPosition().x + 1,newWall.getPosition().y);
+                        hBlockedPathList.remove(temp1);
+                        hBlockedPathList.remove(temp2);
+                        wallArray.remove(newWall);
+                    }
+                    else if(newWall != null && newWall.getOrientation()){ //Remove Vertical wall that blocks winning path from all lists.
+                        Point temp1 = newWall.getPosition();
+                        Point temp2 = new Point(newWall.getPosition().x,newWall.getPosition().y -1);
+                        hBlockedPathList.remove(temp1);
+                        hBlockedPathList.remove(temp2);
+                        wallArray.remove(newWall);
+                    }
                     ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
                     //ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
                     setAIPawnImage();
@@ -184,7 +195,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         }
                     });
 
-                    popupWindow.showAsDropDown((ImageView) findViewById(R.id.pawn12), 36, 0);
+                    popupWindow.showAsDropDown(findViewById(R.id.pawn12), 36, 0);
                 }
             }
 
@@ -311,6 +322,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
             //take away one wall
             user.numUserWallsRemaining--;
 
+            //Update display
+            String wallsRemaining = String.valueOf(user.numUserWallsRemaining);
+            TextView text = (TextView) findViewById(R.id.userWalls);
+            text.setText(wallsRemaining);
+
             return true;
         } else {
 
@@ -334,11 +350,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         ImageView path2 = (ImageView) findViewById(getResources().getIdentifier(path2ID, "id", getPackageName()));
         path2.setImageResource(R.drawable.h_path);
 
-        Point blockedPath1 = new Point(aNewWallPosition.x, aNewWallPosition.y);
-        Point blockedPath2 = new Point(aNewWallPosition.x + 1, aNewWallPosition.y);
+        //Sync wall lists.
         placedWalls.add(aNewWallPosition);
-        hBlockedPathList.add(blockedPath1);
-        hBlockedPathList.add(blockedPath2);
 
         //Update display
         String wallsRemaining = String.valueOf(ai.numAIWallsRemaining);
@@ -402,11 +415,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
         ImageView path2 = (ImageView) findViewById(getResources().getIdentifier(path2ID, "id", getPackageName()));
         path2.setImageResource(R.drawable.v_path);
 
-        Point blockedPath1 = new Point(aNewWallPosition.x,aNewWallPosition.y);
-        Point blockedPath2 = new Point(aNewWallPosition.x,aNewWallPosition.y + 1);
+        //Sync wall lists.
         placedWalls.add(aNewWallPosition);
-        vBlockedPathList.add(blockedPath1);
-        vBlockedPathList.add(blockedPath2);
+
 
         //Update display
         String wallsRemaining = String.valueOf(ai.numAIWallsRemaining);
