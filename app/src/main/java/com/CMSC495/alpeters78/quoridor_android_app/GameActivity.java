@@ -224,20 +224,20 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         //print out wall centers
         System.out.println("Wall Array");
-        for(int i = wallArray.size()-1; i > 0; i--) {
+        for(int i = wallArray.size()-1; i >= 0; i--) {
             Wall wallCenterPoint = wallArray.get(i);
             System.out.println(wallCenterPoint.getPosition());
         }
         System.out.println("Placed Walls");
-        for(int i = placedWalls.size()-1; i > 0; i--) {
+        for(int i = placedWalls.size()-1; i >= 0; i--) {
             System.out.println(placedWalls.get(i));
         }
         System.out.println("H Blocked Paths");
-        for(int i = hBlockedPathList.size()-1; i > 0; i--) {
+        for(int i = hBlockedPathList.size()-1; i >= 0; i--) {
             System.out.println(hBlockedPathList.get(i));
         }
         System.out.println("V Blocked Paths");
-        for(int i = vBlockedPathList.size()-1; i > 0; i--) {
+        for(int i = vBlockedPathList.size()-1; i >= 0; i--) {
             System.out.println(vBlockedPathList.get(i));
         }
 
@@ -314,11 +314,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             //take away one wall
             user.numUserWallsRemaining--;
-
-            //Update display
-            String wallsRemaining = String.valueOf(user.numUserWallsRemaining);
-            TextView text = (TextView) findViewById(R.id.userWalls);
-            text.setText(wallsRemaining);
 
             return true;
         } else {

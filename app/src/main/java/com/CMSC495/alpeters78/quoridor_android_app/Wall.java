@@ -11,6 +11,26 @@ public class Wall
     private Point position; //The center position of the wall.
     private boolean orientation; //True is vertical, false is horizontal.
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Wall wall = (Wall) o;
+
+        if (orientation != wall.orientation) return false;
+        if (!position.equals(wall.position)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = position.hashCode();
+        result = 31 * result + (orientation ? 1 : 0);
+        return result;
+    }
+
     /**
      * Constructor for a Wall object that takes three parameters.
      *
