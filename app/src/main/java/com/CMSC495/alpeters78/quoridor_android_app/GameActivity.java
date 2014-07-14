@@ -156,13 +156,15 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         hBlockedPathList.remove(temp1);
                         hBlockedPathList.remove(temp2);
                         wallArray.remove(newWall);
+                        ai.numAIWallsRemaining++;
                     }
                     else if(newWall != null && newWall.getOrientation()){ //Remove Vertical wall that blocks winning path from all lists.
                         Point temp1 = newWall.getPosition();
-                        Point temp2 = new Point(newWall.getPosition().x,newWall.getPosition().y -1);
-                        hBlockedPathList.remove(temp1);
-                        hBlockedPathList.remove(temp2);
+                        Point temp2 = new Point(newWall.getPosition().x,newWall.getPosition().y - 1);
+                        vBlockedPathList.remove(temp1);
+                        vBlockedPathList.remove(temp2);
                         wallArray.remove(newWall);
+                        ai.numAIWallsRemaining++;
                     }
                     ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
                     //ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
