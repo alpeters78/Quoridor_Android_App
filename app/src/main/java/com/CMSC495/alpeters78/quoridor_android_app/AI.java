@@ -69,6 +69,11 @@ public class AI
             if(tempPoint.x == aUserPosition.x && tempPoint.y == aUserPosition.y - 1)
                 return wall; //The user's path forward is already being blocked, so return null.
         }
+        System.out.println("Ai method");
+        for(int i = aWallArray.size()-1; i >= 0; i--) {
+            Wall wallCenterPoint = aWallArray.get(i);
+            System.out.println(wallCenterPoint.getPosition());
+        }
 
         //Now that we know the user's path forward is not being blocked, check to see if the left and right center wall positions are open.
         int xCenterLeftTemp = aUserPosition.x - 1;
@@ -138,7 +143,7 @@ public class AI
                 xCenter = aUserPosition.x;
                 yCenter = aUserPosition.y - 1;
                 wall = new Wall(false, xCenter, yCenter);
-                aWallArray.add(wall);
+                aWallArray.add(wall); //this changes the local aWallArray not the global wallArray
                 numAIWallsRemaining--;
             }
         }
@@ -157,7 +162,7 @@ public class AI
             xCenter = aUserPosition.x - 1;
             yCenter = aUserPosition.y - 1;
             wall = new Wall(false, xCenter, yCenter);
-            aWallArray.add(wall);
+            aWallArray.add(wall); //this changes the local aWallArray not the global wallArray
             numAIWallsRemaining--;
         }
 
