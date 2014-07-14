@@ -197,6 +197,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     popupWindow.showAsDropDown(findViewById(R.id.pawn12), 36, 0);
                 }
+
+
             }
 
             if(didUserWin || didAIWin) {
