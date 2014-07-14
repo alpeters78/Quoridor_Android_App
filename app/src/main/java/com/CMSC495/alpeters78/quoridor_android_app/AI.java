@@ -144,6 +144,9 @@ public class AI
                 yCenter = aUserPosition.y - 1;
                 wall = new Wall(false, xCenter, yCenter);
                 aWallArray.add(wall); //this changes the local aWallArray not the global wallArray
+                // TODO The value of the reference to the global wallArray was passed in as a parameter, so it should be adding a wall to the object in the above line of code.
+                // TODO If I did something like aWallArray = new ArrayList<Wall>; then that would only change the local variable since there is a separate copy of the reference
+                // TODO that can only be used in this method.  At least, this is how I understand Java Parameters.
                 numAIWallsRemaining--;
             }
         }
