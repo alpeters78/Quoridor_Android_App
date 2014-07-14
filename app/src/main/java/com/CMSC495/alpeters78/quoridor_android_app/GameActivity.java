@@ -113,9 +113,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             didUserWin = checkForWin(); //Check to see if user won.
             if(didUserWin) {
-                //The user won.
-                Toast.makeText(GameActivity.this, "You Won!!!", Toast.LENGTH_SHORT).show();
-
+                //The user won.  Show a popup window.
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.user_won_popup, null);
                 final PopupWindow popupWindow = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
@@ -161,9 +159,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                 didAIWin = checkForWin();
                 if(didAIWin) {
-                    //The AI won.
-                    Toast.makeText(GameActivity.this, "The Computer Beat you", Toast.LENGTH_SHORT).show();
-
+                    //The AI won.  Show a popup window.
                     LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.ai_won_popup, null);
                     final PopupWindow popupWindow = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
@@ -195,7 +191,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 setPawnCLickListenersOFF();
                 setWallCLickListenersOFF();
                 return;
-                //TODO create popup and stop the game
             }
             else {
 

@@ -17,7 +17,6 @@ public class AI
     public int numAIWallsRemaining;  //The AI starts with 10 walls
     private ArrayList<Point> checkedPositions;
     private ArrayList<Point> visitedPositions;
-    private enum moveEnum {LEFT, RIGHT, DOWN};
 
 
     public AI()
@@ -208,9 +207,6 @@ public class AI
         //Add the first round of moves
         if(canAIMoveDown(aUserPosition, aiPosition, aHorizontalBlockedPathList))
             moveCounts.get(0).add(new Node(new Point(aiPosition.x, aiPosition.y + 1), null));
-            //root.children.add(new Node(new Point(aiPosition.x, aiPosition.y + 1), root));
-            //moveTree.root.children.add(Tree.Node<Point>());
-            //moveCounts.get(0).add(new Point(aiPosition.x, aiPosition.y + 1));
 
         if(canAIMoveLeft(aUserPosition, aiPosition, aVerticalBlockedPathList))
             moveCounts.get(0).add(new Node(new Point(aiPosition.x - 1, aiPosition.y), null));
@@ -274,23 +270,6 @@ public class AI
                     return true;
                 }
             }
-
-            /*for(int i = 0; i < length; i++)
-            {
-                if(moveCounts.get(index).get(i).point.y == 9)
-                {
-                    //The winning path has been found!  Follow the path back to find the first move.
-                    pathNotFound = false;
-
-                    Node<Point> tempNode = moveCounts.get(index).get(i).parent;
-                    while(tempNode.parent != null)
-                        tempNode = tempNode.parent;
-
-                    aiPosition.set(tempNode.point.x, tempNode.point.y);
-
-                    return true;
-                }
-            }*/
 
             //Just in case there is a condition not covered, make sure the loop does not go on forever.
             if(index > 10000)
@@ -519,7 +498,7 @@ public class AI
      */
     public void makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
-        //TODO The randomness of this method can be tweeked as needed.
+        //TODO The randomness of this method can be tweaked as needed.
         //First, check to see if the users pawn can be jumped.
         if(isForwardPawnJumpPossible(aUserPosition, aHorizontalBlockedPathList))
         {
