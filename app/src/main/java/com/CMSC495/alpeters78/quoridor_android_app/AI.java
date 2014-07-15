@@ -37,12 +37,10 @@ public class AI
      *              An ArrayList of walls on the game board.
      * @param aHorizontalBlockedPathList
      *              An ArrayList of blocked horizontal paths on the game board.
-     * @param aVerticalBlockedPathList
-     *              An ArrayList of blocked vertical paths on the game board.
      * @return Wall
      *              The wall that the AI placed on the board.  Null if the AI did not place a wall.
      */
-    public Wall blockUserPathWithWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
+    public Wall blockUserPathWithWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList)
     {
         Wall wall = null;
         Iterator<Wall> wallIterator;
@@ -168,25 +166,7 @@ public class AI
     }
 
     /**
-     * Places a Wall in a random position somewhere near the user.
-     *
-     * @return boolean
-     *              True if a wall was placed, false otherwise.
-     */
-    public boolean placeRandomWallNearUser()
-    {
-        Wall wall;
-        Iterator<Wall> iterator;
-        int x;
-        int y;
-
-        //TODO Complete this method.
-
-        return false;
-    }
-
-    /**
-     * Places a Wall somewhere in front of the user.
+     * Places a vertical Wall next to a horizontal wall that is in front of the user's pawn.
      *
      * @param aUserPosition
      *              The position of the user's pawn.
@@ -199,9 +179,204 @@ public class AI
      * @return Wall
      *              The wall that the AI placed on the board.  Null if the AI did not place a wall.
      */
-    public Wall placeRandomWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
+    public Wall placeVerticalWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
-        //TODO Right now this method only places horizontal walls.  However, it could be easily changed to place vertical walls too.
+        Wall wall = null;
+        int xLeft; //The x coordinate for the left blocked path by the wall to be placed
+        int yLeft; //The y coordinate for the left blocked path by the wall to be placed
+        int xRight; //The x coordinate for the right blocked path by the wall to be placed
+        int yRight; //The y coordinate for the right blocked path by the wall to be placed
+        int xCenter; //The x coordinate for the center point of the wall to be placed
+        int yCenter; //The y coordinate for the center point of the wall to be placed
+
+        //First check to see if the AI has any walls left
+        if(numAIWallsRemaining == 0)
+        {
+            return wall; //Return the null wall since there are no remaining walls.
+        }
+
+        //Now see if the user's pawn has a wall directly in front of it.
+        if(aHorizontalBlockedPathList.contains(new Point(aUserPosition.x, aUserPosition.y - 1)))
+        {
+            System.out.println("The User has a wall directly in front of it.");
+            //There is a wall directly in front of the user.  Now find the end of the wall row that is closest to the user.
+            Point tempPointLeft = new Point(aUserPosition.x - 1, aUserPosition.y - 1);
+            Point tempPointRight = new Point(aUserPosition.x + 1, aUserPosition.y - 1);
+            int leftCount = 0;
+            int rightCount = 0;
+            boolean leftEdgeNotReached = true;
+            boolean rightEdgeNotReached = true;
+            boolean wallNotPlaced = false;
+
+            //Check left.
+            while(aHorizontalBlockedPathList.contains(tempPointLeft))
+            {
+                leftCount++;
+                tempPointLeft.set(tempPointLeft.x - 1, tempPointLeft.y);
+            }
+
+            //Make sure the edge of the board was not reached.
+            if(tempPointLeft.x < 1)
+            {
+                leftEdgeNotReached = false;
+            }
+
+            //Check right.
+            while(aHorizontalBlockedPathList.contains(tempPointRight))
+            {
+                rightCount++;
+                tempPointRight.set(tempPointRight.x + 1, tempPointRight.y);
+            }
+
+            //Make sure the edge of the board was not reached.
+            if(tempPointRight.x > 9)
+            {
+                rightEdgeNotReached = false;
+            }
+
+            System.out.println("leftCount: " + leftCount + ", rightCount: " + rightCount);
+
+            if(leftCount <= rightCount && leftEdgeNotReached)
+            {
+                System.out.println("Left count is better, and the left edge was not reached.");
+                //The left side of the wall row is the best place to put the wall, but first check to see if a wall is already in that spot and also for the back edge of the board.
+                Point tempWallCenter = new Point(tempPointLeft.x, tempPointLeft.y + 1);
+                if(aWallArray.contains(new Wall(false, tempWallCenter.x, tempWallCenter.y)) || aWallArray.contains(new Wall(true, tempWallCenter.x, tempWallCenter.y)) || aUserPosition.y == 9)
+                {
+                    //There is already a wall there, try one spot up.
+                    tempWallCenter.set(tempWallCenter.x, tempWallCenter.y - 1);
+                    if(aWallArray.contains(new Wall(false, tempWallCenter.x, tempWallCenter.y)) || aWallArray.contains(new Wall(true, tempWallCenter.x, tempWallCenter.y)))
+                    {
+                        //There is a wall there too.
+                        wallNotPlaced = true;
+                    }
+                    else
+                    {
+                        //There is not a wall in this spot.  Now check for overlapping walls.
+                        Point topHalf = new Point(tempWallCenter);
+                        Point bottomHalf = new Point(tempWallCenter.x, tempWallCenter.y + 1);
+                        if(aVerticalBlockedPathList.contains(topHalf) || aVerticalBlockedPathList.contains(bottomHalf))
+                        {
+                            //The wall would overlap with another vertical wall.
+                            wallNotPlaced = true;
+                        }
+                        else
+                        {
+                            //Everything checks out, place the wall.
+                            aVerticalBlockedPathList.add(topHalf);
+                            aVerticalBlockedPathList.add(bottomHalf);
+
+                            wall = new Wall(true, tempWallCenter.x, tempWallCenter.y);
+                            aWallArray.add(wall);
+                            numAIWallsRemaining--;
+                        }
+                    }
+                }
+                else
+                {
+                    //The center point is open, but now check for overlapping walls.
+                    Point topHalf = new Point(tempWallCenter);
+                    Point bottomHalf = new Point(tempWallCenter.x, tempWallCenter.y + 1);
+                    if(aVerticalBlockedPathList.contains(topHalf) || aVerticalBlockedPathList.contains(bottomHalf))
+                    {
+                        //The wall would overlap with another vertical wall.
+                        wallNotPlaced = true;
+                    }
+                    else
+                    {
+                        //Everything checks out, place the wall.
+                        aVerticalBlockedPathList.add(topHalf);
+                        aVerticalBlockedPathList.add(bottomHalf);
+
+                        wall = new Wall(true, tempWallCenter.x, tempWallCenter.y);
+                        aWallArray.add(wall);
+                        numAIWallsRemaining--;
+                    }
+                }
+            }
+            else
+            {
+                System.out.println("Right count is better or the left edge was reached");
+                wallNotPlaced = true;
+            }
+
+            if((rightCount < leftCount || wallNotPlaced) && rightEdgeNotReached)
+            {
+                System.out.println("Trying to place a right wall now.");
+                //Either the right side was the best, or the left side could not get a wall placed there.
+                Point tempWallCenter = new Point(tempPointRight.x - 1, tempPointRight.y + 1);
+                if(aWallArray.contains(new Wall(false, tempWallCenter.x, tempWallCenter.y)) || aWallArray.contains(new Wall(true, tempWallCenter.x, tempWallCenter.y)) || aUserPosition.y == 9)
+                {
+                    //There is already a wall there, try one spot up.
+                    tempWallCenter.set(tempWallCenter.x, tempWallCenter.y - 1);
+                    if(aWallArray.contains(new Wall(false, tempWallCenter.x, tempWallCenter.y)) || aWallArray.contains(new Wall(true, tempWallCenter.x, tempWallCenter.y)))
+                    {
+                        //There is a wall there too.
+                        wallNotPlaced = true; //I know this assignment does not do anything, but I think it helps readability of the code.
+                    }
+                    else
+                    {
+                        //There is not a wall in this spot.  Now check for overlapping walls.
+                        Point topHalf = new Point(tempWallCenter);
+                        Point bottomHalf = new Point(tempWallCenter.x, tempWallCenter.y + 1);
+                        if(aVerticalBlockedPathList.contains(topHalf) || aVerticalBlockedPathList.contains(bottomHalf))
+                        {
+                            //The wall would overlap with another vertical wall.
+                            wallNotPlaced = true; //I know this assignment does not do anything, but I think it helps readability of the code.
+                        }
+                        else
+                        {
+                            //Everything checks out, place the wall.
+                            aVerticalBlockedPathList.add(topHalf);
+                            aVerticalBlockedPathList.add(bottomHalf);
+
+                            wall = new Wall(true, tempWallCenter.x, tempWallCenter.y);
+                            aWallArray.add(wall);
+                            numAIWallsRemaining--;
+                        }
+                    }
+                }
+                else
+                {
+                    //The center point is open, but now check for overlapping walls.
+                    Point topHalf = new Point(tempWallCenter);
+                    Point bottomHalf = new Point(tempWallCenter.x, tempWallCenter.y + 1);
+                    if(aVerticalBlockedPathList.contains(topHalf) || aVerticalBlockedPathList.contains(bottomHalf))
+                    {
+                        //The wall would overlap with another vertical wall.
+                        wallNotPlaced = true; //I know this assignment does not do anything, but I think it helps readability of the code.
+                    }
+                    else
+                    {
+                        //Everything checks out, place the wall.
+                        aVerticalBlockedPathList.add(topHalf);
+                        aVerticalBlockedPathList.add(bottomHalf);
+
+                        wall = new Wall(true, tempWallCenter.x, tempWallCenter.y);
+                        aWallArray.add(wall);
+                        numAIWallsRemaining--;
+                    }
+                }
+            }
+        }
+
+        return wall;
+    }
+
+    /**
+     * Places a Wall somewhere in front of the user.
+     *
+     * @param aUserPosition
+     *              The position of the user's pawn.
+     * @param aWallArray
+     *              An ArrayList of walls on the game board.
+     * @param aHorizontalBlockedPathList
+     *              An ArrayList of blocked horizontal paths on the game board.
+     * @return Wall
+     *              The wall that the AI placed on the board.  Null if the AI did not place a wall.
+     */
+    public Wall placeRandomWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList)
+    {
         Wall wall = null;
         int xLeft; //The x coordinate for the left blocked path by the wall to be placed
         int yLeft; //The y coordinate for the left blocked path by the wall to be placed
@@ -379,211 +554,6 @@ public class AI
     }
 
     /**
-     * Calculates the shortest path to the other end of the board,
-     * and moves the AI's pawn to the next point on that path.
-     *
-     * @return boolean
-     *              True if the AI's pawn was moved, false otherwise.
-     */
-    /*public boolean makeGoodAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
-    {
-        System.out.println("The makeGoodAIPawnMove() method was called.");
-        int downMoveCount = 0;
-        int upMoveCount = 0;
-        int leftMoveCount = 0;
-        int rightMoveCount = 0;
-
-        checkedPositions.clear();
-        checkedPositions.add(aiPosition);
-        visitedPositions.clear();
-        visitedPositions.add(aiPosition);
-        if(canAIMoveDown(aUserPosition, aiPosition, aHorizontalBlockedPathList))
-            downMoveCount = nextMove(aUserPosition, new Point(aiPosition.x, aiPosition.y + 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, 0) + 1;
-        else
-            downMoveCount = 200;
-
-        System.out.println("Down move count after recursive call: " + downMoveCount);
-
-        visitedPositions.clear();
-        visitedPositions.add(aiPosition);
-        if(canAIMoveLeft(aUserPosition, aiPosition, aVerticalBlockedPathList))
-            leftMoveCount = nextMove(aUserPosition, new Point(aiPosition.x - 1, aiPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, 0);
-        else
-            leftMoveCount = 200;
-
-        visitedPositions.clear();
-        visitedPositions.add(aiPosition);
-        if(canAIMoveRight(aUserPosition, aiPosition, aVerticalBlockedPathList))
-            rightMoveCount = nextMove(aUserPosition, new Point(aiPosition.x + 1, aiPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, 0);
-        else
-            rightMoveCount = 200;
-
-        visitedPositions.clear();
-        visitedPositions.add(aiPosition);
-        if(canAIMoveUp(aUserPosition, aiPosition, aHorizontalBlockedPathList))
-            upMoveCount = nextMove(aUserPosition, new Point(aiPosition.x, aiPosition.y - 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, 0);
-        else
-            upMoveCount = 200;
-
-        System.out.println("The Move Counts -" + "  Down: " + downMoveCount + "  Up: " + upMoveCount + "  Left: " + leftMoveCount + "  Right: " + rightMoveCount);
-
-        if(downMoveCount <= upMoveCount)
-        {
-            if(downMoveCount <= leftMoveCount)
-            {
-                if(downMoveCount <= rightMoveCount)
-                {
-                    //A down move is the most efficient.
-                    aiPosition.set(aiPosition.x, aiPosition.y + 1);
-                    System.out.println("End of the makeGoodAIPawnMove() method; Down Move was picked.");
-                    return true;
-                }
-            }
-        }
-
-        if(leftMoveCount <= rightMoveCount)
-        {
-            if(leftMoveCount <= upMoveCount)
-            {
-                //A left move is the most efficient.
-                aiPosition.set(aiPosition.x - 1, aiPosition.y);
-                System.out.println("End of the makeGoodAIPawnMove() method; Left Move was picked.");
-                return true;
-            }
-        }
-
-        if(rightMoveCount <= upMoveCount)
-        {
-            //A right move is the most efficient.
-
-            aiPosition.set(aiPosition.x + 1, aiPosition.y);
-            System.out.println("End of the makeGoodAIPawnMove() method; Right Move was picked.");
-            return true;
-        }
-        else
-        {
-            //An up move is the most efficient.
-            aiPosition.set(aiPosition.x, aiPosition.y - 1);
-            System.out.println("End of the makeGoodAIPawnMove() method; Up Move was picked.");
-            return true;
-        }
-    }
-
-    private int nextMove(Point aUserPosition, Point aNextPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList, int aMoveCount)
-    {
-        //checkedPositions.add(aNextPosition);
-        aMoveCount++;
-        System.out.println("aMoveCount: " + aMoveCount);
-
-        int downMoveCount = aMoveCount;
-        int upMoveCount = aMoveCount;
-        int leftMoveCount = aMoveCount;
-        int rightMoveCount = aMoveCount;
-
-        int downMoveReturn = 0;
-        int upMoveReturn = 0;
-        int leftMoveReturn = 0;
-        int rightMoveReturn = 0;
-
-        if(aNextPosition.y == 9)
-        {
-            System.out.println("The base case has been reached; returning 0");
-            return 0;
-        }
-        else
-        {
-            if(aMoveCount > 30 || aNextPosition.equals(aiPosition))
-            {
-                System.out.println("The max number of moves has been reached, returning 21.");
-                return 199;
-            }
-            else
-            {
-                visitedPositions.add(aNextPosition);
-
-                if(canAIMoveDown(aUserPosition, aNextPosition, aHorizontalBlockedPathList) && (!checkedPositions.contains(new Point(aNextPosition.x, aNextPosition.y + 1))) && (!visitedPositions.contains(new Point(aNextPosition.x, aNextPosition.y + 1)))) {
-                    System.out.println("The AI can move down");
-                    downMoveReturn =  nextMove(aUserPosition, new Point(aNextPosition.x, aNextPosition.y + 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, downMoveCount) + 1;
-                    System.out.println("nextMove() just returned a downMoveCount value of " + downMoveReturn);
-                }
-                else
-                    downMoveReturn = 200;
-
-                if(canAIMoveLeft(aUserPosition, aNextPosition, aVerticalBlockedPathList) && (!checkedPositions.contains(new Point(aNextPosition.x - 1, aNextPosition.y))) && (!visitedPositions.contains(new Point(aNextPosition.x - 1, aNextPosition.y)))) {
-                    System.out.println("The AI can move left");
-                    leftMoveReturn = nextMove(aUserPosition, new Point(aNextPosition.x - 1, aNextPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, leftMoveCount) + 1;
-                    System.out.println("nextMove() just returned a leftMoveCount value of " + leftMoveReturn);
-                }
-                else
-                    leftMoveReturn = 200;
-
-                if(canAIMoveRight(aUserPosition, aNextPosition, aVerticalBlockedPathList) && (!checkedPositions.contains(new Point(aNextPosition.x + 1, aNextPosition.y))) && (!visitedPositions.contains(new Point(aNextPosition.x + 1, aNextPosition.y)))) {
-                    System.out.println("The AI can move right");
-                    rightMoveReturn = nextMove(aUserPosition, new Point(aNextPosition.x + 1, aNextPosition.y), aHorizontalBlockedPathList, aVerticalBlockedPathList, rightMoveCount) + 1;
-                    System.out.println("nextMove() just returned a rightMoveCount value of " + rightMoveReturn);
-                }
-                else
-                    rightMoveReturn = 200;
-
-                if(canAIMoveUp(aUserPosition, aNextPosition, aHorizontalBlockedPathList) && (!checkedPositions.contains(new Point(aNextPosition.x, aNextPosition.y - 1))) && (!visitedPositions.contains(new Point(aNextPosition.x, aNextPosition.y - 1)))) {
-                    System.out.println("The AI can move up");
-                    upMoveReturn = nextMove(aUserPosition, new Point(aNextPosition.x, aNextPosition.y - 1), aHorizontalBlockedPathList, aVerticalBlockedPathList, upMoveCount) + 1;
-                    System.out.println("nextMove() just returned a upMoveCount value of " + upMoveReturn);
-                }
-                else
-                    upMoveReturn = 200;
-
-                //if(aMoveCount > 10)
-                //    checkedPositions.remove(aNextPosition);
-                visitedPositions.remove(aNextPosition);
-
-
-                System.out.println("End of nextMove() - "+ "  Down: " + downMoveReturn + "  Up: " + upMoveReturn + "  Left: " + leftMoveReturn + "  Right: " + rightMoveReturn);
-                //Return the smallest of the four moves
-                if(downMoveReturn <= upMoveReturn)
-                {
-                    if(downMoveReturn <= leftMoveReturn)
-                    {
-                        if(downMoveReturn <= rightMoveReturn)
-                        {
-                            //A down move is the most efficient.
-                            if(downMoveReturn <= 31)
-                                checkedPositions.add(aNextPosition);
-                            return downMoveReturn;
-                        }
-                    }
-                }
-
-                if(leftMoveReturn <= rightMoveReturn)
-                {
-                    if(leftMoveReturn <= upMoveReturn)
-                    {
-                        //A left move is the most efficient.
-                        if(leftMoveReturn <= 31)
-                            checkedPositions.add(aNextPosition);
-                        return leftMoveReturn;
-                    }
-                }
-
-                if(rightMoveReturn <= upMoveReturn)
-                {
-                    //A right move is the most efficient.
-                    if(rightMoveReturn <= 31)
-                        checkedPositions.add(aNextPosition);
-                    return rightMoveReturn;
-                }
-                else
-                {
-                    //An up move is the most efficient.
-                    if(upMoveReturn <= 31)
-                        checkedPositions.add(aNextPosition);
-                    return upMoveReturn;
-                }
-            }
-        }
-    }*/
-
-    /**
      * Pick a random spot to move the AI's pawn to.
      *
      * @param aUserPosition
@@ -634,64 +604,64 @@ public class AI
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y - 1);
                         hasMoved = canMoveUp;
-                        break;
                     }
+                    break;
                 case 1:
                     if(canMoveLeft)
                     {
                         aiPosition.set(aiPosition.x - 1, aiPosition.y);
                         hasMoved = canMoveLeft;
-                        break;
                     }
+                    break;
                 case 2:
                     if(canMoveLeft)
                     {
                         aiPosition.set(aiPosition.x - 1, aiPosition.y);
                         hasMoved = canMoveLeft;
-                        break;
                     }
+                    break;
                 case 3:
                     if(canMoveRight)
                     {
                         aiPosition.set(aiPosition.x + 1, aiPosition.y);
                         hasMoved = canMoveRight;
-                        break;
                     }
+                    break;
                 case 4:
                     if(canMoveRight)
                     {
                         aiPosition.set(aiPosition.x + 1, aiPosition.y);
                         hasMoved = canMoveRight;
-                        break;
                     }
+                    break;
                 case 5:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
                         hasMoved = canMoveDown;
-                        break;
                     }
+                    break;
                 case 6:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
                         hasMoved = canMoveDown;
-                        break;
                     }
+                    break;
                 case 7:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
                         hasMoved = canMoveDown;
-                        break;
                     }
+                    break;
                 case 8:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
                         hasMoved = canMoveDown;
-                        break;
                     }
+                    break;
             }
         }
     }

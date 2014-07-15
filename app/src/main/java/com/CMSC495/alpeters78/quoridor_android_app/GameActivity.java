@@ -16,13 +16,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
-
+import java.util.Random;
 
 
 public class GameActivity extends Activity implements View.OnClickListener {
 
     //Instance variables
-    public ArrayList<Wall> wallArray = new ArrayList<Wall>(); //Stores the details of the walls on the board - //TODO are you using this?  Yes I am.
+    public ArrayList<Wall> wallArray = new ArrayList<Wall>(); //Stores the details of the walls on the board
     public ArrayList<Point> placedWalls = new ArrayList<Point>();//stores the center point of the placed walls
     public ArrayList<Point> hBlockedPathList = new ArrayList<Point>(); //The paths that are blocked by horizontal walls
     public ArrayList<Point> vBlockedPathList = new ArrayList<Point>(); //The paths that are blocked by horizontal walls
@@ -54,8 +54,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //Initialize listeners
         setPawnClickListeners();
         setWallClickListeners();
-        setWallCLickListenersOFF(); //TODO This is not working.  A Wall can still be placed even before the wall radio button is selected.
-        //TODO We need to prevent the screen from rotating since we don't have a horizontal view setup.
+        setWallCLickListenersOFF();
     }
 
     @Override
@@ -137,10 +136,16 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                 popupWindow.showAsDropDown((ImageView) findViewById(R.id.pawn32), -35, 0);
             } else {
+
+
+
                 //The user's turn is over and he/she did not win, now let the AI make a move.
 
-                //Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
-                Wall newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+                //First, always try to use the placeVerticalWall method.
+                Wall newWall;
+                newWall = ai.placeVerticalWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+
+                //Check to see if a wall was placed.
                 if(newWall != null && (!User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9))) {
                     if(newWall.getOrientation())
                         setAIVerWallImage(newWall.getPosition());
@@ -148,27 +153,140 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         setAIHorWallImage(newWall.getPosition());
 
                 } else {
-                    //A wall was not placed.
-                    System.out.println("A Wall is already in that spot or the AI is out of walls.");
+                    //A wall was not placed
                     if(newWall != null && !newWall.getOrientation()){ //Remove Horizontal wall that blocks winning path from all lists.
-                        Point temp1 = newWall.getPosition();
-                        Point temp2 = new Point(newWall.getPosition().x + 1,newWall.getPosition().y);
-                        hBlockedPathList.remove(temp1);
-                        hBlockedPathList.remove(temp2);
+                        hBlockedPathList.remove(newWall.getPosition());
+                        hBlockedPathList.remove(new Point(newWall.getPosition().x + 1, newWall.getPosition().y));
                         wallArray.remove(newWall);
                         ai.numAIWallsRemaining++;
                     }
                     else if(newWall != null && newWall.getOrientation()){ //Remove Vertical wall that blocks winning path from all lists.
-                        Point temp1 = newWall.getPosition();
-                        Point temp2 = new Point(newWall.getPosition().x,newWall.getPosition().y - 1);
-                        vBlockedPathList.remove(temp1);
-                        vBlockedPathList.remove(temp2);
+                        vBlockedPathList.remove(newWall.getPosition());
+                        vBlockedPathList.remove(new Point(newWall.getPosition().x, newWall.getPosition().y + 1));
                         wallArray.remove(newWall);
                         ai.numAIWallsRemaining++;
                     }
-                    ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
-                    //ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList);
-                    setAIPawnImage();
+
+                    //Now try to either place another wall or move the pawn.
+                    //Keep trying random moves until one of them is valid.
+                    boolean aiHasMoved = false;
+                    boolean isWallMove = false;
+                    Random random = new Random();
+
+                    while(!aiHasMoved)
+                    {
+                        int index = random.nextInt(8);
+                        System.out.println("Random index: " + index);
+
+                        switch (index) {
+                            case 0:
+                                System.out.println("blockUserPathWithWall() is tried");
+                                newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList);
+                                isWallMove = true;
+                                break;
+
+                            case 1:
+                                System.out.println("blockUserPathWithWall() is tried");
+                                newWall = ai.blockUserPathWithWall(user.userPosition, wallArray, hBlockedPathList);
+                                isWallMove = true;
+                                break;
+
+                            case 2:
+                                System.out.println("placeRandomWall() is tried");
+                                newWall = ai.placeRandomWall(user.userPosition, wallArray, hBlockedPathList);
+                                isWallMove = true;
+                                break;
+
+                            case 3:
+                                System.out.println("makeRandomAIPawnMove() is executed");
+                                ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList); //This one is guaranteed, so there is not a reason to check
+                                aiHasMoved = true;
+                                isWallMove = false;
+                                setAIPawnImage();
+                                break;
+
+                            case 4:
+                                System.out.println("makeGoodAIPawnMove() is tried");
+                                if(ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList))
+                                {
+                                    System.out.println("makeGoodAIPawnMove() is executed");
+                                    aiHasMoved = true;
+                                    setAIPawnImage();
+                                }
+                                isWallMove = false;
+                                break;
+
+                            case 5:
+                                System.out.println("makeGoodAIPawnMove() is tried");
+                                if(ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList))
+                                {
+                                    System.out.println("makeGoodAIPawnMove() is executed");
+                                    aiHasMoved = true;
+                                    setAIPawnImage();
+                                }
+                                isWallMove = false;
+                                break;
+
+                            case 6:
+                                System.out.println("makeGoodAIPawnMove() is tried");
+                                if(ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList))
+                                {
+                                    System.out.println("makeGoodAIPawnMove() is executed");
+                                    aiHasMoved = true;
+                                    setAIPawnImage();
+                                }
+                                isWallMove = false;
+                                break;
+
+                            case 7:
+                                System.out.println("makeGoodAIPawnMove() is tried");
+                                if(ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList))
+                                {
+                                    System.out.println("makeGoodAIPawnMove() is executed");
+                                    aiHasMoved = true;
+                                    setAIPawnImage();
+                                }
+                                isWallMove = false;
+                                break;
+                        }
+
+                        if(isWallMove)
+                        {
+                            System.out.println("It is a wall move, so check if it should be placed");
+                            //Check to see if a wall was placed.
+                            if (newWall != null && (!User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9)))
+                            {
+                                System.out.println("The wall is being placed since it is valid");
+                                //A wall was placed, and it does not block anyone from winning the game.  Set the wall image.
+                                if (newWall.getOrientation())
+                                    setAIVerWallImage(newWall.getPosition());
+                                else
+                                    setAIHorWallImage(newWall.getPosition());
+
+                                aiHasMoved = true;
+                            }
+                            else
+                            {
+                                System.out.println("The wall should not be placed");
+                                //A wall was not placed
+                                if (newWall != null && !newWall.getOrientation()) { //Remove Horizontal wall that blocks winning path from all lists.
+                                    hBlockedPathList.remove(newWall.getPosition());
+                                    hBlockedPathList.remove(new Point(newWall.getPosition().x + 1, newWall.getPosition().y));
+                                    wallArray.remove(newWall);
+                                    ai.numAIWallsRemaining++;
+                                } else if (newWall != null && newWall.getOrientation()) { //Remove Vertical wall that blocks winning path from all lists.
+                                    vBlockedPathList.remove(newWall.getPosition());
+                                    vBlockedPathList.remove(new Point(newWall.getPosition().x, newWall.getPosition().y + 1));
+                                    wallArray.remove(newWall);
+                                    ai.numAIWallsRemaining++;
+                                }
+
+                                aiHasMoved = false;
+                            }
+                        }
+
+                    }
+
                 }
 
                 didAIWin = checkForWin();
@@ -200,7 +318,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     popupWindow.showAsDropDown(findViewById(R.id.pawn12), 36, 0);
                 }
 
-
             }
 
             if(didUserWin || didAIWin) {
@@ -231,7 +348,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //TEST BLOCK
 
         //First wait for the user to move.
-        System.out.println("onClick method was invoked.");
+        /*System.out.println("onClick method was invoked.");
 
         //print out wall centers
         System.out.println("Wall Array");
@@ -250,7 +367,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         System.out.println("V Blocked Paths");
         for(int i = vBlockedPathList.size()-1; i >= 0; i--) {
             System.out.println(vBlockedPathList.get(i));
-        }
+        }*/
 
 
 
