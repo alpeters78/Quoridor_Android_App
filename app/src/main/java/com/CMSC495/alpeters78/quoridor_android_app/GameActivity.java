@@ -138,7 +138,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
             } else {
 
 
-
                 //The user's turn is over and he/she did not win, now let the AI make a move.
 
                 //First, always try to use the placeVerticalWall method.

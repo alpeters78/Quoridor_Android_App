@@ -15,7 +15,6 @@ public class AI
     //Instance variables
     public Point aiPosition; //Stores the current AI Position on the game board
     public int numAIWallsRemaining;  //The AI starts with 10 walls
-    private ArrayList<Point> checkedPositions;
     private ArrayList<Point> visitedPositions;
 
 
@@ -23,7 +22,6 @@ public class AI
     {
         aiPosition = new Point(5, 1);
         numAIWallsRemaining = 10; //The AI starts with 10 walls
-        checkedPositions = new ArrayList<Point>();
         visitedPositions = new ArrayList<Point>();
     }
 
@@ -182,12 +180,6 @@ public class AI
     public Wall placeVerticalWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
         Wall wall = null;
-        int xLeft; //The x coordinate for the left blocked path by the wall to be placed
-        int yLeft; //The y coordinate for the left blocked path by the wall to be placed
-        int xRight; //The x coordinate for the right blocked path by the wall to be placed
-        int yRight; //The y coordinate for the right blocked path by the wall to be placed
-        int xCenter; //The x coordinate for the center point of the wall to be placed
-        int yCenter; //The y coordinate for the center point of the wall to be placed
 
         //First check to see if the AI has any walls left
         if(numAIWallsRemaining == 0)
@@ -565,7 +557,6 @@ public class AI
      */
     public void makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
-        //TODO The randomness of this method can be tweaked as needed.
         //First, check to see if the users pawn can be jumped.
         if(isForwardPawnJumpPossible(aUserPosition, aHorizontalBlockedPathList))
         {
