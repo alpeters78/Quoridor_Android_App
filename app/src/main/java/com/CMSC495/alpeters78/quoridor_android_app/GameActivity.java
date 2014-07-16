@@ -18,6 +18,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static android.app.ActivityManager.isUserAMonkey;
+
 
 public class GameActivity extends Activity implements View.OnClickListener {
 
@@ -107,7 +109,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
             //Turn off all clicks since the user turn is over.
             setPawnCLickListenersOFF();
             setWallCLickListenersOFF();
-
+            isUserAMonkey();
             didUserWin = checkForWin(); //Check to see if user won.
             if(didUserWin) {
                 //The user won.  Show a popup window.
@@ -134,9 +136,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     }
                 });
 
-                popupWindow.showAsDropDown((ImageView) findViewById(R.id.pawn32), -35, 0);
+                popupWindow.showAsDropDown(findViewById(R.id.pawn32), -35, 0);
             } else {
-
 
                 //The user's turn is over and he/she did not win, now let the AI make a move.
 
@@ -319,6 +320,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             }
 
+
             if(didUserWin || didAIWin) {
                 setPawnCLickListenersOFF();
                 setWallCLickListenersOFF();
@@ -428,6 +430,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             ImageView path2 = (ImageView) findViewById(path2ID);
             path2.setImageResource(R.drawable.h_path);
+
 
             //add blocked paths and wall centers to array lists
             Point blockedPath1 = new Point(aPossibleWallPosition.x, aPossibleWallPosition.y);
@@ -3782,11 +3785,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
      * True if someone won, false if no one won.
      */
     private boolean checkForWin() {
-        if (user.userPosition.y == 1 || ai.aiPosition.y == 9)
-            return true; //Either the AI or User has won.
-        else
-            return false; //No one has won, keep playing the game!
+        //Returns true if either the AI or User has won.
+        return user.userPosition.y == 1 || ai.aiPosition.y == 9;
     }
-
 
 }
