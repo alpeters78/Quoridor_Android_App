@@ -175,7 +175,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     while(!aiHasMoved)
                     {
-                        int index = random.nextInt(8);
+                        int index = random.nextInt(7);
                         System.out.println("Random index: " + index);
 
                         switch (index) {
@@ -228,17 +228,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                                 break;
 
                             case 6:
-                                System.out.println("makeGoodAIPawnMove() is tried");
-                                if(ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList))
-                                {
-                                    System.out.println("makeGoodAIPawnMove() is executed");
-                                    aiHasMoved = true;
-                                    setAIPawnImage();
-                                }
-                                isWallMove = false;
-                                break;
-
-                            case 7:
                                 System.out.println("makeGoodAIPawnMove() is tried");
                                 if(ai.makeGoodAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList))
                                 {

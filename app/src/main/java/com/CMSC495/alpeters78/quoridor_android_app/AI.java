@@ -466,6 +466,23 @@ public class AI
         boolean pathNotFound = true;
         visitedPositions.clear();
 
+        //First, check to see if the users pawn can be jumped.
+        if(isForwardPawnJumpPossible(aUserPosition, aHorizontalBlockedPathList))
+        {
+            //The users pawn can be jumped, but we need to see if there is a wall behind the user's pawn.
+            if(!aHorizontalBlockedPathList.contains(aUserPosition))
+            {
+                //The path behind the user is NOT blocked, so jump the user.
+                aiPosition.y = aiPosition.y + 2;
+                return true; //The AI made its move by jumping the user's pawn.
+            }
+            else
+            {
+                //The path behind the user is blocked, but it still might be possible to move left or right.
+                //TODO We probably don't have to implement this check, but I left a place for it if we do.
+            }
+        }
+
         moveCounts.add(new ArrayList<Node<Point>>());
 
         //Add the first round of moves
@@ -669,13 +686,12 @@ public class AI
      */
     private boolean isForwardPawnJumpPossible(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList)
     {
-        if(aiPosition.x == aUserPosition.x && aiPosition.y == aUserPosition.y + 1)
+        if(aiPosition.x == aUserPosition.x && aiPosition.y + 1 == aUserPosition.y)
         {
             //The user and AI pawns are face to face.
 
             // Now check to make sure there is not a wall between them.
-            Point tempPath = new Point(aiPosition.x, aiPosition.y);
-            if(aHorizontalBlockedPathList.contains(tempPath))
+            if(aHorizontalBlockedPathList.contains(aiPosition))
                 return false;
 
             //There is not a wall between them.
