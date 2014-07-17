@@ -41,7 +41,6 @@ public class AI
     public Wall blockUserPathWithWall(Point aUserPosition, ArrayList<Wall> aWallArray, ArrayList<Point> aHorizontalBlockedPathList)
     {
         Wall wall = null;
-        Iterator<Wall> wallIterator;
         Iterator<Point> blockedPathIterator1;
         Iterator<Point> blockedPathIterator2;
         Iterator<Point> blockedPathIterator3;
@@ -56,16 +55,15 @@ public class AI
 
         //First check to see if the AI has any walls left
         if(numAIWallsRemaining == 0)
-        {
-            return wall; //Return the null wall.
-        }
+            return null; //Return the null wall.
+
         //Next check to see if the user's path forward is already blocked.
         blockedPathIterator1 = aHorizontalBlockedPathList.iterator();
         while(blockedPathIterator1.hasNext())
         {
             Point tempPoint = blockedPathIterator1.next();
             if(tempPoint.x == aUserPosition.x && tempPoint.y == aUserPosition.y - 1)
-                return wall; //The user's path forward is already being blocked, so return null.
+                return null; //The user's path forward is already being blocked, so return null.
         }
 
 
@@ -119,9 +117,7 @@ public class AI
             }
 
             if(isRightPathBlocked)
-            {
-                return wall; //We now know that both the left path is blocked and the right path is blocked, so a wall will not fit there. Return a null wall.
-            }
+                return null; //We now know that both the left path is blocked and the right path is blocked, so a wall will not fit there. Return a null wall.
             else
             {
                 //The center and right paths are open, so place a horizontal wall there.
@@ -183,9 +179,7 @@ public class AI
 
         //First check to see if the AI has any walls left
         if(numAIWallsRemaining == 0)
-        {
-            return wall; //Return the null wall since there are no remaining walls.
-        }
+            return null; //Return the null wall since there are no remaining walls.
 
         //Now see if the user's pawn has a wall directly in front of it.
         if(aHorizontalBlockedPathList.contains(new Point(aUserPosition.x, aUserPosition.y - 1)))
@@ -304,6 +298,7 @@ public class AI
                     if(aWallArray.contains(new Wall(false, tempWallCenter.x, tempWallCenter.y)) || aWallArray.contains(new Wall(true, tempWallCenter.x, tempWallCenter.y)))
                     {
                         //There is a wall there too.
+                        //noinspection UnusedAssignment
                         wallNotPlaced = true; //I know this assignment does not do anything, but I think it helps readability of the code.
                     }
                     else
@@ -314,6 +309,7 @@ public class AI
                         if(aVerticalBlockedPathList.contains(topHalf) || aVerticalBlockedPathList.contains(bottomHalf))
                         {
                             //The wall would overlap with another vertical wall.
+                            //noinspection UnusedAssignment
                             wallNotPlaced = true; //I know this assignment does not do anything, but I think it helps readability of the code.
                         }
                         else
@@ -336,6 +332,7 @@ public class AI
                     if(aVerticalBlockedPathList.contains(topHalf) || aVerticalBlockedPathList.contains(bottomHalf))
                     {
                         //The wall would overlap with another vertical wall.
+                        //noinspection UnusedAssignment
                         wallNotPlaced = true; //I know this assignment does not do anything, but I think it helps readability of the code.
                     }
                     else
@@ -380,9 +377,7 @@ public class AI
 
         //First check to see if the AI has any walls left
         if(numAIWallsRemaining == 0)
-        {
-            return wall; //Return the null wall since there are no remaining walls.
-        }
+            return null; //Return the null wall since there are no remaining walls.
 
         //Get a random y value somewhere between row 0 and the users row.
         Random random = new Random();
@@ -487,16 +482,16 @@ public class AI
 
         //Add the first round of moves
         if(canAIMoveDown(aUserPosition, aiPosition, aHorizontalBlockedPathList))
-            moveCounts.get(0).add(new Node(new Point(aiPosition.x, aiPosition.y + 1), null));
+            moveCounts.get(0).add(new Node<Point>(new Point(aiPosition.x, aiPosition.y + 1), null));
 
         if(canAIMoveLeft(aUserPosition, aiPosition, aVerticalBlockedPathList))
-            moveCounts.get(0).add(new Node(new Point(aiPosition.x - 1, aiPosition.y), null));
+            moveCounts.get(0).add(new Node<Point>(new Point(aiPosition.x - 1, aiPosition.y), null));
 
         if(canAIMoveRight(aUserPosition, aiPosition, aVerticalBlockedPathList))
-            moveCounts.get(0).add(new Node(new Point(aiPosition.x + 1, aiPosition.y), null));
+            moveCounts.get(0).add(new Node<Point>(new Point(aiPosition.x + 1, aiPosition.y), null));
 
         if(canAIMoveUp(aUserPosition, aiPosition, aHorizontalBlockedPathList))
-            moveCounts.get(0).add(new Node(new Point(aiPosition.x, aiPosition.y - 1), null));
+            moveCounts.get(0).add(new Node<Point>(new Point(aiPosition.x, aiPosition.y - 1), null));
 
         visitedPositions.add(aiPosition); //No reason to come back to where we have already visited.
 
@@ -520,20 +515,21 @@ public class AI
 
             for(int i = 0; i < length; i++)
             {
-                Point currentPosition = new Point(moveCounts.get(index - 1).get(i).point);
+                Point currentPosition;
+                currentPosition = new Point(moveCounts.get(index - 1).get(i).point);
                 visitedPositions.add(currentPosition); //No reason to keep coming back to where we have already visited.
 
                 if(canAIMoveDown(null, currentPosition, aHorizontalBlockedPathList) && (!visitedPositions.contains(new Point(currentPosition.x, currentPosition.y + 1))))
-                    moveCounts.get(index).add(new Node(new Point(currentPosition.x, currentPosition.y + 1), moveCounts.get(index - 1).get(i)));
+                    moveCounts.get(index).add(new Node<Point>(new Point(currentPosition.x, currentPosition.y + 1), moveCounts.get(index - 1).get(i)));
 
                 if(canAIMoveLeft(null, currentPosition, aVerticalBlockedPathList) && (!visitedPositions.contains(new Point(currentPosition.x - 1, currentPosition.y))))
-                    moveCounts.get(index).add(new Node(new Point(currentPosition.x - 1, currentPosition.y), moveCounts.get(index - 1).get(i)));
+                    moveCounts.get(index).add(new Node<Point>(new Point(currentPosition.x - 1, currentPosition.y), moveCounts.get(index - 1).get(i)));
 
                 if(canAIMoveRight(null, currentPosition, aVerticalBlockedPathList) && (!visitedPositions.contains(new Point(currentPosition.x + 1, currentPosition.y))))
-                    moveCounts.get(index).add(new Node(new Point(currentPosition.x + 1, currentPosition.y), moveCounts.get(index - 1).get(i)));
+                    moveCounts.get(index).add(new Node<Point>(new Point(currentPosition.x + 1, currentPosition.y), moveCounts.get(index - 1).get(i)));
 
                 if(canAIMoveUp(null, currentPosition, aHorizontalBlockedPathList) && (!visitedPositions.contains(new Point(currentPosition.x, currentPosition.y - 1))))
-                    moveCounts.get(index).add(new Node(new Point(currentPosition.x, currentPosition.y - 1), moveCounts.get(index - 1).get(i)));
+                    moveCounts.get(index).add(new Node<Point>(new Point(currentPosition.x, currentPosition.y - 1), moveCounts.get(index - 1).get(i)));
             }
 
             iterator = moveCounts.get(index).iterator();
@@ -710,6 +706,7 @@ public class AI
      * @param aVerticalBlockedPathList
      *              An ArrayList of vertical blocked paths on the game board.
      * @return
+     *              True if moving the AI's pawn left is valid.
      */
     private boolean canAIMoveLeft(Point aUserPosition, Point anAIPosition, ArrayList<Point> aVerticalBlockedPathList) {
         //First check to see if the AI Position is out of bounds.
@@ -728,16 +725,7 @@ public class AI
             return false;
 
         //The position is not taken by the user's pawn, now test for wall.
-        if(aVerticalBlockedPathList.contains(new Point(anAIPosition.x - 1, anAIPosition.y)))
-        {
-            //There is a wall blocking the path to that position.
-            return false;
-        }
-        else
-        {
-            //No wall, and no user pawn.  The move is valid.
-            return true;
-        }
+        return !aVerticalBlockedPathList.contains(new Point(anAIPosition.x - 1, anAIPosition.y));
     }
 
     /**
@@ -749,6 +737,7 @@ public class AI
      * @param aVerticalBlockedPathList
      *              An ArrayList of vertical blocked paths on the game board.
      * @return
+     *              True if moving the AI's pawn right is valid.
      */
     private boolean canAIMoveRight(Point aUserPosition, Point anAIPosition, ArrayList<Point> aVerticalBlockedPathList) {
         //First check to see if the AI Position is out of bounds.
@@ -767,16 +756,7 @@ public class AI
             return false;
 
         //The position is not taken by the user's pawn, now test for wall.
-        if(aVerticalBlockedPathList.contains(anAIPosition))
-        {
-            //There is a wall blocking the path to that position.
-            return false;
-        }
-        else
-        {
-            //No wall, and no user pawn.  The move is valid.
-            return true;
-        }
+        return !aVerticalBlockedPathList.contains(anAIPosition);
     }
 
     /**
@@ -788,6 +768,7 @@ public class AI
      * @param aHorizontalBlockedPathList
      *              An ArrayList of horizontal blocked paths on the game board.
      * @return
+     *              True if moving the AI's pawn up is valid.
      */
     private boolean canAIMoveUp(Point aUserPosition, Point anAIPosition, ArrayList<Point> aHorizontalBlockedPathList)
     {
@@ -808,16 +789,7 @@ public class AI
 
         //The position is not taken by the user's pawn, now test for wall.
         //System.out.println("Possible AI Position in canAIMoveUp()  " + anAIPosition.toString());
-        if(aHorizontalBlockedPathList.contains(new Point(anAIPosition.x, anAIPosition.y - 1)))
-        {
-            //There is a wall blocking the path to that position.
-            return false;
-        }
-        else
-        {
-            //No wall, and no user pawn.  The move is valid.
-            return true;
-        }
+        return !aHorizontalBlockedPathList.contains(new Point(anAIPosition.x, anAIPosition.y - 1));
     }
 
     /**
@@ -829,6 +801,7 @@ public class AI
      * @param aHorizontalBlockedPathList
      *              An ArrayList of horizontal blocked paths on the game board.
      * @return
+     *              True if moving the AI's pawn down is valid.
      */
     private boolean canAIMoveDown(Point aUserPosition, Point anAIPosition, ArrayList<Point> aHorizontalBlockedPathList) {
         //First check to see if the AI Position is out of bounds.
@@ -843,16 +816,7 @@ public class AI
         }
 
         //The position is not taken by the user's pawn, now test for wall.
-        if(aHorizontalBlockedPathList.contains(anAIPosition))
-        {
-            //There is a wall blocking the path to that position.
-            return false;
-        }
-        else
-        {
-            //No wall, and no user pawn.  The move is valid.
-            return true;
-        }
+        return !aHorizontalBlockedPathList.contains(anAIPosition);
     }
 
     private class Node<T> implements Cloneable
