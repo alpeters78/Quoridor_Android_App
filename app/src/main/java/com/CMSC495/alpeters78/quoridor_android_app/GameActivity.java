@@ -144,6 +144,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 //First, always try to use the placeVerticalWall method.
                 Wall newWall;
                 newWall = ai.placeVerticalWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
+                System.out.println("Is User Path blocked? - Vwall " + User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1));
+                System.out.println("Is AI Path blocked? - Vwall " + User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9));
 
                 //Check to see if a wall was placed.
                 if(newWall != null && (!User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9))) {
@@ -173,6 +175,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     boolean isWallMove = false;
                     Random random = new Random();
 
+                    int count = 0;
+
                     while(!aiHasMoved)
                     {
                         int index = random.nextInt(7);
@@ -198,11 +202,13 @@ public class GameActivity extends Activity implements View.OnClickListener {
                                 break;
 
                             case 3:
-                                System.out.println("makeRandomAIPawnMove() is executed");
-                                ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList); //This one is guaranteed, so there is not a reason to check
-                                aiHasMoved = true;
+                                System.out.println("makeRandomAIPawnMove() is tried");
+                                if(ai.makeRandomAIPawnMove(user.userPosition, hBlockedPathList, vBlockedPathList)) {
+                                    System.out.println("makeRandomAIPawnMove() is executed");
+                                    aiHasMoved = true;
+                                    setAIPawnImage();
+                                }
                                 isWallMove = false;
-                                setAIPawnImage();
                                 break;
 
                             case 4:
@@ -242,6 +248,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         if(isWallMove)
                         {
                             System.out.println("It is a wall move, so check if it should be placed");
+                            System.out.println("User Path blocked " + User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1));
+                            System.out.println("AI Path blocked " + User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9));
                             //Check to see if a wall was placed.
                             if (newWall != null && (!User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9)))
                             {
@@ -273,7 +281,25 @@ public class GameActivity extends Activity implements View.OnClickListener {
                                 aiHasMoved = false;
                             }
                         }
-
+                        //Just in case this loop gets stuck. ex no walls remaining and only valid pawn move is a jump that isn't forward.
+                        count++;
+                        if(count >= 25) {
+                            ArrayList<Point> validAIPawnMoves = User.getUserValidNextPositions(user.userPosition, ai.aiPosition,hBlockedPathList,vBlockedPathList);
+                            System.out.println("User Position" + user.userPosition);
+                            System.out.println("AI Position" + ai.aiPosition);
+                            if(!validAIPawnMoves.isEmpty()){
+                                for(int i = validAIPawnMoves.size()-1;i >= 0; i--){
+                                    System.out.println(validAIPawnMoves.get(i));
+                                }
+                                ai.aiPosition = validAIPawnMoves.get(0);
+                                System.out.println("Last Resort Move Was Made!");
+                                aiHasMoved = true;
+                                setAIPawnImage();
+                            } else {
+                                System.out.println("Umm...Not good. No valid moves found!");
+                                aiHasMoved = true; //just to get out of the loop if this happens
+                            }
+                        }
                     }
 
                 }
@@ -338,7 +364,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         //TEST BLOCK
 
         //First wait for the user to move.
-        /*System.out.println("onClick method was invoked.");
+        System.out.println("onClick method was invoked.");
 
         //print out wall centers
         System.out.println("Wall Array");
@@ -357,8 +383,17 @@ public class GameActivity extends Activity implements View.OnClickListener {
         System.out.println("V Blocked Paths");
         for(int i = vBlockedPathList.size()-1; i >= 0; i--) {
             System.out.println(vBlockedPathList.get(i));
-        }*/
-
+        }
+        System.out.println("User Next Moves");
+        ArrayList<Point> userNextMoves = User.getUserValidNextPositions( ai.aiPosition, user.userPosition,hBlockedPathList,vBlockedPathList);
+        for(int i = userNextMoves.size()-1; i >= 0; i--) {
+            System.out.println(userNextMoves.get(i));
+        }
+        System.out.println("AI Next Moves");
+        ArrayList<Point> aiNextMoves = User.getUserValidNextPositions(user.userPosition, ai.aiPosition,hBlockedPathList,vBlockedPathList);
+        for(int i = aiNextMoves.size()-1; i >= 0; i--) {
+            System.out.println(aiNextMoves.get(i));
+        }
 
 
         //END TEST BLOCK

@@ -549,7 +549,7 @@ public class AI
             }
 
             //Just in case there is a condition not covered, make sure the loop does not go on forever.
-            if(index > 10000)
+            if(index > 1000)
                 pathNotFound = false;
 
             index++;
@@ -568,7 +568,7 @@ public class AI
      * @param aVerticalBlockedPathList
      *              An ArrayList of vertical blocked paths on the game board.
      */
-    public void makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
+    public boolean makeRandomAIPawnMove(Point aUserPosition, ArrayList<Point> aHorizontalBlockedPathList, ArrayList<Point> aVerticalBlockedPathList)
     {
         //First, check to see if the users pawn can be jumped.
         if(isForwardPawnJumpPossible(aUserPosition, aHorizontalBlockedPathList))
@@ -578,7 +578,7 @@ public class AI
             {
                 //The path behind the user is NOT blocked, so jump the user.
                 aiPosition.y = aiPosition.y + 2;
-                return; //The AI made its move by jumping the user's pawn.
+                return true; //The AI made its move by jumping the user's pawn.
             }
             else
             {
@@ -594,80 +594,81 @@ public class AI
         boolean canMoveUp = canAIMoveUp(aUserPosition, aiPosition, aHorizontalBlockedPathList);
         boolean canMoveDown = canAIMoveDown(aUserPosition, aiPosition, aHorizontalBlockedPathList);
 
-        boolean hasMoved = false;
         Random random = new Random();
 
         //Keep trying random moves until one of them is valid.  There are extra left, right, and down moves since they are better than up moves.
-        while(!hasMoved)
+
+        for(int i = 0; i < 20; i++)
         {
             int index = random.nextInt(9);
-
             switch (index) {
                 case 0:
                     if(canMoveUp)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y - 1);
-                        hasMoved = canMoveUp;
+                        return true;
                     }
                     break;
                 case 1:
                     if(canMoveLeft)
                     {
                         aiPosition.set(aiPosition.x - 1, aiPosition.y);
-                        hasMoved = canMoveLeft;
+                        return true;
                     }
                     break;
                 case 2:
                     if(canMoveLeft)
                     {
                         aiPosition.set(aiPosition.x - 1, aiPosition.y);
-                        hasMoved = canMoveLeft;
+                        return true;
                     }
                     break;
                 case 3:
                     if(canMoveRight)
                     {
                         aiPosition.set(aiPosition.x + 1, aiPosition.y);
-                        hasMoved = canMoveRight;
+                        return true;
                     }
                     break;
                 case 4:
                     if(canMoveRight)
                     {
                         aiPosition.set(aiPosition.x + 1, aiPosition.y);
-                        hasMoved = canMoveRight;
+                        return true;
                     }
                     break;
                 case 5:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
-                        hasMoved = canMoveDown;
+                        return true;
                     }
                     break;
                 case 6:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
-                        hasMoved = canMoveDown;
+                        return true;
                     }
                     break;
                 case 7:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
-                        hasMoved = canMoveDown;
+                        return true;
                     }
                     break;
                 case 8:
                     if(canMoveDown)
                     {
                         aiPosition.set(aiPosition.x, aiPosition.y + 1);
-                        hasMoved = canMoveDown;
+                        return true;
                     }
                     break;
             }
+
         }
+        return false;
     }
 
     /**

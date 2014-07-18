@@ -1,8 +1,6 @@
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.graphics.Point;
-import android.widget.ImageView;
-import com.CMSC495.alpeters78.quoridor_android_app.GameActivity;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,6 +37,7 @@ public class User
      */
     public boolean isValidPawnMove(Point aPossibleNewPawnPosition, Point anAIPawnPosition, ArrayList<Point> aHBlockedPathList, ArrayList<Point> aVBlockedPathList)
     {
+        /*
        //TEST BLOCK
         System.out.println("Previous move valid positions");
         System.out.println("runs before move is made");
@@ -49,7 +48,7 @@ public class User
             System.out.println(validPositionsIterator.next());
         }
         //END TEST BLOCK
-
+        */
         //First check to see if the new position is on top of the AI's pawn
         if(aPossibleNewPawnPosition.equals(anAIPawnPosition))
         {
@@ -414,23 +413,41 @@ public class User
 
         Point jumpForward = new Point(userPosition.x,userPosition.y-2);
         Point pathJumpForward = new Point(userPosition.x,userPosition.y-2); //Horizontal path
+
         Point jumpForwardRight = new Point(userPosition.x+1,userPosition.y-1);
+        Point pathJumpForwardRight = new Point(userPosition.x,userPosition.y-1);//Vertical Path
+
         Point jumpForwardLeft = new Point(userPosition.x-1,userPosition.y-1);
+        Point pathJumpForwardLeft = new Point(userPosition.x-1,userPosition.y-1);//Vertical Path
 
         Point jumpBack = new Point(userPosition.x,userPosition.y+2);
         Point pathJumpBack = new Point(userPosition.x,userPosition.y+1); //Horizontal path
+
         Point jumpBackRight = new Point(userPosition.x+1,userPosition.y+1);
+        Point pathJumpBackRight = new Point(userPosition.x,userPosition.y+1);//Vertical Path
+
         Point jumpBackLeft = new Point(userPosition.x-1,userPosition.y+1);
+        Point pathJumpBackLeft = new Point(userPosition.x-1,userPosition.y+1);//Vertical Path
 
         Point jumpLeft = new Point(userPosition.x-2,userPosition.y);
         Point pathJumpLeft = new Point(userPosition.x-2,userPosition.y); //Vertical path
+
         Point jumpLeftForward = new Point(userPosition.x-1,userPosition.y-1);
+        Point pathJumpLeftForward = new Point(userPosition.x-1,userPosition.y-1);//Horizontal path
+
         Point jumpLeftBack = new Point(userPosition.x-1,userPosition.y+1);
+        Point pathJumpLeftBack = new Point(userPosition.x-1,userPosition.y);//Horizontal path
 
         Point jumpRight = new Point(userPosition.x+2,userPosition.y);
         Point pathJumpRight = new Point(userPosition.x+1,userPosition.y); //Vertical path
+
         Point jumpRightForward = new Point(userPosition.x+1,userPosition.y-1);
+        Point pathJumpRightForward = new Point(userPosition.x+1,userPosition.y-1);//Horizontal path
+
         Point jumpRightBack = new Point(userPosition.x+1,userPosition.y+1);
+        Point pathJumpRightBack = new Point(userPosition.x+1,userPosition.y);//Horizontal path
+
+
 
         //add all moves to an ArrayList
         allPossibleMovePositions.add(moveForward); //0
@@ -473,28 +490,36 @@ public class User
                         else{  //jump is allowed
                             switch (i){ //get jump direction
                                 case 0:
-                                    if(!hBlockedPathList.contains(testPath) && (jumpForward.x > 0) && (jumpForward.x < 10) && (jumpForward.y > 0) && (jumpForward.y < 10)){  //check for blocked path
+                                    if(!hBlockedPathList.contains(pathJumpForward) && (jumpForward.x > 0) && (jumpForward.x < 10) && (jumpForward.y > 0) && (jumpForward.y < 10)){  //check for blocked path
                                         nextValidPositions.add(jumpForward);
                                     }
                                     else{ //test diagonal moves are on the board
                                         if((jumpForwardLeft.x > 0) && (jumpForwardLeft.x < 10) && (jumpForwardLeft.y > 0) && (jumpForwardLeft.y < 10)){
-                                            nextValidPositions.add(jumpForwardLeft);
+                                            if(!vBlockedPathList.contains(pathJumpForwardLeft)) {
+                                                nextValidPositions.add(jumpForwardLeft);
+                                            }
                                         }
                                         if((jumpForwardRight.x > 0) && (jumpForwardRight.x < 10) && (jumpForwardRight.y > 0) && (jumpForwardRight.y < 10)){
-                                            nextValidPositions.add(jumpForwardRight);
+                                            if(!vBlockedPathList.contains(pathJumpForwardRight)) {
+                                                nextValidPositions.add(jumpForwardRight);
+                                            }
                                         }
                                     }
                                     break;
                                 case 1:
-                                    if(!hBlockedPathList.contains(testPath) && (jumpBack.x > 0) && (jumpBack.x < 10) && (jumpBack.y > 0) && (jumpBack.y < 10)){  //check for blocked path
+                                    if(!hBlockedPathList.contains(pathJumpBack) && (jumpBack.x > 0) && (jumpBack.x < 10) && (jumpBack.y > 0) && (jumpBack.y < 10)){  //check for blocked path
                                         nextValidPositions.add(jumpBack);
                                     }
                                     else{ //test diagonal moves are on the board
                                         if((jumpBackLeft.x > 0) && (jumpBackLeft.x < 10) && (jumpBackLeft.x > 0) && (jumpBackLeft.x < 10)){
-                                            nextValidPositions.add(jumpBackLeft);
+                                            if(!vBlockedPathList.contains(pathJumpBackLeft)) {
+                                                nextValidPositions.add(jumpBackLeft);
+                                            }
                                         }
                                         if((jumpBackRight.x > 0) && (jumpBackRight.x < 10) && (jumpBackRight.x > 0) && (jumpBackRight.x < 10)){
-                                            nextValidPositions.add(jumpBackRight);
+                                            if(!vBlockedPathList.contains(pathJumpBackRight)) {
+                                                nextValidPositions.add(jumpBackRight);
+                                            }
                                         }
                                     }
                                     break;
@@ -505,34 +530,42 @@ public class User
                 }
                 else{
                     if(!vBlockedPathList.contains(testPath)){  //check vertical paths
-                        if(aiPosition != testMove){            //check for jump
+                        if(!(aiPosition.x == testMove.x && aiPosition.y == testMove.y)){            //check for jump
                             nextValidPositions.add(testMove);  //Move is valid, add to list.
                         }
                         else{  //jump is allowed
-                            switch (allPossibleJumpPositions.indexOf(testMove)){ //get jump direction
+                            switch (i){ //get jump direction
                                 case 2:
-                                    if(!hBlockedPathList.contains(testPath) && (jumpLeft.x > 0) && (jumpLeft.x < 10) && (jumpLeft.y > 0) && (jumpLeft.y < 10)){  //check for blocked path
+                                    if(!vBlockedPathList.contains(pathJumpLeft) && (jumpLeft.x > 0) && (jumpLeft.x < 10) && (jumpLeft.y > 0) && (jumpLeft.y < 10)){  //check for blocked path
                                         nextValidPositions.add(jumpLeft);
                                     }
                                     else{ //test diagonal moves are on the board
                                         if((jumpLeftForward.x > 0) && (jumpLeftForward.x < 10) && (jumpLeftForward.x > 0) && (jumpLeftForward.x < 10)){
-                                            nextValidPositions.add(jumpLeftForward);
+                                            if(!hBlockedPathList.contains(pathJumpLeftForward)) {
+                                                nextValidPositions.add(jumpLeftForward);
+                                            }
                                         }
                                         if((jumpLeftBack.x > 0) && (jumpLeftBack.x < 10) && (jumpLeftBack.x > 0) && (jumpLeftBack.x < 10)){
-                                            nextValidPositions.add(jumpRightForward);
+                                            if(!hBlockedPathList.contains(pathJumpLeftBack)) {
+                                                nextValidPositions.add(jumpLeftBack);
+                                            }
                                         }
                                     }
                                     break;
                                 case 3:
-                                    if(!hBlockedPathList.contains(testPath) && (jumpRight.x > 0) && (jumpRight.x < 10) && (jumpRight.y > 0) && (jumpRight.y < 10)){  //check for blocked path
+                                    if(!vBlockedPathList.contains(pathJumpRight) && (jumpRight.x > 0) && (jumpRight.x < 10) && (jumpRight.y > 0) && (jumpRight.y < 10)){  //check for blocked path
                                         nextValidPositions.add(jumpRight);
                                     }
                                     else{ //test diagonal moves are on the board
                                         if((jumpRightForward.x > 0) && (jumpRightForward.x < 10) && (jumpRightForward.x > 0) && (jumpRightForward.x < 10)){
-                                            nextValidPositions.add(jumpLeftBack);
+                                            if(!hBlockedPathList.contains(pathJumpRightForward)) {
+                                                nextValidPositions.add(jumpRightForward);
+                                            }
                                         }
                                         if((jumpRightBack.x > 0) && (jumpRightBack.x < 10) && (jumpRightBack.x > 0) && (jumpRightBack.x < 10)){
-                                            nextValidPositions.add(jumpRightBack);
+                                            if(!hBlockedPathList.contains(pathJumpRightBack)) {
+                                                nextValidPositions.add(jumpRightBack);
+                                            }
                                         }
                                     }
                                     break;
