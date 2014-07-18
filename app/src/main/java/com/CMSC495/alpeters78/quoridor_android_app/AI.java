@@ -471,11 +471,6 @@ public class AI
                 aiPosition.y = aiPosition.y + 2;
                 return true; //The AI made its move by jumping the user's pawn.
             }
-            else
-            {
-                //The path behind the user is blocked, but it still might be possible to move left or right.
-                //TODO We probably don't have to implement this check, but I left a place for it if we do.
-            }
         }
 
         moveCounts.add(new ArrayList<Node<Point>>());
@@ -547,7 +542,6 @@ public class AI
                     return true;
                 }
             }
-
             //Just in case there is a condition not covered, make sure the loop does not go on forever.
             if(index > 1000)
                 pathNotFound = false;
@@ -580,11 +574,6 @@ public class AI
                 aiPosition.y = aiPosition.y + 2;
                 return true; //The AI made its move by jumping the user's pawn.
             }
-            else
-            {
-                //The path behind the user is blocked, but it still might be possible to move left or right.
-                //TODO We probably don't have to implement this check, but I left a place for it if we do.
-            }
         }
 
         //The AI pawn cannot jump the user's pawn.
@@ -597,7 +586,6 @@ public class AI
         Random random = new Random();
 
         //Keep trying random moves until one of them is valid.  There are extra left, right, and down moves since they are better than up moves.
-
         for(int i = 0; i < 20; i++)
         {
             int index = random.nextInt(9);
@@ -666,7 +654,6 @@ public class AI
                     }
                     break;
             }
-
         }
         return false;
     }

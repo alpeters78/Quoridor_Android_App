@@ -138,14 +138,10 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                 popupWindow.showAsDropDown(findViewById(R.id.pawn32), -35, 0);
             } else {
-
                 //The user's turn is over and he/she did not win, now let the AI make a move.
-
                 //First, always try to use the placeVerticalWall method.
                 Wall newWall;
                 newWall = ai.placeVerticalWall(user.userPosition, wallArray, hBlockedPathList, vBlockedPathList);
-                System.out.println("Is User Path blocked? - Vwall " + User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1));
-                System.out.println("Is AI Path blocked? - Vwall " + User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9));
 
                 //Check to see if a wall was placed.
                 if(newWall != null && (!User.isWinningPathBlocked(ai.aiPosition, user.userPosition, hBlockedPathList, vBlockedPathList, 1)) && (!User.isWinningPathBlocked(user.userPosition, ai.aiPosition, hBlockedPathList, vBlockedPathList, 9))) {
@@ -174,7 +170,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     boolean aiHasMoved = false;
                     boolean isWallMove = false;
                     Random random = new Random();
-
                     int count = 0;
 
                     while(!aiHasMoved)
@@ -283,7 +278,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         }
                         //Just in case this loop gets stuck. ex no walls remaining and only valid pawn move is a jump that isn't forward.
                         count++;
-                        if(count >= 25) {
+                        if(count >= 25) { //I just picked a number here. If you want to change it feel free.
                             ArrayList<Point> validAIPawnMoves = User.getUserValidNextPositions(user.userPosition, ai.aiPosition,hBlockedPathList,vBlockedPathList);
                             System.out.println("User Position" + user.userPosition);
                             System.out.println("AI Position" + ai.aiPosition);

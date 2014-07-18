@@ -235,7 +235,6 @@ public class User
         ArrayList<Point> newaHBlockedPathList = new ArrayList<Point>();
 
         //add new paths
-
         newaHBlockedPathList.add(newBlockedPath1);
         newaHBlockedPathList.add(newBlockedPath2);
         Iterator<Point> pathListIterator = aHBlockedPathList.iterator();
@@ -244,7 +243,7 @@ public class User
         }
         boolean test1 = isWinningPathBlocked(userPosition, anAIPawnPosition, newaHBlockedPathList, aVBlockedPathList, 9);//test AI path
         boolean test2 = isWinningPathBlocked(anAIPawnPosition, userPosition, newaHBlockedPathList, aVBlockedPathList, 1);//test User path
-
+        /*
         //TEST BLOCK
         System.out.println("Is AI win blocked? " + test1);
         System.out.println("Is User win blocked? " + test2);
@@ -268,7 +267,7 @@ public class User
         boolean wallCenter = placedWalls.contains(aPossibleNewWallPosition);
         System.out.println(path1 + " " + path2 + " " + wallCenter);
         //END TEST BLOCK
-
+        */
         if(test1 || test2)
         {
             //The placement of the new horizontal wall completely blocks the AI's path to win; therefore, it is an invalid move
@@ -302,7 +301,7 @@ public class User
 
         boolean test1 = isWinningPathBlocked(userPosition, anAIPawnPosition, aHBlockedPathList, newaVBlockedPathList, 9);//test AI path
         boolean test2 = isWinningPathBlocked(anAIPawnPosition, userPosition, aHBlockedPathList, newaVBlockedPathList, 1);//test User path
-
+        /*
         //TEST BLOCK
         System.out.println("Is AI win blocked? " + test1);
         System.out.println("Is User win blocked? " + test2);
@@ -326,7 +325,7 @@ public class User
         boolean wallCenter = placedWalls.contains(aPossibleNewWallPosition);
         System.out.println(path1 + " " + path2 + " " + wallCenter);
         //END TEST BLOCK
-
+        */
         if(test1 || test2)
         {
             //The placement of the new vertical wall completely blocks the AI's path to win; therefore, it is an invalid move
@@ -397,9 +396,7 @@ public class User
         //create needed lists
         ArrayList<Point> nextValidPositions = new ArrayList<Point>();
         ArrayList<Point> allPossibleMovePositions = new ArrayList<Point>();
-        ArrayList<Point> allPossibleJumpPositions = new ArrayList<Point>();
         ArrayList<Point> allPossibleMovePaths = new ArrayList<Point>();
-        ArrayList<Point> allPossibleJumpPaths = new ArrayList<Point>();
 
         // Define all possible moves and paths
         Point moveForward = new Point(userPosition.x, userPosition.y-1);
@@ -461,18 +458,6 @@ public class User
         allPossibleMovePaths.add(pathLeft);        //2
         allPossibleMovePaths.add(pathRight);       //3
 
-        //add all jumps to an ArrayList
-        allPossibleJumpPositions.add(jumpForward); //0
-        allPossibleJumpPositions.add(jumpBack);    //1
-        allPossibleJumpPositions.add(jumpLeft);    //2
-        allPossibleJumpPositions.add(jumpRight);   //3
-
-        //add all jump paths to an ArrayList
-        allPossibleJumpPaths.add(pathJumpForward);  //0
-        allPossibleJumpPaths.add(pathJumpBack);     //1
-        allPossibleJumpPaths.add(pathJumpLeft);     //2
-        allPossibleJumpPaths.add(pathJumpRight);    //3
-
         //test all possible moves
         //is the possible move on the game board
         for(int i=0; i < 4; i++){
@@ -523,7 +508,6 @@ public class User
                                         }
                                     }
                                     break;
-
                             }
                         }
                     }
@@ -575,9 +559,6 @@ public class User
                 }
             }
         }
-
         return nextValidPositions;
     }
-
-
 }
