@@ -1,3 +1,9 @@
+/**
+ * File:  User.java
+ * Author:  Andrew Peters and Christian Rowlands
+ * Last modified:  July 18, 2014
+ */
+
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.graphics.Point;
@@ -6,6 +12,8 @@ import java.util.Iterator;
 
 /**
  * A User object holds the current User's position and the number of walls remaining.
+ *
+ * @author Andrew Peters and Christian Rowlands
  */
 public class User
 {

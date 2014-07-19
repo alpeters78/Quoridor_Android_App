@@ -1,3 +1,9 @@
+/**
+ * File:  RulesActivity.java
+ * Author:  Andrew Peters and Christian Rowlands
+ * Last modified:  July 18, 2014
+ */
+
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.app.Activity;
@@ -6,6 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.CMSC495.alpeters78.quoridor_android_app.R;
 
+/**
+ * The RulesActivity Class is used to display
+ * the Quoridor game rules to the user.
+ */
 public class RulesActivity extends Activity {
 
     @Override
@@ -15,7 +25,6 @@ public class RulesActivity extends Activity {
 
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

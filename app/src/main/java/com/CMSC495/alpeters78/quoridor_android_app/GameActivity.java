@@ -1,3 +1,9 @@
+/*
+ * File:  GameActivity.java
+ * Author:  Andrew Peters and Christian Rowlands
+ * Last modified:  July 18, 2014
+ */
+
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.app.ActionBar;
@@ -20,7 +26,12 @@ import java.util.Random;
 
 import static android.app.ActivityManager.isUserAMonkey;
 
-
+/**
+ * The GameActivity Class is the main controller for the Quoridor game.
+ * It creates User and AI objects, handles user input, and calls appropriate game play methods.
+ *
+ * @author Andrew Peters and Christian Rowlands
+ */
 public class GameActivity extends Activity implements View.OnClickListener {
 
     //Instance variables

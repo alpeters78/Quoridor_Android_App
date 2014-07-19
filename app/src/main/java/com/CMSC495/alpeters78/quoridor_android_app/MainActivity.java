@@ -1,3 +1,9 @@
+/**
+ * File:  MainActivity.java
+ * Author:  Andrew Peters and Christian Rowlands
+ * Last modified:  July 18, 2014
+ */
+
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.app.Activity;
@@ -9,14 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-
+/**
+ * The MainActivity Class is used to display the main menu.
+ * It also handles input to select the main menu buttons.
+ */
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Button startButton = (Button) findViewById(R.id.start_button);
         Button rulesButton = (Button) findViewById(R.id.rules_button);
@@ -39,7 +47,6 @@ public class MainActivity extends Activity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

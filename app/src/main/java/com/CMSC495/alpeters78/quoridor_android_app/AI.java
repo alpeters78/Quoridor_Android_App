@@ -1,3 +1,9 @@
+/*
+ * File:  AI.java
+ * Author:  Andrew Peters and Christian Rowlands
+ * Last modified:  July 18, 2014
+ */
+
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.graphics.Point;
@@ -9,6 +15,8 @@ import java.util.Random;
 /**
  * An AI object holds the current AI's position and the number of walls remaining.
  * In addition, it provides methods for having the AI make various moves.
+ *
+ * @author Andrew Peters and Christian Rowlands
  */
 public class AI
 {
@@ -807,6 +815,10 @@ public class AI
         return !aHorizontalBlockedPathList.contains(anAIPosition);
     }
 
+    /**
+     * Private Node Class for the tree data structure.
+     * @param <T>
+     */
     private class Node<T> implements Cloneable
     {
         public T point;

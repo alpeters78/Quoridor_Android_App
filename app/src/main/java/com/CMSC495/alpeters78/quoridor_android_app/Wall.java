@@ -1,3 +1,9 @@
+/*
+ * File:  Wall.java
+ * Author:  Andrew Peters and Christian Rowlands
+ * Last modified:  July 18, 2014
+ */
+
 package com.CMSC495.alpeters78.quoridor_android_app;
 
 import android.graphics.Point;
@@ -5,6 +11,8 @@ import android.graphics.Point;
 /**
  * A Wall object records all the details about a Wall on the
  * Quoridor game board.  It stores the position of the wall and the orientation.
+ *
+ * @author Andrew Peters and Christian Rowlands
  */
 public class Wall
 {

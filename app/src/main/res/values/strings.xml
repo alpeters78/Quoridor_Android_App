@@ -22,7 +22,7 @@
     <string name="rules_2">2. When a player runs out of walls they must move their pawn.</string>
     <string name="rules_3">3. The pawn can move one square: forwards, backwards, left or right.</string>
     <string name="rules_4">4. The pawn must move around the walls.</string>
-    <string name="rules_5">5. The walls must not be placed in a manner that they completely block a players path to the goal.</string>
+    <string name="rules_5">5. The walls must not be placed in a manner where they completely block a players path to the goal.</string>
     <string name="rules_6">6. When two pawns are on neighboring squares the opponents pawn can be jumped. If a wall is behind the pawn getting jumped, the player can move diagonally to either side of the jumped pawn.</string>
     <string name="rules_7">7. The game is complete when a player has moved their pawn to the opposite end of the game board.</string>
     <string name="end_of_game_popup_user_win">You Won!</string>
