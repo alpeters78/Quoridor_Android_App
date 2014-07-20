@@ -473,7 +473,7 @@ public class AI
         if(isForwardPawnJumpPossible(aUserPosition, aHorizontalBlockedPathList))
         {
             //The users pawn can be jumped, but we need to see if there is a wall behind the user's pawn.
-            if(!aHorizontalBlockedPathList.contains(aUserPosition))
+            if(!aHorizontalBlockedPathList.contains(aUserPosition) && (aiPosition.y < 8))
             {
                 //The path behind the user is NOT blocked, so jump the user.
                 aiPosition.y = aiPosition.y + 2;
@@ -576,7 +576,7 @@ public class AI
         if(isForwardPawnJumpPossible(aUserPosition, aHorizontalBlockedPathList))
         {
             //The users pawn can be jumped, but we need to see if there is a wall behind the user's pawn.
-            if(!aHorizontalBlockedPathList.contains(aUserPosition))
+            if(!aHorizontalBlockedPathList.contains(aUserPosition) && aiPosition.y < 8)
             {
                 //The path behind the user is NOT blocked, so jump the user.
                 aiPosition.y = aiPosition.y + 2;
